@@ -911,6 +911,68 @@ body.spreadsheet-mode #activeModeExitBtn{
 }
 </style>
 
+
+<style id="purchase-wallet-access-fix">
+/* Wallet should never be stranded off-screen in the Purchase sidebar.
+   Keep the wide item/command sections horizontally pannable, but let
+   Character / Wallet / Shopping Rules fit the available sidebar width. */
+body.purchase-sidebar-open #purchaseDrawer .purchase-body > .purchase-identity,
+body.purchase-sidebar-open #purchaseDrawer .purchase-body > .purchase-wallet,
+body.purchase-sidebar-open #purchaseDrawer .purchase-body > .purchase-shop-settings,
+body.purchase-sidebar-open #purchaseDrawer .purchase-body > .artificer-purchase-notice{
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box;
+}
+body.purchase-sidebar-open #purchaseDrawer .purchase-wallet{overflow:visible!important}
+body.purchase-sidebar-open #purchaseDrawer .purchase-wallet .balance-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:7px!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:visible!important;
+  box-sizing:border-box;
+}
+body.purchase-sidebar-open #purchaseDrawer .purchase-wallet .balance-grid label{
+  min-width:0!important;
+  width:auto!important;
+}
+body.purchase-sidebar-open #purchaseDrawer .purchase-wallet .balance-grid input{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box;
+}
+body.purchase-sidebar-open #purchaseDrawer .purchase-wallet .balance-grid label:last-child{
+  grid-column:1 / -1;
+}
+body.purchase-sidebar-open #purchaseDrawer .purchase-form-grid{
+  grid-template-columns:1fr!important;
+  min-width:0!important;
+}
+body.purchase-sidebar-open #purchaseDrawer .purchase-shop-settings .shop-config-grid{
+  grid-template-columns:1fr!important;
+  min-width:0!important;
+}
+/* On narrow drawer layouts, use the same readable wallet wrapping even
+   without pinned-sidebar mode. */
+@media(max-width:620px){
+  #purchaseDrawer .purchase-body > .purchase-identity,
+  #purchaseDrawer .purchase-body > .purchase-wallet,
+  #purchaseDrawer .purchase-body > .purchase-shop-settings{
+    min-width:0!important;
+    width:100%!important;
+  }
+  #purchaseDrawer .purchase-wallet .balance-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    min-width:0!important;
+  }
+  #purchaseDrawer .purchase-wallet .balance-grid label:last-child{grid-column:1 / -1}
+}
+</style>
 </head>
 <body>
 <div class="top-sheet">
@@ -2294,6 +2356,185 @@ if(window.ResizeObserver){new ResizeObserver(()=>syncStickyTierHeaders(true)).ob
   window.addEventListener('resize',syncModeEscape,{passive:true});
   ['simpleModeBtn','mobileModeBtn','spreadsheetModeBtn','artificerModeBtn'].forEach(id=>document.querySelector('#'+id)?.addEventListener('click',()=>requestAnimationFrame(syncModeEscape)));
   syncModeEscape();
+})();
+</script>
+
+
+<style id="bear-compare-purchase-hscroll-fix-styles">
+/* Bear artwork is intentionally independent of the hidden attunement legend. */
+#bearThemeArt{
+  justify-self:end;
+  align-self:center;
+  min-width:0;
+}
+body.theme-bear #bearThemeArt{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+body:not(.theme-bear) #bearThemeArt{display:none!important}
+@media(max-width:760px){
+  body.theme-bear #bearThemeArt{
+    position:absolute;
+    right:10px;
+    bottom:5px;
+    max-width:170px;
+    justify-content:flex-end;
+  }
+}
+
+/* Purchase drawer: vertical scrolling belongs to the drawer itself.
+   Keep configuration sections (Character, Wallet, Shopping Rules) locked to
+   the visible drawer width. Only content that can genuinely be wider -- the
+   selected-item list and command output -- gets its own horizontal scroller. */
+#purchaseDrawer .drawer-body{
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  touch-action:pan-y!important;
+  overscroll-behavior:contain!important;
+  scrollbar-gutter:stable;
+}
+#purchaseDrawer .purchase-body{
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+body.purchase-sidebar-open #purchaseDrawer .purchase-body > .purchase-identity,
+body.purchase-sidebar-open #purchaseDrawer .purchase-body > .purchase-wallet,
+body.purchase-sidebar-open #purchaseDrawer .purchase-body > .purchase-shop-settings,
+body.purchase-sidebar-open #purchaseDrawer .purchase-body > .artificer-purchase-notice,
+body.purchase-sidebar-open #purchaseDrawer .purchase-body > .purchase-summary{
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+}
+/* Wallet always uses two compact columns, with Gold across the full width. */
+#purchaseDrawer .purchase-wallet{overflow:hidden!important}
+#purchaseDrawer .purchase-wallet .balance-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+#purchaseDrawer .purchase-wallet .balance-grid label{
+  display:grid!important;
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+}
+#purchaseDrawer .purchase-wallet .balance-grid input{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+#purchaseDrawer .purchase-wallet .balance-grid label:last-child{grid-column:1 / -1!important}
+/* Selected items retain a desktop-readable width, but scroll inside their own
+   section instead of dragging Wallet off-screen. */
+#purchaseDrawer .purchase-items-section{overflow:hidden!important}
+#purchaseDrawer .purchase-items-section .cart-list{
+  overflow-x:auto!important;
+  overflow-y:visible!important;
+  touch-action:pan-x!important;
+  scrollbar-gutter:stable!important;
+}
+body.purchase-sidebar-open #purchaseDrawer .purchase-items-section .purchase-item{
+  min-width:560px!important;
+}
+/* Commands can also pan horizontally without affecting Wallet. */
+#purchaseDrawer .purchase-command-section{overflow:hidden!important}
+#purchaseDrawer .purchase-command-section .copybox{
+  overflow-x:auto!important;
+  overflow-y:auto!important;
+  white-space:pre!important;
+  touch-action:pan-x pan-y!important;
+}
+@media(max-width:620px){
+  #purchaseDrawer .purchase-wallet .balance-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  #purchaseDrawer .purchase-items-section .purchase-item{min-width:520px!important}
+}
+
+/* Compare window removal controls. */
+.compare-tools{display:flex;justify-content:flex-end;gap:6px;margin:0 0 8px;position:sticky;left:0}
+.compare-item-head{display:grid;gap:5px;min-width:150px}
+.compare-item-head strong{font-size:calc(10px * var(--text-scale));line-height:1.2}
+.compare-remove{justify-self:start;margin:0!important;padding:3px 7px!important;font-size:calc(8px * var(--text-scale))!important}
+.compare-single{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--grid);border-radius:8px;padding:8px 10px;background:var(--alt)}
+</style>
+<script id="bear-compare-purchase-hscroll-fix-script">
+(()=>{
+  /* The readability pass hides .header-legend. Bear art used to live inside
+     that element, so move it into the header itself while leaving the legend
+     hidden exactly as requested. */
+  const bear=document.querySelector('#bearThemeArt');
+  const header=document.querySelector('#adStrip');
+  const legend=header?.querySelector('.header-legend');
+  if(bear&&header&&bear.parentElement!==header){
+    header.insertBefore(bear,legend||header.lastElementChild);
+  }
+
+  /* Make the genuinely wide purchase regions horizontally navigable without
+     moving Character/Wallet/Shopping Rules off-screen. Shift + wheel pans the
+     selected-item list or command box under the pointer; normal wheel remains
+     vertical and Alt + wheel remains interface scaling. */
+  for(const scroller of document.querySelectorAll('#purchaseDrawer .cart-list, #purchaseDrawer .purchase-command-section .copybox')){
+    scroller.addEventListener('wheel',e=>{
+      if(e.altKey||!e.shiftKey)return;
+      const max=scroller.scrollWidth-scroller.clientWidth;
+      if(max<=1)return;
+      e.preventDefault();
+      e.stopPropagation();
+      scroller.scrollLeft += (Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX);
+    },{passive:false,capture:true});
+  }
+
+  window.removeCompareItem=(name)=>{
+    state.compare=(state.compare||[]).filter(x=>x!==name);
+    try{persist()}catch{}
+    try{renderAll()}catch{}
+    try{renderCompare()}catch{}
+  };
+  window.clearCompareItems=()=>{
+    state.compare=[];
+    try{persist()}catch{}
+    try{renderAll()}catch{}
+    try{renderCompare()}catch{}
+  };
+
+  /* Replace the comparison renderer with one that always exposes removal. */
+  renderCompare=function(){
+    const btn=$('#compareBtn');
+    if(btn)btn.classList.toggle('primary',(state.compare||[]).length>=2);
+    const body=$('#compareBody');
+    if(!body)return;
+    const selected=(state.compare||[]).map(getByName).filter(Boolean);
+    if(!selected.length){
+      body.innerHTML='<div class="empty-state">No items selected for comparison. Enable Compare Mode and choose up to four items.</div>';
+      return;
+    }
+    const controls=`<div class="compare-tools"><button class="mini-btn warn" type="button" onclick="clearCompareItems()">Clear Compare</button></div>`;
+    if(selected.length===1){
+      const x=selected[0],safe=esc(x.Item).replace(/'/g,"&#39;");
+      body.innerHTML=controls+`<div class="compare-single"><strong>${esc(x.Item)}</strong><button class="mini-btn warn" type="button" onclick="removeCompareItem('${safe}')">Remove</button></div><div class="empty-state" style="margin-top:8px">Select at least one more item to compare fields side by side.</div>`;
+      return;
+    }
+    const fields=[['Rarity','Rarity'],['Category','Category'],['Tier','Tier'],['Cost (TP)','TP / Reward'],['Cost (Gold)','Gold'],['Attunement','Attunement'],['Attunement Requirements','Attunement Requirements'],['Bonuses','Bonuses'],['Resistances Granted','Resistances'],['Immunities Granted','Immunities'],['Condition Immunities Granted','Condition Immunities'],['Attached Spells','Spells'],['Errata','Errata'],['Evolving Item','Evolving Item'],['Next Evolution','Next Evolution'],['Source','Source']];
+    let h=controls+'<div style="overflow:auto"><table class="compare-table"><tr><th>Field</th>';
+    h+=selected.map(x=>{const safe=esc(x.Item).replace(/'/g,"&#39;");return `<th><div class="compare-item-head"><strong>${esc(x.Item)}</strong><button class="mini-btn warn compare-remove" type="button" onclick="removeCompareItem('${safe}')">Remove</button></div></th>`}).join('');
+    h+='</tr>';
+    for(const [f,l] of fields)h+=`<tr><th>${esc(l)}</th>${selected.map(x=>`<td>${esc(x[f]||'—')}</td>`).join('')}</tr>`;
+    h+='</table></div>';
+    body.innerHTML=h;
+  };
+
+  try{renderCompare()}catch{}
 })();
 </script>
 

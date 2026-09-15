@@ -1,5 +1,5 @@
-# D&D Friends Magic Item Guide
+# D&D Friends 5.5 Magic Item Guide
 
-This build fixes Purchase List scrolling in both drawer and sidebar modes and adds a persistent Exit Mode control whenever a display mode hides the normal Modes button.
+This build corrects the Purchase List sidebar layout so Character, Wallet, and Shopping Rules always fit within the visible sidebar width. Wallet uses two TP columns per row with Gold spanning the full width. Selected items and command output retain independent horizontal scrolling where needed.
 
-Deploy by placing the contents of this folder at the root of the GitHub Pages branch.
+Deploy the contents of this folder at the root of a GitHub Pages site.
