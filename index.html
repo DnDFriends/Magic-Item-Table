@@ -10,7 +10,7 @@
  --page:#2f3439;--surface:#343a40;--alt:#30363b;--text:#f1f3f5;--muted:#b8bec4;
  --header:#1c2024;--headerText:#ffffff;--grid:#111417;--accent:#b8c0c7;--selected:#4c5963;
  --attune:#ff9d00;--nonattune:#f4f4f4;--newplayer:#6ee7b7;--classrec:#38bdf8;
- --success:#77d38a;--warning:#ff6b6b;--compare:#c084fc;--evolve:#55c77b;--text-scale:1.3;--shadow:0 16px 45px rgba(0,0,0,.34);
+ --success:#77d38a;--warning:#ff6b6b;--compare:#c084fc;--evolve:#00e889;--text-scale:1.3;--shadow:0 16px 45px rgba(0,0,0,.34);
  --font:Calibri,"Segoe UI",Arial,sans-serif;
 }
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--page);color:var(--text);font-family:var(--font);font-size:13px;min-height:100vh}
@@ -382,6 +382,35 @@ body{font-size:calc(14px * var(--text-scale))!important}
 /* Hidden is the default bottom-navigation state; users can opt into tier buttons or the draggable scrollbar. */
 .nav-style-btn:not(.primary){opacity:.86}
 
+
+/* === Evolution-chain visibility + upgrade purchasing === */
+.evolution-mode-note{font-size:calc(9px * var(--text-scale));color:var(--muted);max-width:220px;line-height:1.15}
+.item-name.has-prereq,.mobile-item-name.has-prereq,.search-table .item-anchor.has-prereq{flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:1px!important}
+.item-label{min-width:0}.evolution-requires{display:block;width:100%;font-size:.68em!important;line-height:1.05!important;font-weight:760!important;color:color-mix(in srgb,var(--evolve) 72%,var(--ui-surface-text))!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none!important}
+.evolve-mark.chain-collapsed{min-width:22px;padding:1px 4px;border-radius:999px;background:color-mix(in srgb,var(--evolve) 18%,var(--surface));border:1px solid color-mix(in srgb,var(--evolve) 52%,var(--grid));font-size:.72em;line-height:1.1;text-align:center}
+.item-cell.evolving .item-name,.mobile-item-row.evolving .mobile-item-name,.search-table tr.evolving .item-anchor{cursor:pointer}
+.item-info-evolution.requires{margin-bottom:5px;color:var(--ui-surface-text)}
+.purchase-tag.upgrade{color:var(--evolve);border-color:color-mix(in srgb,var(--evolve) 52%,var(--grid));background:color-mix(in srgb,var(--evolve) 10%,var(--surface))}
+.purchase-upgrade{border-left:3px solid var(--evolve)}
+.upgrade-requirement{display:grid;gap:3px;margin-top:7px;padding:6px 8px;border:1px solid var(--grid);border-radius:7px;background:color-mix(in srgb,var(--surface) 72%,var(--page));font-size:calc(8.5px * var(--text-scale));line-height:1.2}
+.upgrade-requirement strong{font-size:calc(8px * var(--text-scale));text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.upgrade-requirement>span{font-weight:850;color:var(--evolve)}
+.upgrade-requirement label{display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--ui-surface-text);font-weight:700}.upgrade-requirement input{accent-color:var(--evolve)}
+.upgrade-requirement.ready{border-color:color-mix(in srgb,var(--success) 52%,var(--grid))}.upgrade-requirement.blocked{border-color:color-mix(in srgb,var(--warning) 55%,var(--grid))}
+.upgrade-warn{color:var(--warning);font-size:.84em}
+.purchase-item-actions button:disabled{opacity:.45;cursor:not-allowed}
+.search-table .item-anchor.has-prereq{display:inline-flex!important;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+body.spreadsheet-mode .upgrade-requirement{border-radius:0!important;background:#292a2d!important}
+@media(max-width:760px){.evolution-mode-note{display:none}.toolbar-group:has(#evolutionMode){min-width:210px}.upgrade-requirement{font-size:11px}}
+
+/* === 2026-09-15 dynamic compact aligned row heights === */
+:root{--dynamic-row-floor:30px}
+.tier-table tbody tr{height:auto!important;min-height:0!important}
+.tier-table tbody td{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding-top:calc(3px * var(--text-scale))!important;padding-bottom:calc(4px * var(--text-scale))!important}
+.tier-table .item-name{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;white-space:normal!important;line-height:1.20!important;align-items:flex-start!important;padding-bottom:2px!important}
+.tier-table .item-name.has-prereq{justify-content:flex-start!important}
+.tier-table .item-label{display:inline;line-height:inherit}
+.tier-table .cell-actions{top:50%!important;transform:translateY(-50%)!important}
 </style>
 
 <style id="final-scroll-theme-fixes">
@@ -611,7 +640,7 @@ body.spreadsheet-mode .aligned-empty{background:#202124!important}
 body.spreadsheet-mode .item-name,body.spreadsheet-mode .mobile-item-name,body.spreadsheet-mode .search-table .item-anchor{background:transparent!important;background-image:none!important;box-shadow:none!important}
 body.spreadsheet-mode .item-name.noattune,body.spreadsheet-mode .mobile-item-name.noattune{color:#f1f3f4!important;-webkit-text-fill-color:#f1f3f4!important}
 body.spreadsheet-mode .item-name.attune,body.spreadsheet-mode .mobile-item-name.attune{color:#ff9d00!important;-webkit-text-fill-color:#ff9d00!important}
-body.spreadsheet-mode .evolving-item .item-name,body.spreadsheet-mode .evolving-item .mobile-item-name,body.spreadsheet-mode .item-cell.evolving-item .item-name{color:#81c995!important;-webkit-text-fill-color:#81c995!important}
+body.spreadsheet-mode .evolving-item .item-name,body.spreadsheet-mode .evolving-item .mobile-item-name,body.spreadsheet-mode .item-cell.evolving-item .item-name{color:#00e889!important;-webkit-text-fill-color:#00e889!important}
 body.spreadsheet-mode .cell-action{border-radius:0!important;background:#292a2d!important;border-color:#5f6368!important;color:#f1f3f4!important}
 body.spreadsheet-mode .cell-action.on{background:#3c4043!important;border-color:#8ab4f8!important}
 body.spreadsheet-mode .modern-footer,body.spreadsheet-mode .sheet-footer{background:#202124!important;border-color:#5f6368!important;color:#bdc1c6!important}
@@ -723,6 +752,83 @@ body:not(.bottom-scroll-active) #scrollNavigator{display:none!important}
   .nav-row{min-height:38px}
   .content{padding-top:2px}
 }
+
+/* === Readability / consolidated controls / Artificer Mode === */
+#dataStatus,#refreshBtn,.sheet-updated,.brand-note,.header-legend,.sheet-footer{display:none!important}
+.toolbar{display:none!important}
+.filter-panel.filter-collapsed{display:none!important}
+.filter-panel{margin:8px 10px 10px;border:1px solid var(--grid);border-radius:12px;overflow:visible;background:var(--surface)}
+.filter-dock-title .filter-eyebrow{display:none}
+#filtersBtn.primary{background:var(--accent);color:var(--ui-accent-text,var(--headerText));border-color:var(--accent)}
+.modes-control{position:relative;display:flex;align-items:center}
+.modes-menu{position:fixed;z-index:1750;width:min(330px,calc(100vw - 18px));padding:8px;border:1px solid var(--grid);border-radius:12px;background:var(--surface);box-shadow:0 16px 42px rgba(0,0,0,.42)}
+.modes-menu-head{display:grid;gap:1px;padding:3px 5px 7px;border-bottom:1px solid var(--grid);margin-bottom:6px}.modes-menu-head strong{font-size:calc(12px * var(--text-scale))}.modes-menu-head small{color:var(--muted);font-size:calc(9px * var(--text-scale))}
+.mode-menu-option{display:flex!important;width:100%;margin:3px 0!important;justify-content:flex-start;min-height:36px;border-radius:8px!important}
+.mode-menu-option.primary{box-shadow:inset 3px 0 0 var(--accent)}
+.artificer-mode-settings{margin-top:7px;padding:8px;border:1px solid color-mix(in srgb,var(--grid) 80%,var(--accent));border-radius:9px;background:color-mix(in srgb,var(--surface) 86%,var(--accent) 14%)}
+.artificer-mode-settings label{display:grid;grid-template-columns:1fr 92px;align-items:center;gap:8px;color:var(--text);font-weight:800;font-size:calc(10px * var(--text-scale))}.artificer-mode-settings input{min-height:34px;border:1px solid var(--grid);border-radius:6px;background:var(--page);color:var(--text);padding:4px 7px;font:inherit}
+.artificer-capacity{margin-top:6px;color:var(--muted);font-size:calc(9px * var(--text-scale));line-height:1.35}
+.artificer-filter-wrap.hidden{display:none!important}
+body.artificer-mode .item-cell.artificer-plan,body.artificer-mode .mobile-item-row.artificer-plan,body.artificer-mode .search-table tr.artificer-plan td{background-image:linear-gradient(90deg,color-mix(in srgb,#25d6a2 18%,transparent),transparent 55%)!important}
+body.artificer-mode .item-cell.artificer-plan{box-shadow:inset 3px 0 0 #25d6a2}
+body.artificer-mode .item-cell.artificer-plan .item-label::after,body.artificer-mode .mobile-item-row.artificer-plan .item-label::after,body.artificer-mode .search-table tr.artificer-plan .item-label::after{content:"  ARTIFICER PLAN";color:#25d6a2;font-size:.68em;font-weight:900;letter-spacing:.04em;text-decoration:none}
+.artificer-purchase-notice{margin:0;border:1px solid color-mix(in srgb,#25d6a2 48%,var(--grid));border-radius:11px;background:color-mix(in srgb,#25d6a2 10%,var(--surface));padding:9px 10px;display:grid;gap:3px}.artificer-purchase-notice strong{color:#25d6a2}.artificer-purchase-notice small{color:var(--muted)}
+.purchase-tag.artificer{border-color:#25d6a2;color:#25d6a2;background:color-mix(in srgb,#25d6a2 10%,var(--surface))}.purchase-artificer-note{display:block;margin-top:5px;color:#25d6a2;font-size:calc(8.5px * var(--text-scale));font-weight:800}
+.item-info-title{font-weight:900;font-size:calc(11.5px * var(--text-scale));margin-bottom:7px;color:var(--text)}.item-info-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px}.item-info-tag{display:inline-flex;padding:3px 6px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--grid));border-radius:999px;background:color-mix(in srgb,var(--surface) 75%,var(--accent) 8%);color:var(--text);font-size:calc(8px * var(--text-scale));font-weight:800}.item-info-source{color:var(--muted);font-size:calc(9px * var(--text-scale));line-height:1.35;margin-bottom:6px}.errata-tooltip::before{content:"ITEM DETAILS"!important}
+.reward-carry-note{display:block;margin-top:2px;color:var(--accent);font-size:.68em;font-weight:900;letter-spacing:.025em;text-decoration:none}.reward-head .carry-head{display:block;color:var(--muted);font-size:.72em;margin-top:2px;font-weight:700}
+@media(max-width:700px){.modes-menu{max-height:calc(100vh - 18px);overflow:auto}.filter-panel{margin:5px}.artificer-mode-settings label{grid-template-columns:1fr 82px}}
+</style>
+
+<style id="purchase-sidebar-transfer-styles">
+/* Purchase sidebar: keeps the MIT fully interactive while the list stays open. */
+:root{--purchase-sidebar-width:clamp(320px,34vw,470px)}
+body.purchase-sidebar-open #drawerBackdrop{display:none!important}
+body.purchase-sidebar-open #purchaseDrawer{display:flex!important;width:var(--purchase-sidebar-width)!important;box-shadow:-10px 0 28px rgba(0,0,0,.28);z-index:115}
+body.purchase-sidebar-open .top-sheet,
+body.purchase-sidebar-open .content,
+body.purchase-sidebar-open #shopBar{width:calc(100% - var(--purchase-sidebar-width));max-width:calc(100% - var(--purchase-sidebar-width))}
+body.purchase-sidebar-open #scrollNavigator{right:calc(var(--purchase-sidebar-width) + 10px)}
+body.purchase-sidebar-open #navDock{right:calc(var(--purchase-sidebar-width) + 12px)}
+.drawer-head-actions{display:flex;align-items:center;gap:6px;margin-left:auto}
+#purchaseSidebarToggle{white-space:nowrap}
+body.purchase-sidebar-open #purchaseSidebarToggle{background:var(--accent);color:var(--ui-accent-text,var(--headerText));border-color:var(--accent)}
+@media(max-width:760px){:root{--purchase-sidebar-width:clamp(300px,48vw,380px)}body.purchase-sidebar-open .top-sheet,body.purchase-sidebar-open .content,body.purchase-sidebar-open #shopBar{width:calc(100% - var(--purchase-sidebar-width));max-width:calc(100% - var(--purchase-sidebar-width))}}
+
+/* Evolving item identity always wins over attunement/theme text treatments. */
+body .item-cell.evolving .item-name,
+body .item-cell.evolving .item-name.attune,
+body .mobile-item-row.evolving .mobile-item-name,
+body .mobile-item-row.evolving .mobile-item-name.attune,
+body .search-table tr.evolving .item-anchor,
+body .search-table tr.evolving .item-anchor.attune{color:var(--evolve)!important;-webkit-text-fill-color:var(--evolve)!important;background:none!important;background-image:none!important;text-shadow:none!important}
+body .item-cell.evolving .item-name>span:first-child,
+body .item-cell.evolving .item-name.attune>span:first-child,
+body .mobile-item-row.evolving .mobile-item-name>span:first-child,
+body .mobile-item-row.evolving .mobile-item-name.attune>span:first-child,
+body .search-table tr.evolving .item-anchor>span:first-child,
+body .search-table tr.evolving .item-anchor.attune>span:first-child{color:var(--evolve)!important;-webkit-text-fill-color:var(--evolve)!important;background:none!important;background-image:none!important;background-clip:initial!important;-webkit-background-clip:initial!important;text-shadow:none!important}
+
+/* Whole-app import/export center. */
+.transfer-modal-card{width:min(720px,calc(100vw - 18px))!important}
+.transfer-body{padding:12px;display:grid;gap:12px}
+.transfer-intro{color:var(--muted);font-size:calc(10px * var(--text-scale));line-height:1.45}
+.transfer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.transfer-option{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:8px;padding:9px;border:1px solid var(--grid);border-radius:9px;background:color-mix(in srgb,var(--surface) 92%,var(--page));cursor:pointer}
+.transfer-option input{margin-top:2px;accent-color:var(--accent)}
+.transfer-option strong{display:block;font-size:calc(10.5px * var(--text-scale));color:var(--text)}
+.transfer-option small{display:block;margin-top:2px;color:var(--muted);font-size:calc(8.8px * var(--text-scale));line-height:1.35}
+.transfer-tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:2px}
+.transfer-tools .spacer{flex:1}
+.transfer-summary{min-height:22px;padding:6px 8px;border-radius:7px;background:color-mix(in srgb,var(--alt) 86%,var(--surface));border:1px solid var(--grid);color:var(--muted);font-size:calc(9px * var(--text-scale))}
+@media(max-width:640px){.transfer-grid{grid-template-columns:1fr}}
+@media(max-width:1180px),(max-height:700px){#dataTransferBtn{display:none!important}}
+
+/* Reset dialog. */
+.reset-options{padding:12px;display:grid;gap:10px}
+.reset-options p{margin:0;color:var(--muted);font-size:calc(10px * var(--text-scale));line-height:1.45}
+.reset-theme-choice{display:flex;align-items:flex-start;gap:8px;padding:10px;border:1px solid var(--grid);border-radius:9px;background:var(--surface)}
+.reset-theme-choice input{margin-top:2px;accent-color:var(--accent)}
+.reset-theme-choice strong{display:block}.reset-theme-choice small{display:block;color:var(--muted);margin-top:2px}
 </style>
 </head>
 <body>
@@ -747,10 +853,22 @@ body:not(.bottom-scroll-active) #scrollNavigator{display:none!important}
     <button class="sheet-tab active" data-view="magic">Magic Item Table</button>
     <button class="sheet-tab" data-view="reward">Reward Item Table</button>
     <button class="sheet-tab" data-view="search">Search</button>
-    <button class="mini-btn mode-btn" id="simpleModeBtn" type="button" title="Hide everything except the tabs and table">Simple Mode</button>
-    <button class="mini-btn mode-btn" id="mobileModeBtn" type="button" title="Use a touch-friendly vertical table layout">Mobile Mode</button>
+    <div class="modes-control">
+      <button class="mini-btn mode-btn" id="modesBtn" type="button" aria-expanded="false" aria-controls="modesMenu" title="Simple, Mobile, Spreadsheet, and Artificer modes">Modes ▾</button>
+      <div class="modes-menu hidden" id="modesMenu" role="dialog" aria-label="Display and character modes">
+        <div class="modes-menu-head"><strong>Modes</strong><small>Choose optional table modes</small></div>
+        <button class="mini-btn mode-menu-option" id="simpleModeBtn" type="button" title="Hide everything except the tabs and table">Simple Mode</button>
+        <button class="mini-btn mode-menu-option" id="mobileModeBtn" type="button" title="Use a touch-friendly vertical table layout">Mobile Mode</button>
+        <button class="mini-btn mode-menu-option" id="spreadsheetModeBtn" type="button" title="Performance-optimized Google Sheet-style layout">Spreadsheet Mode</button>
+        <button class="mini-btn mode-menu-option artificer-mode-option" id="artificerModeBtn" type="button" title="Highlight magic items available through Artificer Magical Item Plans">Artificer Mode</button>
+        <div class="artificer-mode-settings" id="artificerModeSettings">
+          <label>Artificer Level<input id="artificerLevel" type="number" min="1" max="20" step="1" inputmode="numeric" placeholder="2–20"></label>
+          <div class="artificer-capacity" id="artificerCapacityText">Enter your Artificer level.</div>
+        </div>
+      </div>
+    </div>
     <button class="mini-btn mode-btn" id="newPlayerModeBtn" type="button" title="Toggle New Player recommendations">New Player Mode</button>
-    <button class="mini-btn mode-btn" id="spreadsheetModeBtn" type="button" title="Performance-optimized Google Sheet-style layout">Spreadsheet Mode</button>
+    <button class="mini-btn mode-btn" id="filtersBtn" type="button" aria-expanded="false" aria-controls="filterPanel">Search &amp; Filter</button>
     <div class="appearance-controls" aria-label="Text appearance">
       <button class="mini-btn mode-btn text-appearance-btn" id="textAppearanceBtn" type="button" aria-expanded="false" aria-controls="textAppearanceMenu" title="Text, font, and interface scale">Display <span id="textAppearanceLabel">130%</span></button>
       <div class="text-appearance-menu hidden" id="textAppearanceMenu" role="dialog" aria-label="Text appearance controls">
@@ -785,7 +903,7 @@ body:not(.bottom-scroll-active) #scrollNavigator{display:none!important}
     <div class="nav-spacer"></div>
     <span class="status-pill snapshot" id="dataStatus" title="Checks the Google Sheet every 15 seconds while this page is open"><span class="status-dot"></span><span>Snapshot</span></span>
     <button class="mini-btn" id="refreshBtn">Refresh Now</button>
-    <button class="mini-btn hidden" id="filtersBtn" aria-hidden="true" tabindex="-1">Filters</button>
+
     <button class="mini-btn" id="purchaseBtn">Purchase List <span id="cartCount">0</span></button>
     <button class="mini-btn" id="rewardBuilderBtn">Reward Builder</button>
     <button class="mini-btn" id="compareBtn">Compare <span id="compareCount">0</span></button>
@@ -797,6 +915,8 @@ body:not(.bottom-scroll-active) #scrollNavigator{display:none!important}
     <div class="toolbar-group"><label>Display <select id="displayMode"><option value="none">Show Everything / No Highlight</option><option value="highlight">Highlight Matches</option><option value="only">Show Matches Only</option></select></label></div>
     <div class="toolbar-group"><label>Match <select id="logicMode"><option value="and">AND</option><option value="or">OR</option></select></label></div>
     <div class="toolbar-group"><label><input type="checkbox" id="compareModeToggle"> Compare Mode</label></div>
+    <div class="toolbar-group"><label>Evolving Items <select id="evolutionMode" title="Collapsed shows only the least-expensive stage of each evolution chain"><option value="collapsed">Collapsed — cheapest only</option><option value="all">Show all stages</option></select></label></div>
+    <div class="toolbar-group"><span id="evolutionModeNote" class="evolution-mode-note">Click an evolving item to reveal its upgrades.</span></div>
     <div class="toolbar-group"><span id="activeFilterText" style="font-size:10px;color:#c6ccd1">No filters active</span></div>
   </div>
   <div class="npbar hidden" id="npbar">
@@ -819,7 +939,7 @@ body:not(.bottom-scroll-active) #scrollNavigator{display:none!important}
 
 <div id="filterPanel" class="filter-panel filter-dock" aria-hidden="false">
  <div class="filter-dialog">
-  <div class="dialog-title filter-dock-title"><div><span class="filter-eyebrow">FILTERS</span><h2>Search & Filter</h2></div><button class="xbtn hidden" id="closeFilters" aria-label="Close">×</button></div>
+  <div class="dialog-title filter-dock-title"><div><span class="filter-eyebrow">FILTERS</span><h2>Search & Filter</h2></div><button class="xbtn" id="closeFilters" aria-label="Close">×</button></div>
   <div class="filter-body">
    <div class="filter-top">
     <label>Search all fields<input type="search" id="filterSearch" placeholder="Name, source, spell, bonus…"></label>
@@ -827,10 +947,11 @@ body:not(.bottom-scroll-active) #scrollNavigator{display:none!important}
     <label>Attunement<select id="attuneFilter"><option value="">Either</option><option value="Yes">Requires Attunement</option><option value="No">No Attunement</option></select></label>
     <label>TP Minimum<select id="tpMin"><option value="">Any</option></select></label>
     <label>TP Maximum<select id="tpMax"><option value="">Any</option></select></label>
+    <label id="artificerFilterWrap" class="artificer-filter-wrap hidden">Artificer Plans<select id="artificerFilter"><option value="highlight">Highlight craftable</option><option value="only">Show craftable only</option><option value="off">Off</option></select></label>
    </div>
    <div class="multi-grid" id="multiGrid"></div>
   </div>
-  <div class="dialog-actions filter-dock-actions"><span class="filter-help">Select one or more values in any category. Open a category to choose multiple values.</span><button class="mini-btn" id="clearFiltersBtn">Clear Filters</button><button class="mini-btn primary hidden" id="applyFiltersBtn">Apply / Close</button></div>
+  <div class="dialog-actions filter-dock-actions"><span class="filter-help">Select one or more values in any category. Open a category to choose multiple values.</span><button class="mini-btn" id="clearFiltersBtn">Clear Filters</button><button class="mini-btn primary" id="applyFiltersBtn">Close</button></div>
  </div>
 </div>
 
@@ -843,7 +964,7 @@ body:not(.bottom-scroll-active) #scrollNavigator{display:none!important}
 
 <div id="drawerBackdrop" class="drawer-backdrop hidden"></div>
 <aside id="purchaseDrawer" class="drawer purchase-drawer hidden" aria-hidden="true">
- <div class="drawer-head"><div><h2>Purchase List</h2><small>Plan purchases, payment, and commands</small></div><button class="xbtn" data-close-drawer>×</button></div>
+ <div class="drawer-head"><div><h2 id="purchaseDrawerTitle">Purchase List - 0 Items</h2><small>Plan purchases, payment, and commands</small></div><button class="xbtn" data-close-drawer>×</button></div>
  <div class="drawer-body purchase-body">
   <section class="purchase-section purchase-identity">
    <div class="purchase-section-head"><div><strong>Character</strong><small>Used in generated commands</small></div></div>
@@ -869,7 +990,7 @@ body:not(.bottom-scroll-active) #scrollNavigator{display:none!important}
    <div id="cartList" class="cart-list"></div>
   </section>
   <section class="purchase-section purchase-command-section">
-   <div class="purchase-section-head"><div><strong>Commands</strong><small>Includes $attune for attunement items</small></div><button class="mini-btn primary" id="copyAllCommands">Copy All</button></div>
+   <div class="purchase-section-head"><div><strong>Commands</strong><small id="purchaseCommandNote">Includes $attune for attunement items</small></div><button class="mini-btn primary" id="copyAllCommands">Copy All</button></div>
    <div class="copybox" id="allCommands"></div>
   </section>
  </div>
@@ -962,7 +1083,7 @@ const COSTS={1:[2,4,6,8],2:[10,12,14],3:[16,18,20],4:[22,24,26,28,30]};
 const LEVELS={1:1,2:5,3:11,4:17};
 const FIXED_MIT_COLORS={attune:'#ff9d00','tier1-start':'#d4843d','tier1-end':'#ffde90','tier2-start':'#369876','tier2-end':'#71ff9e','tier3-start':'#4cadd0','tier3-end':'#b2f9ff','tier4-start':'#9e6bff','tier4-end':'#9fc1ff'};
 const THEMES={
- default:{page:'#10151a',surface:'#171e24',alt:'#1b232a',text:'#eef2f5',muted:'#9ca8b3',header:'#0d1216',headerText:'#ffffff',grid:'#2b353e',accent:'#d19a49',selected:'#26343f',attune:'#f2a23a',nonattune:'#f4f6f8',newplayer:'#67d8a0',classrec:'#51b8e8',success:'#71cf8a',warning:'#f06d6d',compare:'#b78ce4',tri1:'#10151a',tri2:'#d19a49',tri3:'#77838e','tier1-start':'#d4843d','tier1-end':'#ffde90','tier2-start':'#369876','tier2-end':'#71ff9e','tier3-start':'#4cadd0','tier3-end':'#b2f9ff','tier4-start':'#9e6bff','tier4-end':'#9fc1ff'},
+ default:{page:'#10151a',surface:'#171e24',alt:'#1b232a',text:'#eef2f5',muted:'#9ca8b3',header:'#0d1216',headerText:'#ffffff',grid:'#2b353e',accent:'#d19a49',selected:'#26343f',attune:'#f2a23a',nonattune:'#f4f6f8',newplayer:'#67d8a0',classrec:'#51b8e8',success:'#71cf8a',warning:'#f06d6d',compare:'#b78ce4',evolve:'#00d97e',tri1:'#10151a',tri2:'#d19a49',tri3:'#77838e','tier1-start':'#d4843d','tier1-end':'#ffde90','tier2-start':'#369876','tier2-end':'#71ff9e','tier3-start':'#4cadd0','tier3-end':'#b2f9ff','tier4-start':'#9e6bff','tier4-end':'#9fc1ff'},
  white:{page:'#dfe4e8',surface:'#edf0f2',alt:'#d4dbe0',text:'#111820',muted:'#4d5962',header:'#c8d0d6',headerText:'#111820',grid:'#818d96',accent:'#50616d',selected:'#c0cbd2',attune:'#a55212',nonattune:'#111820',newplayer:'#16724a',classrec:'#126894',success:'#236b3e',warning:'#a52d29',compare:'#68458e',tri1:'#45525c',tri2:'#85939d',tri3:'#c9d1d6','tier1-start':'#45525c','tier1-end':'#8e9ba4','tier2-start':'#667681','tier2-end':'#aab5bc','tier3-start':'#7b8992','tier3-end':'#bac3c9','tier4-start':'#8e9aa2','tier4-end':'#cbd2d7'},
  black:{page:'#000000',surface:'#080808',alt:'#111111',text:'#ffffff',muted:'#b8b8b8',header:'#000000',headerText:'#ffffff',grid:'#3a3a3a',accent:'#9b9b9b',selected:'#262626',attune:'#ff9d00',nonattune:'#ffffff',newplayer:'#64e99a',classrec:'#56c7ff',success:'#72db8a',warning:'#ff7070',compare:'#c894ff',tri1:'#000000',tri2:'#555555',tri3:'#bdbdbd','tier1-start':'#111111','tier1-end':'#5a5a5a','tier2-start':'#242424','tier2-end':'#777777','tier3-start':'#3b3b3b','tier3-end':'#a0a0a0','tier4-start':'#5a5a5a','tier4-end':'#d0d0d0'},
  ddb:{page:'#0e0e0f',surface:'#1c1c1e',alt:'#252526',text:'#f2f2f2',muted:'#a9aaad',header:'#080809',headerText:'#ffffff',grid:'#4b4d50',accent:'#c53030',selected:'#4a2023',attune:'#e04747',nonattune:'#eeeeef',newplayer:'#78d69a',classrec:'#92979d',success:'#70ce88',warning:'#e34b4b',compare:'#b17b8f',tri1:'#080809',tri2:'#c53030',tri3:'#7f8286','tier1-start':'#111214','tier1-end':'#62656a','tier2-start':'#6f151a','tier2-end':'#d33b42','tier3-start':'#44474b','tier3-end':'#a1a5aa','tier4-start':'#8d2228','tier4-end':'#d17a7e'},
@@ -1062,6 +1183,8 @@ function refinePresetTheme(name,t){
  return o
 }
 for(const [name,t] of Object.entries(THEMES))THEMES[name]=refinePresetTheme(name,t);
+/* Default evolving items use a vivid emerald; individual custom/preset themes may still override it. */
+if(THEMES.default)THEMES.default.evolve='#00e889';
 /* Team-specific accessibility override: Knicks attunement stays unmistakably Knicks orange. */
 if(THEMES.knicks){THEMES.knicks.attune='#f58426';THEMES.knicks.alt='#1e3b55';THEMES.knicks.selected='#193a55';}
 for(const t of Object.values(THEMES))if(!t.evolve)t.evolve=t.success||'#55c77b';
@@ -1088,31 +1211,31 @@ const isYes=v=>/^(yes|y|true)$/i.test(norm(v));
 let data=SNAPSHOT.items.map((x,i)=>({...x,_id:i}));
 let dataMode='snapshot';
 let liveRefreshInFlight=false,lastLiveSignature='',lastSuccessfulLiveAt=null,lastChangeDetectedAt=null;
-const STATE_VERSION=10;
-const state={view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],theme:'default',customTheme:null,customBaseTheme:'default',preserveMitColors:true,simpleMode:false,mobileMode:false,spreadsheetMode:false,navStyle:'hidden',fontKey:'inter',textScale:1.3};
+const STATE_VERSION=11;
+const state={view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],theme:'default',customTheme:null,customBaseTheme:'default',preserveMitColors:true,simpleMode:false,mobileMode:false,spreadsheetMode:false,navStyle:'hidden',fontKey:'inter',textScale:1.3,evolutionMode:'collapsed',expandedEvolutionChains:[]};
 const saved=(()=>{try{return JSON.parse(localStorage.getItem('mitGuiState')||'{}')}catch{return {}}})();
 const savedIsCurrent=Number(saved.stateVersion||0)>=7;
-Object.assign(state,{newPlayer:savedIsCurrent?!!saved.newPlayer:false,npMode:savedIsCurrent?(saved.npMode||'highlight'):'highlight',npShowHighTiers:savedIsCurrent?!!saved.npShowHighTiers:false,classes:Array.isArray(saved.classes)?saved.classes:[],compareMode:!!saved.compareMode,compare:Array.isArray(saved.compare)?saved.compare.slice(0,4):[],favorites:Array.isArray(saved.favorites)?saved.favorites:[],cart:Array.isArray(saved.cart)?saved.cart:[],theme:(saved.theme==='parchment'?'default':(saved.theme||'default')),customTheme:saved.customTheme||null,customBaseTheme:(typeof saved.customBaseTheme==='string'&&THEMES[saved.customBaseTheme]?saved.customBaseTheme:'default'),preserveMitColors:savedIsCurrent?saved.preserveMitColors!==false:true,simpleMode:!!saved.simpleMode,mobileMode:!!saved.mobileMode,spreadsheetMode:!!saved.spreadsheetMode,navStyle:(['hidden','buttons','scrollbar'].includes(saved.navStyle)?saved.navStyle:'hidden'),fontKey:['inter','atkinson','georgia','trebuchet','mono'].includes(saved.fontKey)?saved.fontKey:'inter',textScale:Math.max(.8,Math.min(1.8,Number((Number(saved.typographyVersion||0)<2&&Math.abs(Number(saved.textScale||1)-1)<.001)?1.3:(saved.textScale||1.3)))) });
+Object.assign(state,{newPlayer:savedIsCurrent?!!saved.newPlayer:false,npMode:savedIsCurrent?(saved.npMode||'highlight'):'highlight',npShowHighTiers:savedIsCurrent?!!saved.npShowHighTiers:false,classes:Array.isArray(saved.classes)?saved.classes:[],compareMode:!!saved.compareMode,compare:Array.isArray(saved.compare)?saved.compare.slice(0,4):[],favorites:Array.isArray(saved.favorites)?saved.favorites:[],cart:Array.isArray(saved.cart)?saved.cart:[],theme:(saved.theme==='parchment'?'default':(saved.theme||'default')),customTheme:saved.customTheme||null,customBaseTheme:(typeof saved.customBaseTheme==='string'&&THEMES[saved.customBaseTheme]?saved.customBaseTheme:'default'),preserveMitColors:savedIsCurrent?saved.preserveMitColors!==false:true,simpleMode:!!saved.simpleMode,mobileMode:!!saved.mobileMode,spreadsheetMode:!!saved.spreadsheetMode,navStyle:(['hidden','buttons','scrollbar'].includes(saved.navStyle)?saved.navStyle:'hidden'),fontKey:['inter','atkinson','georgia','trebuchet','mono'].includes(saved.fontKey)?saved.fontKey:'inter',textScale:Math.max(.8,Math.min(1.8,Number((Number(saved.typographyVersion||0)<2&&Math.abs(Number(saved.textScale||1)-1)<.001)?1.3:(saved.textScale||1.3)))),evolutionMode:saved.evolutionMode==='all'?'all':'collapsed',expandedEvolutionChains:Array.isArray(saved.expandedEvolutionChains)?saved.expandedEvolutionChains:[] });
 /* special themes migrated to their intended palette defaults */
 if(!savedIsCurrent&&(/^pride/i.test(state.theme)||state.theme==='bear'))state.preserveMitColors=false;
 if(state.theme!=='custom'&&!THEMES[state.theme]){state.theme='default';state.customTheme=null;state.preserveMitColors=true;}
-const purchaseState={character:saved.character||'',command:saved.command||'craft',tp:saved.tp||[0,0,0,0],gold:Number(saved.gold||0),methods:(saved.purchaseMethods&&typeof saved.purchaseMethods==='object')?saved.purchaseMethods:{},optGoal:['balanced','preserveTp','preserveGp'].includes(saved.purchaseOptimizeGoal)?saved.purchaseOptimizeGoal:'balanced',shopMode:!!saved.shopMode,shopCurrency:['auto','tp','gp'].includes(saved.shopCurrency)?saved.shopCurrency:'auto',attuneCap:Math.max(0,Number(saved.attuneCap??3))};
+const purchaseState={character:saved.character||'',command:saved.command||'craft',tp:saved.tp||[0,0,0,0],gold:Number(saved.gold||0),methods:(saved.purchaseMethods&&typeof saved.purchaseMethods==='object')?saved.purchaseMethods:{},optGoal:['balanced','preserveTp','preserveGp'].includes(saved.purchaseOptimizeGoal)?saved.purchaseOptimizeGoal:'balanced',shopMode:!!saved.shopMode,shopCurrency:['auto','tp','gp'].includes(saved.shopCurrency)?saved.shopCurrency:'auto',attuneCap:Math.max(0,Number(saved.attuneCap??3)),upgradeOwned:(saved.purchaseUpgradeOwned&&typeof saved.purchaseUpgradeOwned==='object')?saved.purchaseUpgradeOwned:{}};
 const rewardState={mention:saved.rewardMention||'',tier:Number(saved.rewardTier||1),majorCount:Number(saved.majorCount||0),minorCount:Number(saved.minorCount||0),mncCount:Number(saved.mncCount||0),major:Array.isArray(saved.rewardMajor)?saved.rewardMajor:[],minor:Array.isArray(saved.rewardMinor)?saved.rewardMinor:[],mnc:Array.isArray(saved.rewardMnc)?saved.rewardMnc:[],customNames:(saved.rewardCustomNames&&typeof saved.rewardCustomNames==='object')?saved.rewardCustomNames:{},modFriend:!!saved.rewardModFriend};
-function persist(){try{localStorage.setItem('mitGuiState',JSON.stringify({stateVersion:STATE_VERSION,typographyVersion:2,newPlayer:state.newPlayer,npMode:state.npMode,npShowHighTiers:state.npShowHighTiers,classes:state.classes,compareMode:state.compareMode,compare:state.compare,favorites:state.favorites,cart:state.cart,theme:state.theme,customTheme:state.customTheme,customBaseTheme:state.customBaseTheme,preserveMitColors:state.preserveMitColors,simpleMode:state.simpleMode,mobileMode:state.mobileMode,spreadsheetMode:state.spreadsheetMode,navStyle:state.navStyle,fontKey:state.fontKey,textScale:state.textScale,character:purchaseState.character,command:purchaseState.command,tp:purchaseState.tp,gold:purchaseState.gold,purchaseMethods:purchaseState.methods,purchaseOptimizeGoal:purchaseState.optGoal,shopMode:purchaseState.shopMode,shopCurrency:purchaseState.shopCurrency,attuneCap:purchaseState.attuneCap,rewardMention:rewardState.mention,rewardTier:rewardState.tier,majorCount:rewardState.majorCount,minorCount:rewardState.minorCount,mncCount:rewardState.mncCount,rewardMajor:rewardState.major,rewardMinor:rewardState.minor,rewardMnc:rewardState.mnc,rewardCustomNames:rewardState.customNames,rewardModFriend:rewardState.modFriend}))}catch(e){/* Storage may be unavailable in local previews/private contexts. */}}
+function persist(){try{localStorage.setItem('mitGuiState',JSON.stringify({stateVersion:STATE_VERSION,typographyVersion:2,newPlayer:state.newPlayer,npMode:state.npMode,npShowHighTiers:state.npShowHighTiers,classes:state.classes,compareMode:state.compareMode,compare:state.compare,favorites:state.favorites,cart:state.cart,theme:state.theme,customTheme:state.customTheme,customBaseTheme:state.customBaseTheme,preserveMitColors:state.preserveMitColors,simpleMode:state.simpleMode,mobileMode:state.mobileMode,spreadsheetMode:state.spreadsheetMode,navStyle:state.navStyle,fontKey:state.fontKey,textScale:state.textScale,evolutionMode:state.evolutionMode,expandedEvolutionChains:state.expandedEvolutionChains,character:purchaseState.character,command:purchaseState.command,tp:purchaseState.tp,gold:purchaseState.gold,purchaseMethods:purchaseState.methods,purchaseOptimizeGoal:purchaseState.optGoal,shopMode:purchaseState.shopMode,shopCurrency:purchaseState.shopCurrency,attuneCap:purchaseState.attuneCap,purchaseUpgradeOwned:purchaseState.upgradeOwned,rewardMention:rewardState.mention,rewardTier:rewardState.tier,majorCount:rewardState.majorCount,minorCount:rewardState.minorCount,mncCount:rewardState.mncCount,rewardMajor:rewardState.major,rewardMinor:rewardState.minor,rewardMnc:rewardState.mnc,rewardCustomNames:rewardState.customNames,rewardModFriend:rewardState.modFriend}))}catch(e){/* Storage may be unavailable in local previews/private contexts. */}}
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.add('hidden'),1800)}
 const FONT_OPTIONS={inter:'Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif',atkinson:'"Atkinson Hyperlegible","Segoe UI",Arial,sans-serif',georgia:'Georgia,"Times New Roman",serif',trebuchet:'"Trebuchet MS",Verdana,Arial,sans-serif',mono:'"Cascadia Mono","SFMono-Regular",Consolas,"Liberation Mono",monospace'};
 function applyTypography(){document.documentElement.style.setProperty('--font',FONT_OPTIONS[state.fontKey]||FONT_OPTIONS.inter);document.documentElement.style.setProperty('--text-scale',String(state.textScale));const f=$('#fontChoice'),v=$('#textSizeReset'),l=$('#textAppearanceLabel');if(f)f.value=state.fontKey;const pct=`${Math.round(state.textScale*100)}%`;if(v)v.textContent=pct;if(l)l.textContent=pct}
-function setTextScale(v){state.textScale=Math.max(.8,Math.min(1.8,Math.round(v*20)/20));applyTypography();persist();syncStickyTierHeaders(true);syncMobileStickyOffset()}
-function setFontChoice(v){state.fontKey=FONT_OPTIONS[v]?v:'inter';applyTypography();persist()}
+function setTextScale(v){state.textScale=Math.max(.8,Math.min(1.8,Math.round(v*20)/20));applyTypography();persist();syncStickyTierHeaders(true);syncMobileStickyOffset();scheduleTierRowHeightSync()}
+function setFontChoice(v){state.fontKey=FONT_OPTIONS[v]?v:'inter';applyTypography();persist();scheduleTierRowHeightSync()}
 
 function hideErrataTooltip(){const tip=$('#errataTooltip');if(tip){tip.classList.add('hidden');tip.classList.remove('interactive')}}
 function placeErrataTooltip(target){const tip=$('#errataTooltip');if(!tip||!target)return;const r=target.getBoundingClientRect(),pad=10;tip.style.left='0px';tip.style.top='0px';tip.classList.remove('hidden');const tr=tip.getBoundingClientRect();let left=Math.min(Math.max(pad,r.left),window.innerWidth-tr.width-pad);let top=r.bottom+7;if(top+tr.height>window.innerHeight-pad)top=Math.max(pad,r.top-tr.height-7);tip.style.left=`${left}px`;tip.style.top=`${top}px`}
-function showItemInfoTooltip(target){const err=norm(target?.dataset?.errata),next=norm(target?.dataset?.evolution);if(!err&&!next)return;const tip=$('#errataTooltip');if(!tip)return;let h='';if(err)h+=`<div class="item-info-section"><div class="item-info-label">Errata</div><div>${esc(err)}</div></div>`;if(next)h+=`<div class="item-info-section"><div class="item-info-label">Evolving Item</div><div class="item-info-evolution">Next: ${esc(next)}</div><button type="button" class="evolution-jump-btn" data-jump-evolution="${esc(next)}">Jump to ${esc(next)} →</button></div>`;tip.innerHTML=h;tip.classList.toggle('interactive',!!next);placeErrataTooltip(target)}
-function jumpToEvolution(name){const x=getByName(name);if(!x){toast(`Next evolution not found: ${name}`);return}if(state.display==='only')state.display='highlight';if(state.newPlayer&&state.npMode==='only')state.npMode='highlight';const view=x['Consumable/Non Consumable']==='Consumable'?'reward':'magic';setView(view);requestAnimationFrame(()=>requestAnimationFrame(()=>{const el=document.querySelector(`${activeViewSelector()} [data-item="${CSS.escape(name)}"]`);if(!el){toast(`Next evolution is hidden by the current view`);return}el.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});el.classList.add('evolution-jump');setTimeout(()=>el.classList.remove('evolution-jump'),1700)}));hideErrataTooltip()}
+function showItemInfoTooltip(target){const itemName=target?.closest?.('[data-item]')?.dataset?.item||'',meta=itemName?evolutionMeta(itemName):null;if(meta?.isBase&&!evolutionChainExpanded(meta))return;const err=norm(target?.dataset?.errata),next=norm(target?.dataset?.evolution),prev=norm(target?.dataset?.evolutionPrev);if(!err&&!next&&!prev)return;const tip=$('#errataTooltip');if(!tip)return;let h='';if(err)h+=`<div class="item-info-section"><div class="item-info-label">Errata</div><div>${esc(err)}</div></div>`;if(prev||next){h+=`<div class="item-info-section"><div class="item-info-label">Evolution Chain</div>`;if(prev)h+=`<div class="item-info-evolution requires">Requires previous version: <strong>${esc(prev)}</strong></div>`;if(next)h+=`<div class="item-info-evolution">Next: ${esc(next)}</div><button type="button" class="evolution-jump-btn" data-jump-evolution="${esc(next)}">Jump to ${esc(next)} →</button>`;h+='</div>'}tip.innerHTML=h;tip.classList.toggle('interactive',!!next);placeErrataTooltip(target)}
+function jumpToEvolution(name){const x=getByName(name);if(!x){toast(`Next evolution not found: ${name}`);return}const m=evolutionMeta(name);if(m&&state.evolutionMode==='collapsed'&&!state.expandedEvolutionChains.includes(m.chainId))state.expandedEvolutionChains=[...new Set([...state.expandedEvolutionChains,m.chainId])];persist();if(state.display==='only')state.display='highlight';if(state.newPlayer&&state.npMode==='only')state.npMode='highlight';const view=x['Consumable/Non Consumable']==='Consumable'?'reward':'magic';setView(view);requestAnimationFrame(()=>requestAnimationFrame(()=>{const el=document.querySelector(`${activeViewSelector()} [data-item="${CSS.escape(name)}"]`);if(!el){toast(`Next evolution is hidden by the current view`);return}el.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});el.classList.add('evolution-jump');setTimeout(()=>el.classList.remove('evolution-jump'),1700)}));hideErrataTooltip()}
 let itemInfoHideTimer=null;const cancelItemInfoHide=()=>{if(itemInfoHideTimer)clearTimeout(itemInfoHideTimer)};const scheduleItemInfoHide=()=>{cancelItemInfoHide();itemInfoHideTimer=setTimeout(hideErrataTooltip,120)};
-document.addEventListener('mouseover',e=>{const t=e.target.closest?.('[data-errata],[data-evolution]');if(t&&(norm(t.dataset.errata)||norm(t.dataset.evolution))){cancelItemInfoHide();showItemInfoTooltip(t)}});
-document.addEventListener('mouseout',e=>{const t=e.target.closest?.('[data-errata],[data-evolution]');if(t){const tip=$('#errataTooltip');if(e.relatedTarget&&tip?.contains(e.relatedTarget))return;if(!t.contains(e.relatedTarget))scheduleItemInfoHide()}});
-document.addEventListener('focusin',e=>{const t=e.target.closest?.('[data-errata],[data-evolution]');if(t&&(norm(t.dataset.errata)||norm(t.dataset.evolution)))showItemInfoTooltip(t)});
+document.addEventListener('mouseover',e=>{const t=e.target.closest?.('[data-errata],[data-evolution],[data-evolution-prev]');if(t&&(norm(t.dataset.errata)||norm(t.dataset.evolution)||norm(t.dataset.evolutionPrev))){cancelItemInfoHide();showItemInfoTooltip(t)}});
+document.addEventListener('mouseout',e=>{const t=e.target.closest?.('[data-errata],[data-evolution],[data-evolution-prev]');if(t){const tip=$('#errataTooltip');if(e.relatedTarget&&tip?.contains(e.relatedTarget))return;if(!t.contains(e.relatedTarget))scheduleItemInfoHide()}});
+document.addEventListener('focusin',e=>{const t=e.target.closest?.('[data-errata],[data-evolution],[data-evolution-prev]');if(t&&(norm(t.dataset.errata)||norm(t.dataset.evolution)||norm(t.dataset.evolutionPrev)))showItemInfoTooltip(t)});
 document.addEventListener('focusout',e=>{const t=e.target.closest?.('[data-errata],[data-evolution]');if(t)scheduleItemInfoHide()});
 document.addEventListener('click',e=>{const b=e.target.closest?.('[data-jump-evolution]');if(b){e.preventDefault();e.stopPropagation();jumpToEvolution(b.dataset.jumpEvolution)}});
 $('#errataTooltip')?.addEventListener('mouseenter',cancelItemInfoHide);$('#errataTooltip')?.addEventListener('mouseleave',scheduleItemInfoHide);
@@ -1129,31 +1252,85 @@ function activeConditions(x){const cond=[];const q=norm(state.q).toLowerCase();i
 function filterMatch(x){const c=activeConditions(x);if(!c.length)return true;return state.logic==='or'?c.some(Boolean):c.every(Boolean)}
 function isRecommended(x){const friendly=isYes(x['New Player Friendly']);const recs=splitTags(x['Recommended Classes']).map(s=>s.toLowerCase());const classMatch=state.classes.some(c=>recs.includes(c.toLowerCase()));return {friendly,classMatch,any:friendly||classMatch}}
 function npVisible(x){if(!state.newPlayer||state.npMode!=='only')return true;return isRecommended(x).any}
-function cellClasses(x){const a=['item-cell'];const fm=filterMatch(x);if(state.display==='highlight'){a.push(fm?'matching':'no-match')}if(isYes(x['Evolving Item']))a.push('evolving');const rec=isRecommended(x);if(state.newPlayer&&state.npMode==='highlight'){if(rec.friendly)a.push('np-friendly');if(rec.classMatch)a.push('class-rec')}return a.join(' ')}
-function itemVisibleBrowse(x){if(!npVisible(x))return false;if(state.display==='only'&&!filterMatch(x))return false;return true}
+function cellClasses(x){const a=['item-cell'];const fm=filterMatch(x);if(state.display==='highlight'){a.push(fm?'matching':'no-match')}if(evolutionMeta(x.Item))a.push('evolving');const rec=isRecommended(x);if(state.newPlayer&&state.npMode==='highlight'){if(rec.friendly)a.push('np-friendly');if(rec.classMatch)a.push('class-rec')}return a.join(' ')}
+function itemVisibleBrowse(x){if(!npVisible(x)||!evolutionVisible(x))return false;if(state.display==='only'&&!filterMatch(x))return false;return true}
 function getByName(name){return data.find(x=>x.Item===name)}
+let evolutionCacheData=null,evolutionCache=null;
+function compareEvolutionCost(a,b){
+ const at=num(a?.['Cost (TP)']),bt=num(b?.['Cost (TP)']);if(at!==bt){if(at===null)return 1;if(bt===null)return -1;return at-bt}
+ const ag=num(a?.['Cost (Gold)']),bg=num(b?.['Cost (Gold)']);if(ag!==bg){if(ag===null)return 1;if(bg===null)return -1;return ag-bg}
+ const ar=Number(a?.Tier)||99,br=Number(b?.Tier)||99;if(ar!==br)return ar-br;
+ return norm(a?.Item).localeCompare(norm(b?.Item),undefined,{numeric:true,sensitivity:'base'})
+}
+function getEvolutionIndex(){
+ if(evolutionCacheData===data&&evolutionCache)return evolutionCache;
+ const byName=new Map(data.map(x=>[x.Item,x])),child=new Map(),parent=new Map(),adj=new Map(),involved=new Set();
+ const link=(a,b)=>{if(!adj.has(a))adj.set(a,new Set());if(!adj.has(b))adj.set(b,new Set());adj.get(a).add(b);adj.get(b).add(a);involved.add(a);involved.add(b)};
+ for(const x of data){const next=norm(x['Next Evolution']);if(!isYes(x['Evolving Item'])||!next||!byName.has(next)||next===x.Item)continue;child.set(x.Item,next);if(!parent.has(next))parent.set(next,x.Item);link(x.Item,next)}
+ const byItem=new Map(),chains=new Map(),visited=new Set();
+ for(const start of involved){if(visited.has(start))continue;const stack=[start],names=[];visited.add(start);while(stack.length){const n=stack.pop();names.push(n);for(const v of adj.get(n)||[]){if(!visited.has(v)){visited.add(v);stack.push(v)}}}
+   const items=names.map(n=>byName.get(n)).filter(Boolean);if(items.length<2)continue;items.sort(compareEvolutionCost);const base=items[0];
+   const roots=names.filter(n=>!parent.has(n)).sort((a,b)=>compareEvolutionCost(byName.get(a),byName.get(b)));const order=[],seen=new Set();
+   for(const root of roots){let cur=root;while(cur&&!seen.has(cur)&&names.includes(cur)){seen.add(cur);order.push(cur);cur=child.get(cur)}}
+   for(const n of items.map(x=>x.Item)){if(!seen.has(n)){seen.add(n);order.push(n)}}
+   const chain={id:base.Item,base:base.Item,names:order};chains.set(chain.id,chain);
+   order.forEach((name,i)=>byItem.set(name,{chainId:chain.id,base:chain.base,names:chain.names,isBase:name===chain.base,prev:parent.get(name)||'',next:child.get(name)||'',stage:i+1,total:order.length}));
+ }
+ evolutionCacheData=data;evolutionCache={byItem,chains,parent,child};return evolutionCache
+}
+function evolutionMeta(name){return getEvolutionIndex().byItem.get(name)||null}
+function evolutionChainExpanded(meta){return !!meta&&(state.evolutionMode==='all'||state.expandedEvolutionChains.includes(meta.chainId))}
+function evolutionVisible(x){const m=evolutionMeta(x.Item);if(!m)return true;return evolutionChainExpanded(m)||m.isBase}
+function expandEvolutionFromItem(name){const m=evolutionMeta(name);if(!m||!m.isBase||state.evolutionMode==='all'||state.expandedEvolutionChains.includes(m.chainId)||m.total<2)return false;state.expandedEvolutionChains=[...new Set([...state.expandedEvolutionChains,m.chainId])];persist();renderAll();toast(`Showing ${m.total-1} upgrade stage${m.total===2?'':'s'} for ${m.base}`);return true}
+function evolutionRequirement(x){const m=evolutionMeta(x.Item);return m?.prev||''}
+function evolutionDepth(name){return evolutionMeta(name)?.stage||0}
+function upgradeReady(x,seen=new Set()){const m=evolutionMeta(x.Item);if(!m?.prev)return true;if(purchaseState.upgradeOwned[x.Item])return true;if(seen.has(x.Item))return false;seen.add(x.Item);const prev=getByName(m.prev);return !!prev&&state.cart.includes(m.prev)&&upgradeReady(prev,seen)}
+function evolutionInfoAttrs(x){const m=evolutionMeta(x.Item),parts=[];if(norm(x.Errata))parts.push(` data-errata="${esc(norm(x.Errata))}"`);if(m?.next)parts.push(` data-evolution="${esc(m.next)}"`);if(m?.prev)parts.push(` data-evolution-prev="${esc(m.prev)}"`);return parts.join('')}
 function openItem(x){const u=norm(x.Link);if(u)window.open(u,'_blank','noopener');else toast('No item reference link is set')}
 function toggleFavorite(name){state.favorites=state.favorites.includes(name)?state.favorites.filter(x=>x!==name):[...state.favorites,name];persist();renderAll()}
-function addCart(name){const x=getByName(name);if(!x)return;if(x['Consumable/Non Consumable']!=='Non-Consumable'||num(x['Cost (TP)'])===null){toast('Only Magic Item Table non-consumables can be purchased');return}if(state.cart.includes(name)){state.cart=state.cart.filter(n=>n!==name);delete purchaseState.methods[name];persist();renderAll();toast('Removed from purchase list');return}state.cart.push(name);if(purchaseState.shopMode)purchaseState.methods[name]=purchaseState.shopCurrency==='auto'?'auto':purchaseState.shopCurrency;persist();renderAll();toast('Added to purchase list')}
+function addCart(name){const x=getByName(name);if(!x)return;if(x['Consumable/Non Consumable']!=='Non-Consumable'||num(x['Cost (TP)'])===null){toast('Only Magic Item Table non-consumables can be purchased');return}if(state.cart.includes(name)){state.cart=state.cart.filter(n=>n!==name);delete purchaseState.methods[name];delete purchaseState.upgradeOwned[name];persist();renderAll();toast('Removed from purchase list');return}state.cart.push(name);if(purchaseState.shopMode)purchaseState.methods[name]=purchaseState.shopCurrency==='auto'?'auto':purchaseState.shopCurrency;persist();renderAll();toast('Added to purchase list')}
 function toggleCompare(name){if(state.compare.includes(name))state.compare=state.compare.filter(x=>x!==name);else{if(state.compare.length>=4){toast('Compare supports up to 4 items');return}state.compare.push(name)}persist();renderAll()}
 function cellHTML(x,groupClass=''){
-  const fav=state.favorites.includes(x.Item),cmp=state.compare.includes(x.Item),inCart=state.cart.includes(x.Item),err=norm(x.Errata),next=isYes(x['Evolving Item'])?norm(x['Next Evolution']):'';
-  const infoAttr=(err?` data-errata="${esc(err)}"`:'')+(next?` data-evolution="${esc(next)}"`:'');
-  const infoMark=err?'<span class="errata-mark" aria-hidden="true">i</span>':'';const evolveMark=isYes(x['Evolving Item'])?'<span class="evolve-mark" aria-label="Evolving item">↗</span>':'';
-  const title=next?`Evolving item${err?' • Errata available':''} — hover for details`:err?'Errata available — hover to read':'Open '+esc(x.Item)+' in a new tab';
-  return `<td class="${cellClasses(x)} ${groupClass}" data-item="${esc(x.Item)}"><button class="item-name ${norm(x.Attunement)==='Yes'?'attune':'noattune'}"${infoAttr} title="${title}" onclick="openItemByName('${esc(x.Item).replace(/&#39;/g,"\\'")}')"><span>${esc(x.Item)}</span>${evolveMark}${infoMark}</button><span class="cell-actions ${fav||cmp||inCart?'keep':''}"><button class="cell-action star ${fav?'on':''}" title="Favorite" onclick="event.stopPropagation();toggleFavoriteSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy ${inCart?'on':''}" title="${inCart?'Remove from':'Add to'} purchase list" onclick="event.stopPropagation();addCartSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">${inCart?'−':'+'}</button>`:''}${state.compareMode?`<button class="cell-action compare ${cmp?'on':''}" title="Compare" onclick="event.stopPropagation();toggleCompareSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">⇄</button>`:''}</span></td>`
+  const fav=state.favorites.includes(x.Item),cmp=state.compare.includes(x.Item),inCart=state.cart.includes(x.Item),m=evolutionMeta(x.Item),prev=m?.prev||'',next=m?.next||'',collapsedBase=!!m&&m.isBase&&!evolutionChainExpanded(m);
+  const infoAttr=evolutionInfoAttrs(x),infoMark=norm(x.Errata)?'<span class="errata-mark" aria-hidden="true">i</span>':'',evolveMark=m?`<span class="evolve-mark ${collapsedBase?'chain-collapsed':''}" aria-label="Evolution chain">${collapsedBase?`+${m.total-1}`:(prev?'↑':'↗')}</span>`:'';
+  const prereq=prev?`<small class="evolution-requires">Requires: ${esc(prev)}</small>`:'';
+  const title=collapsedBase?`Click to show ${m.total-1} upgrade stage${m.total===2?'':'s'}`:prev?`Requires ${esc(prev)} — open ${esc(x.Item)} in a new tab`:next?`Evolving item — hover for details`:norm(x.Errata)?'Errata available — hover to read':'Open '+esc(x.Item)+' in a new tab';
+  const safe=esc(x.Item).replace(/&#39;/g,"\\'");
+  return `<td class="${cellClasses(x)} ${groupClass}" data-item="${esc(x.Item)}"><button class="item-name ${prev?'has-prereq ':''}${norm(x.Attunement)==='Yes'?'attune':'noattune'}"${infoAttr} title="${title}" onclick="openItemByName('${safe}')"><span class="item-label">${esc(x.Item)}</span>${evolveMark}${infoMark}${prereq}</button><span class="cell-actions ${fav||cmp||inCart?'keep':''}"><button class="cell-action star ${fav?'on':''}" title="Favorite" onclick="event.stopPropagation();toggleFavoriteSafe('${safe}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy ${inCart?'on':''}" title="${inCart?'Remove from':'Add to'} purchase list" onclick="event.stopPropagation();addCartSafe('${safe}')">${inCart?'−':'+'}</button>`:''}${state.compareMode?`<button class="cell-action compare ${cmp?'on':''}" title="Compare" onclick="event.stopPropagation();toggleCompareSafe('${safe}')">⇄</button>`:''}</span></td>`
 }
 
-window.openItemByName=name=>{const x=getByName(name);if(x)openItem(x)};window.toggleFavoriteSafe=name=>toggleFavorite(name);window.addCartSafe=name=>addCart(name);window.toggleCompareSafe=name=>toggleCompare(name);
+window.openItemByName=name=>{const x=getByName(name);if(!x)return;if(expandEvolutionFromItem(name))return;openItem(x)};window.toggleFavoriteSafe=name=>toggleFavorite(name);window.addCartSafe=name=>addCart(name);window.toggleCompareSafe=name=>toggleCompare(name);window.handleSearchItemClick=(event,name)=>{if(expandEvolutionFromItem(name)){event?.preventDefault?.();return false}return true};
+
 function dedupeSort(arr){const m=new Map();arr.forEach(x=>{if(!m.has(x.Item))m.set(x.Item,x)});return [...m.values()].sort((a,b)=>a.Item.localeCompare(b.Item,undefined,{numeric:true,sensitivity:'base'}))}
 function magicCostLabel(t,c){const sample=data.find(x=>Number(x.Tier)===t&&num(x['Cost (TP)'])===c&&num(x['Cost (Gold)'])!==null);const gold=sample?Number(sample['Cost (Gold)']).toLocaleString():'—';return `${c} TP / ${gold} GP`}
 function mobileItemHTML(x){
- const fav=state.favorites.includes(x.Item),cmp=state.compare.includes(x.Item),inCart=state.cart.includes(x.Item),err=norm(x.Errata),next=isYes(x['Evolving Item'])?norm(x['Next Evolution']):'',classes=cellClasses(x).replace('item-cell','').trim();
- const infoAttr=(err?` data-errata="${esc(err)}"`:'')+(next?` data-evolution="${esc(next)}"`:'');const errMark=err?'<span class="errata-mark" aria-hidden="true">i</span>':'';const evolveMark=isYes(x['Evolving Item'])?'<span class="evolve-mark" aria-label="Evolving item">↗</span>':'';
- const safe=esc(x.Item).replace(/&#39;/g,"\\'");
- return `<div class="mobile-item-row ${classes}" data-item="${esc(x.Item)}"><button class="mobile-item-name ${norm(x.Attunement)==='Yes'?'attune':'noattune'}"${infoAttr} onclick="openItemByName('${safe}')"><span>${esc(x.Item)}</span>${evolveMark}${errMark}</button><div class="mobile-item-actions"><button class="cell-action star ${fav?'on':''}" title="Favorite" onclick="event.stopPropagation();toggleFavoriteSafe('${safe}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy ${inCart?'on':''}" title="${inCart?'Remove from':'Add to'} purchase list" onclick="event.stopPropagation();addCartSafe('${safe}')">${inCart?'−':'+'}</button>`:''}${state.compareMode?`<button class="cell-action compare ${cmp?'on':''}" title="Compare" onclick="event.stopPropagation();toggleCompareSafe('${safe}')">⇄</button>`:''}</div></div>`
+ const fav=state.favorites.includes(x.Item),cmp=state.compare.includes(x.Item),inCart=state.cart.includes(x.Item),m=evolutionMeta(x.Item),prev=m?.prev||'',collapsedBase=!!m&&m.isBase&&!evolutionChainExpanded(m),classes=cellClasses(x).replace('item-cell','').trim();
+ const infoAttr=evolutionInfoAttrs(x),errMark=norm(x.Errata)?'<span class="errata-mark" aria-hidden="true">i</span>':'',evolveMark=m?`<span class="evolve-mark ${collapsedBase?'chain-collapsed':''}" aria-label="Evolution chain">${collapsedBase?`+${m.total-1}`:(prev?'↑':'↗')}</span>`:'';
+ const safe=esc(x.Item).replace(/&#39;/g,"\\'"),prereq=prev?`<small class="evolution-requires">Requires: ${esc(prev)}</small>`:'';
+ return `<div class="mobile-item-row ${classes}" data-item="${esc(x.Item)}"><button class="mobile-item-name ${prev?'has-prereq ':''}${norm(x.Attunement)==='Yes'?'attune':'noattune'}"${infoAttr} onclick="openItemByName('${safe}')"><span class="item-label">${esc(x.Item)}</span>${evolveMark}${errMark}${prereq}</button><div class="mobile-item-actions"><button class="cell-action star ${fav?'on':''}" title="Favorite" onclick="event.stopPropagation();toggleFavoriteSafe('${safe}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy ${inCart?'on':''}" title="${inCart?'Remove from':'Add to'} purchase list" onclick="event.stopPropagation();addCartSafe('${safe}')">${inCart?'−':'+'}</button>`:''}${state.compareMode?`<button class="cell-action compare ${cmp?'on':''}" title="Compare" onclick="event.stopPropagation();toggleCompareSafe('${safe}')">⇄</button>`:''}</div></div>`
 }
 
+function syncTierRowHeights(){
+ if(state.mobileMode)return;
+ for(const rootSel of ['#viewMagic','#viewReward']){
+  const bodies=[...document.querySelectorAll(`${rootSel} .tier-panel .tier-table tbody`)];
+  if(!bodies.length)continue;
+  const sets=bodies.map(tb=>[...tb.rows]);
+  for(const rows of sets)for(const row of rows){row.style.removeProperty('height');for(const cell of row.cells){cell.style.removeProperty('height');cell.style.removeProperty('min-height')}}
+  // Read intrinsic heights only after every row is released from the previous alignment.
+  const count=Math.max(0,...sets.map(rows=>rows.length));
+  const floor=Math.max(26,parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--dynamic-row-floor'))||30);
+  const zoom=Math.max(.1,parseFloat(getComputedStyle(document.body).zoom)||1);
+  for(let i=0;i<count;i++){
+   let targetRendered=floor*zoom;
+   for(const rows of sets){const row=rows[i];if(row)targetRendered=Math.max(targetRendered,row.getBoundingClientRect().height)}
+   const targetCss=Math.ceil(targetRendered/zoom);
+   for(const rows of sets){const row=rows[i];if(!row)continue;row.style.setProperty('height',`${targetCss}px`,'important');for(const cell of row.cells)cell.style.setProperty('height',`${targetCss}px`,'important')}
+  }
+ }
+}
+let rowHeightSyncRaf=0;
+function scheduleTierRowHeightSync(){cancelAnimationFrame(rowHeightSyncRaf);rowHeightSyncRaf=requestAnimationFrame(()=>requestAnimationFrame(syncTierRowHeights))}
 function renderMagicMobile(){
  let total=0;const maxTier=(state.newPlayer&&!state.npShowHighTiers)?2:4;let h='<div class="mobile-stack magic-mobile-stack">';
  for(let t=1;t<=maxTier;t++){
@@ -1199,7 +1376,7 @@ function renderMagic(){
     for(let r=0;r<alignedRows;r++){h+='<tr>';cols.forEach(col=>{const x=col.items[r];h+=x?cellHTML(x,''):'<td class="aligned-empty"></td>'});h+='</tr>'}
     h+='</tbody></table></div></section>';
   }
-  h+=`</div></div><div class="sheet-footer modern-footer"><span><strong>${total}</strong> purchasable magic-item entries ${maxTier===2?'shown across Tier 1–2 in New Player Mode':'across Tier 1–4'}.</span><span>Rows are aligned across every visible tier for easier horizontal comparison.</span></div>`;$('#viewMagic').innerHTML=h;
+  h+=`</div></div><div class="sheet-footer modern-footer"><span><strong>${total}</strong> purchasable magic-item entries ${maxTier===2?'shown across Tier 1–2 in New Player Mode':'across Tier 1–4'}.</span><span>Rows are aligned across every visible tier. Click a collapsed evolving item to reveal its required upgrade stages.</span></div>`;$('#viewMagic').innerHTML=h;
 }
 function rewardCols(){const defs=[];defs.push({tier:1,label:'Minor Non-Consumable A–M',kind:'mnc',part:'am'});defs.push({tier:1,label:'Minor Non-Consumable N–Z',kind:'mnc',part:'nz'});defs.push({tier:1,label:'Minor (Consumable)',kind:'minor'});defs.push({tier:1,label:'Major (Consumable)',kind:'major'});for(let t=2;t<=4;t++){defs.push({tier:t,label:'Minor',kind:'minor'});defs.push({tier:t,label:'Major',kind:'major'})}return defs.map((d,globalIndex)=>{let items=data.filter(x=>Number(x.Tier)===d.tier&&x['Consumable/Non Consumable']==='Consumable');if(d.kind==='minor')items=items.filter(x=>norm(x['Cost (TP)'])==='Minor');if(d.kind==='major')items=items.filter(x=>norm(x['Cost (TP)'])==='Major');if(d.kind==='mnc')items=items.filter(x=>norm(x['Cost (TP)'])==='Minor Non-Consumable').filter(x=>{const ch=x.Item.trim()[0]?.toUpperCase()||'';return d.part==='am'?ch>='A'&&ch<='M':ch>='N'&&ch<='Z'});items=dedupeSort(items.filter(itemVisibleBrowse));return {...d,globalIndex,items}})}
 function renderReward(){
@@ -1216,18 +1393,19 @@ function renderReward(){
   }
   h+=`</div></div><div class="sheet-footer modern-footer"><span>Reward availability preserves the current MIT Tier → Minor/Major structure.</span><span>Rows are aligned across every visible tier.</span></div>`;$('#viewReward').innerHTML=h;
 }
-function searchResults(){return dedupeSort(data.filter(x=>filterMatch(x)&&npVisible(x)&&shopItemVisible(x)))}
+function searchResults(){return dedupeSort(data.filter(x=>filterMatch(x)&&npVisible(x)&&evolutionVisible(x)&&shopItemVisible(x)))}
 function renderSearch(){
  const rows=searchResults();
  if(state.mobileMode){renderSearchMobileRows(rows);return;}
  let h=`<div class="panel"><div class="panel-head"><h2>Search Results</h2><span>${rows.length} matching items</span></div><div class="panel-body" style="overflow:auto;padding:0"><table class="search-table"><thead><tr><th>Item</th><th>Tier</th><th>TP / Reward</th><th>Gold</th><th>Rarity</th><th>Category</th><th>Attunement</th><th>Source</th><th>Actions</th></tr></thead><tbody>`;
  for(const x of rows){
-   const att=norm(x.Attunement)==='Yes',rec=isRecommended(x),err=norm(x.Errata),next=isYes(x['Evolving Item'])?norm(x['Next Evolution']):'';
+   const att=norm(x.Attunement)==='Yes',rec=isRecommended(x),m=evolutionMeta(x.Item),prev=m?.prev||'',next=m?.next||'',collapsedBase=!!m&&m.isBase&&!evolutionChainExpanded(m);
    const recClass=(state.newPlayer&&state.npMode==='highlight')?(rec.friendly&&rec.classMatch?'np-friendly class-rec':rec.friendly?'np-friendly':rec.classMatch?'class-rec':''):'';
-   const evolving=isYes(x['Evolving Item'])?' evolving':'';const infoAttr=(err?` data-errata="${esc(err)}"`:'')+(next?` data-evolution="${esc(next)}"`:'');
-   const errMark=err?'<span class="errata-mark" aria-hidden="true">i</span>':'';const evolveMark=isYes(x['Evolving Item'])?'<span class="evolve-mark" aria-label="Evolving item">↗</span>':'';
-   h+=`<tr class="${recClass}${evolving}" data-item="${esc(x.Item)}"><td><a class="item-anchor ${att?'attune':'noattune'}"${infoAttr} href="${esc(x.Link||'#')}" target="_blank" rel="noopener"><span>${esc(x.Item)}</span>${evolveMark}${errMark}</a></td><td>${esc(x.Tier)}</td><td>${esc(x['Cost (TP)'])}</td><td>${num(x['Cost (Gold)'])!==null?Number(x['Cost (Gold)']).toLocaleString():'—'}</td><td>${esc(x.Rarity)}</td><td>${esc(x.Category)}</td><td>${esc(x.Attunement)}</td><td>${esc(x.Source)}</td><td><div class="search-actions"><button class="cell-action star ${state.favorites.includes(x.Item)?'on':''}" onclick="toggleFavoriteSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy ${state.cart.includes(x.Item)?'on':''}" title="${state.cart.includes(x.Item)?'Remove from':'Add to'} purchase list" onclick="addCartSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">${state.cart.includes(x.Item)?'−':'+'}</button>`:''}${state.compareMode?`<button class="cell-action compare ${state.compare.includes(x.Item)?'on':''}" onclick="toggleCompareSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">⇄</button>`:''}</div></td></tr>`
+   const evolving=m?' evolving':'',infoAttr=evolutionInfoAttrs(x),errMark=norm(x.Errata)?'<span class="errata-mark" aria-hidden="true">i</span>':'',evolveMark=m?`<span class="evolve-mark ${collapsedBase?'chain-collapsed':''}" aria-label="Evolution chain">${collapsedBase?`+${m.total-1}`:(prev?'↑':'↗')}</span>`:'';
+   const safe=esc(x.Item).replace(/&#39;/g,"\\'"),prereq=prev?`<small class="evolution-requires">Requires: ${esc(prev)}</small>`:'';
+   h+=`<tr class="${recClass}${evolving}" data-item="${esc(x.Item)}"><td><a class="item-anchor ${prev?'has-prereq ':''}${att?'attune':'noattune'}"${infoAttr} href="${esc(x.Link||'#')}" target="_blank" rel="noopener" onclick="return handleSearchItemClick(event,'${safe}')"><span class="item-label">${esc(x.Item)}</span>${evolveMark}${errMark}${prereq}</a></td><td>${esc(x.Tier)}</td><td>${esc(x['Cost (TP)'])}</td><td>${num(x['Cost (Gold)'])!==null?Number(x['Cost (Gold)']).toLocaleString():'—'}</td><td>${esc(x.Rarity)}</td><td>${esc(x.Category)}</td><td>${esc(x.Attunement)}</td><td>${esc(x.Source)}</td><td><div class="search-actions"><button class="cell-action star ${state.favorites.includes(x.Item)?'on':''}" onclick="toggleFavoriteSafe('${safe}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy ${state.cart.includes(x.Item)?'on':''}" title="${state.cart.includes(x.Item)?'Remove from':'Add to'} purchase list" onclick="addCartSafe('${safe}')">${state.cart.includes(x.Item)?'−':'+'}</button>`:''}${state.compareMode?`<button class="cell-action compare ${state.compare.includes(x.Item)?'on':''}" onclick="toggleCompareSafe('${safe}')">⇄</button>`:''}</div></td></tr>`
  }
+
  h+=`</tbody></table>${rows.length?'':'<div class="empty-state">No items match the current filters.</div>'}</div></div>`;$('#viewSearch').innerHTML=h;updateShareHash()
 }
 
@@ -1319,7 +1497,7 @@ function setMobileMode(v){const pos=captureScrollState();state.mobileMode=!!v;pe
 function setSpreadsheetMode(v){const pos=captureScrollState();state.spreadsheetMode=!!v;persist();syncModeUI();renderAll();restoreScrollState(pos);toast(state.spreadsheetMode?'Spreadsheet Mode enabled — lightweight Google Sheet layout':'Spreadsheet Mode disabled — full visual interface restored')}
 function bindMobileCollapseTools(){document.addEventListener('click',e=>{const ex=e.target.closest?.('[data-expand-tier]'),cl=e.target.closest?.('[data-collapse-tier]');if(!ex&&!cl)return;const t=Number((ex||cl).dataset[ex?'expandTier':'collapseTier']);const panel=activeTableRoot()?.querySelector(`[data-tier="${t}"]`);if(panel)panel.querySelectorAll('details.mobile-cost-group').forEach(d=>d.open=!!ex)})}
 
-function renderAll(){syncModeUI();const scrollPos=captureScrollState();renderMagic();renderReward();renderSearch();renderCounts();renderNp();renderCart();renderShopBar();renderRewardBuilder();renderCompare();updateFilterText();restoreScrollState(scrollPos)}
+function renderAll(){syncModeUI();const evo=$('#evolutionMode');if(evo)evo.value=state.evolutionMode;const note=$('#evolutionModeNote');if(note){const n=state.evolutionMode==='all'?getEvolutionIndex().chains.size:state.expandedEvolutionChains.length;note.textContent=state.evolutionMode==='all'?'All evolution stages shown.':n?`${n} evolution chain${n===1?'':'s'} expanded.`:'Click an evolving item to reveal its upgrades.'}const scrollPos=captureScrollState();renderMagic();renderReward();renderSearch();renderCounts();renderNp();renderCart();renderShopBar();renderRewardBuilder();renderCompare();updateFilterText();restoreScrollState(scrollPos);scheduleTierRowHeightSync();}
 function renderCounts(){$('#cartCount').textContent=state.cart.length;$('#compareCount').textContent=state.compare.length;$('#compareBtn').disabled=state.compare.length<2}
 function renderNp(){$('#npbar').classList.toggle('hidden',!state.newPlayer);$('#npMode').value=state.npMode;$('#npShowHighTiers').checked=state.npShowHighTiers;$('#compareModeToggle').checked=state.compareMode;const friendlyCount=data.filter(x=>isYes(x['New Player Friendly'])).length,classCount=data.filter(x=>norm(x['Recommended Classes'])).length;$('#npNote').textContent=(friendlyCount||classCount)?`${friendlyCount} New Player Friendly item${friendlyCount===1?'':'s'}${classCount?` • ${classCount} with class recommendations`:''}`:'Recommendation fields are ready but currently unfilled in the source sheet.'}
 function updateFilterText(){let n=0;if(norm(state.q))n++;if(state.tier)n++;if(state.attune)n++;if(state.tpMin!==''||state.tpMax!=='')n++;for(const [f] of FILTER_DEFS)n+=(state.filters[f]||[]).length?1:0;const base=n?`${n} filter group${n===1?'':'s'} active`:'No filters active';$('#activeFilterText').textContent=base+(purchaseState.shopMode?' • Shop Mode affordability active':'')}
@@ -1327,9 +1505,9 @@ function renderFilterOptions(){const grid=$('#multiGrid');grid.innerHTML='';for(
 function syncFilterCounts(){for(const [field] of FILTER_DEFS){const el=document.querySelector(`[data-count="${CSS.escape(field)}"]`);if(el){const n=(state.filters[field]||[]).length;el.textContent=n?`(${n})`:''}}}
 function populateTp(){const vals=[2,4,6,8,10,12,14,16,18,20,22,24,26,28,30];for(const id of ['#tpMin','#tpMax']){const s=$(id);const cur=s.value;s.innerHTML='<option value="">Any</option>'+vals.map(v=>`<option value="${v}">${v}</option>`).join('');s.value=cur}}
 function clearFilters(){state.q='';state.tier='';state.attune='';state.tpMin='';state.tpMax='';state.filters={};$('#quickSearch').value='';$('#filterSearch').value='';$('#tierFilter').value='';$('#attuneFilter').value='';$('#tpMin').value='';$('#tpMax').value='';autoHighlightFilters();renderFilterOptions();renderAll()}
-function cartItems(){return state.cart.map(getByName).filter(Boolean).sort((a,b)=>a.Item.localeCompare(b.Item))}
+function cartItems(){return state.cart.map(getByName).filter(Boolean).sort((a,b)=>{const ma=evolutionMeta(a.Item),mb=evolutionMeta(b.Item);if(ma&&mb&&ma.chainId===mb.chainId)return ma.stage-mb.stage;const ka=ma?.chainId||a.Item,kb=mb?.chainId||b.Item;const c=ka.localeCompare(kb,undefined,{numeric:true,sensitivity:'base'});return c||evolutionDepth(a.Item)-evolutionDepth(b.Item)||a.Item.localeCompare(b.Item)})}
 function quote(s){return '"'+String(s||'').replace(/"/g,'\\"')+'"'}
-function commandFor(x){return `$tp ${purchaseState.command} ${quote(purchaseState.character||'CHARNAME')} ${quote(x.Item)}`}
+function commandFor(x){const m=evolutionMeta(x.Item);if(m?.prev)return `$tp upgrade ${commandArg(purchaseState.character||'CHARNAME')} ${quote(x.Item)}`;return `$tp ${purchaseState.command} ${quote(purchaseState.character||'CHARNAME')} ${quote(x.Item)}`}
 function commandArg(s){const v=norm(s)||'CHARNAME';return /\s|"/.test(v)?quote(v):v}
 function attuneCommandFor(x){return `$attune ${commandArg(purchaseState.character||'CHARNAME')} ${quote(x.Item)}`}
 function commandsForItem(x){const out=[commandFor(x)];if(norm(x.Attunement)==='Yes')out.push(attuneCommandFor(x));return out.join('\n')}
@@ -1342,13 +1520,15 @@ function shopItemVisible(x){if(!purchaseState.shopMode)return true;if(x['Consuma
 function renderShopBar(){const b=$('#shopBar');if(!b)return;b.classList.toggle('hidden',!purchaseState.shopMode);if(!purchaseState.shopMode){syncMobileStickyOffset();return}const plan=shopBasePlan(),attuned=cartItems().filter(x=>norm(x.Attunement)==='Yes').length,mode=purchaseState.shopCurrency==='tp'?'TP only':purchaseState.shopCurrency==='gp'?'GP only':'Auto';b.innerHTML=`<strong>SHOP MODE</strong><span class="shop-stat">${mode}</span><span class="shop-stat">T1–T4 remaining: ${plan.alloc.remain.map((v,i)=>`T${i+1} ${v}`).join(' • ')}</span><span class="shop-stat">GP ${plan.goldRemaining.toLocaleString()}</span><span class="shop-stat">Attunement ${attuned} / ${purchaseState.attuneCap}</span><button class="mini-btn" type="button" id="exitShopMode">Exit Shop Mode</button>`;$('#exitShopMode').onclick=()=>{purchaseState.shopMode=false;persist();renderAll()};syncMobileStickyOffset()}
 function renderCart(){
  const items=cartItems(),plan=optimizePurchase(items);$('#characterName').value=purchaseState.character;$('#commandType').value=purchaseState.command;purchaseState.tp.forEach((v,i)=>$('#tp'+(i+1)).value=v);$('#gold').value=purchaseState.gold;$('#shopCurrency').value=purchaseState.shopCurrency;$('#purchaseOptimizeGoal').value=purchaseState.optGoal;$('#attuneCap').value=purchaseState.attuneCap;
- const sm=$('#shopModeToggle');sm.textContent=purchaseState.shopMode?'Exit Shop Mode':'Start Shop Mode';sm.classList.toggle('primary',purchaseState.shopMode);const goalLabel=purchaseState.optGoal==='preserveTp'?'Preserve TP':purchaseState.optGoal==='preserveGp'?'Preserve GP':'Best overall';
- const status=plan.ok?'Affordable':'Over budget';$('#affordBox').innerHTML=`<div class="purchase-summary-grid"><div class="purchase-summary-cell"><small>Plan</small><strong>${goalLabel}<br><span class="${plan.ok?'ok':'bad'}">${status}</span></strong></div><div class="purchase-summary-cell"><small>Treasure Points</small><strong>Spend ${plan.alloc.spent.map((v,i)=>`T${i+1}:${v}`).join(' · ')}<br>Left ${plan.alloc.remain.map((v,i)=>`T${i+1}:${v}`).join(' · ')}</strong></div><div class="purchase-summary-cell"><small>Gold</small><strong>Spend ${plan.goldSpent.toLocaleString()} GP<br>Left ${plan.goldRemaining.toLocaleString()} GP</strong></div></div>`;
+ const sm=$('#shopModeToggle');sm.textContent=purchaseState.shopMode?'Exit Shop Mode':'Start Shop Mode';sm.classList.toggle('primary',purchaseState.shopMode);const goalLabel=purchaseState.optGoal==='preserveTp'?'Preserve TP':purchaseState.optGoal==='preserveGp'?'Preserve GP':'Best overall',blocked=items.filter(x=>evolutionRequirement(x)&&!upgradeReady(x));
+ const status=plan.ok?'Affordable':'Over budget';$('#affordBox').innerHTML=`<div class="purchase-summary-grid"><div class="purchase-summary-cell"><small>Plan</small><strong>${goalLabel}<br><span class="${plan.ok?'ok':'bad'}">${status}</span>${blocked.length?`<br><span class="upgrade-warn">${blocked.length} upgrade${blocked.length===1?'':'s'} awaiting prerequisite</span>`:''}</strong></div><div class="purchase-summary-cell"><small>Treasure Points</small><strong>Spend ${plan.alloc.spent.map((v,i)=>`T${i+1}:${v}`).join(' · ')}<br>Left ${plan.alloc.remain.map((v,i)=>`T${i+1}:${v}`).join(' · ')}</strong></div><div class="purchase-summary-cell"><small>Gold</small><strong>Spend ${plan.goldSpent.toLocaleString()} GP<br>Left ${plan.goldRemaining.toLocaleString()} GP</strong></div></div>`;
  const count=$('#purchaseItemCount');if(count)count.textContent=`${items.length} selected`;
- $('#cartList').innerHTML=items.length?items.map(x=>{const method=purchaseMethod(x.Item),resolved=plan.resolved[x.Item]||'tp',safe=esc(x.Item).replace(/&#39;/g,"\'");return `<div class="purchase-item"><div class="purchase-item-main"><strong class="purchase-item-name">${esc(x.Item)}</strong><div class="purchase-item-tags"><span class="purchase-tag">Tier ${x.Tier}</span><span class="purchase-tag">${x['Cost (TP)']} TP</span><span class="purchase-tag">${Number(x['Cost (Gold)']||0).toLocaleString()} GP</span>${norm(x.Attunement)==='Yes'?'<span class="purchase-tag attune">Attunement</span>':''}</div></div><div class="purchase-item-controls"><label class="purchase-pay"><select aria-label="Payment method for ${esc(x.Item)}" data-purchase-method="${esc(x.Item)}"><option value="auto" ${method==='auto'?'selected':''}>Auto</option><option value="tp" ${method==='tp'?'selected':''}>TP</option><option value="gp" ${method==='gp'?'selected':''}>GP</option></select><small>Using <span class="method-${resolved}">${resolved.toUpperCase()}</span></small></label><div class="purchase-item-actions"><button class="mini-btn" title="Copy command${norm(x.Attunement)==='Yes'?'s':''}" onclick="copyCartItem('${safe}')">Copy</button><button class="mini-btn warn" title="Remove" onclick="removeCartItem('${safe}')">×</button></div></div></div>`}).join(''):'<div class="empty-state">No items selected. Use + on the Magic Item Table or Search page.</div>';
- document.querySelectorAll('[data-purchase-method]').forEach(sel=>sel.onchange=()=>{purchaseState.methods[sel.dataset.purchaseMethod]=sel.value;persist();renderAll()});const all=items.map(commandsForItem).join('\n');$('#allCommands').textContent=all||'Commands will appear here.';renderCounts()
+ $('#cartList').innerHTML=items.length?items.map(x=>{const method=purchaseMethod(x.Item),resolved=plan.resolved[x.Item]||'tp',safe=esc(x.Item).replace(/&#39;/g,"\\'"),m=evolutionMeta(x.Item),prev=m?.prev||'',ready=!prev||upgradeReady(x),prevInCart=prev&&state.cart.includes(prev),confirmed=!!purchaseState.upgradeOwned[x.Item];return `<div class="purchase-item ${prev?'purchase-upgrade':''}"><div class="purchase-item-main"><strong class="purchase-item-name">${esc(x.Item)}</strong><div class="purchase-item-tags"><span class="purchase-tag">Tier ${x.Tier}</span><span class="purchase-tag">${x['Cost (TP)']} TP</span><span class="purchase-tag">${Number(x['Cost (Gold)']||0).toLocaleString()} GP</span>${norm(x.Attunement)==='Yes'?'<span class="purchase-tag attune">Attunement</span>':''}${prev?'<span class="purchase-tag upgrade">Upgrade</span>':''}</div>${prev?`<div class="upgrade-requirement ${ready?'ready':'blocked'}"><strong>Requires previous version</strong><span>${esc(prev)}</span>${prevInCart?`<small>${ready?'Previous stage is in this purchase list.':'Previous stage is selected, but its earlier prerequisite still needs confirmation.'}</small>`:`<label><input type="checkbox" data-upgrade-confirm="${esc(x.Item)}" ${confirmed?'checked':''}> I already have ${esc(prev)}</label>`}</div>`:''}</div><div class="purchase-item-controls"><label class="purchase-pay"><select aria-label="Payment method for ${esc(x.Item)}" data-purchase-method="${esc(x.Item)}"><option value="auto" ${method==='auto'?'selected':''}>Auto</option><option value="tp" ${method==='tp'?'selected':''}>TP</option><option value="gp" ${method==='gp'?'selected':''}>GP</option></select><small>Using <span class="method-${resolved}">${resolved.toUpperCase()}</span></small></label><div class="purchase-item-actions"><button class="mini-btn" title="${ready?'Copy command'+(norm(x.Attunement)==='Yes'?'s':''):'Confirm the previous version first'}" onclick="copyCartItem('${safe}')" ${ready?'':'disabled'}>Copy</button><button class="mini-btn warn" title="Remove" onclick="removeCartItem('${safe}')">×</button></div></div></div>`}).join(''):'<div class="empty-state">No items selected. Use + on the Magic Item Table or Search page.</div>';
+ document.querySelectorAll('[data-purchase-method]').forEach(sel=>sel.onchange=()=>{purchaseState.methods[sel.dataset.purchaseMethod]=sel.value;persist();renderAll()});document.querySelectorAll('[data-upgrade-confirm]').forEach(cb=>cb.onchange=()=>{purchaseState.upgradeOwned[cb.dataset.upgradeConfirm]=cb.checked;if(!cb.checked)delete purchaseState.upgradeOwned[cb.dataset.upgradeConfirm];persist();renderAll()});
+ const valid=items.filter(x=>!evolutionRequirement(x)||upgradeReady(x)),all=valid.map(commandsForItem).join('\n');$('#allCommands').textContent=all||'Commands will appear here.';const note=$('#purchaseCommandNote');if(note)note.textContent=blocked.length?`${blocked.length} upgrade${blocked.length===1?'':'s'} omitted until prerequisite confirmation`:'Includes $attune for attunement items';renderCounts()
 }
-window.copyCartItem=name=>{const x=getByName(name);if(x)copyText(commandsForItem(x))};window.removeCartItem=name=>{state.cart=state.cart.filter(n=>n!==name);delete purchaseState.methods[name];persist();renderAll()}
+
+window.copyCartItem=name=>{const x=getByName(name);if(!x)return;if(evolutionRequirement(x)&&!upgradeReady(x)){toast(`Confirm that you have ${evolutionRequirement(x)} first`);return}copyText(commandsForItem(x))};window.removeCartItem=name=>{state.cart=state.cart.filter(n=>n!==name);delete purchaseState.methods[name];delete purchaseState.upgradeOwned[name];persist();renderAll()}
 
 function rewardOptions(kind,exactTier=null){let items=data.filter(x=>x['Consumable/Non Consumable']==='Consumable');if(kind==='major')items=items.filter(x=>norm(x['Cost (TP)'])==='Major'&&Number(x.Tier)===rewardState.tier);if(kind==='minor')items=items.filter(x=>norm(x['Cost (TP)'])==='Minor'&&(exactTier==null?Number(x.Tier)<=rewardState.tier:Number(x.Tier)===Number(exactTier)));if(kind==='mnc')items=items.filter(x=>norm(x['Cost (TP)'])==='Minor Non-Consumable'&&Number(x.Tier)<=rewardState.tier);return dedupeSort(items)}
 function rewardCapacity(kind){if(kind==='major')return Math.max(0,rewardState.majorCount);if(kind==='minor')return Math.max(0,rewardState.minorCount-Math.max(0,rewardState.mnc.length-rewardState.mncCount));if(kind==='mnc')return Math.max(0,rewardState.mncCount+Math.max(0,rewardState.minorCount-rewardState.minor.length));return 0}
@@ -1563,7 +1743,7 @@ function loadShareHash(){if(!location.hash.startsWith('#search='))return false;t
 function openRandomItem(){let pool=data.filter(x=>norm(x.Link));if(state.view==='magic')pool=pool.filter(x=>x['Consumable/Non Consumable']==='Non-Consumable');else if(state.view==='reward')pool=pool.filter(x=>x['Consumable/Non Consumable']==='Consumable');else if(state.view==='search')pool=pool.filter(x=>filterMatch(x)&&npVisible(x));if(!pool.length)pool=data.filter(x=>norm(x.Link));const x=pool[Math.floor(Math.random()*pool.length)];if(!x){toast('No linked items are available');return}toast(`Bot Friend found: ${x.Item}`);openItem(x)}
 function openDrawer(id){$('#drawerBackdrop').classList.remove('hidden');$('#purchaseDrawer').classList.add('hidden');$('#rewardDrawer').classList.add('hidden');$(id).classList.remove('hidden');$(id).setAttribute('aria-hidden','false')}
 function closeDrawers(){$('#drawerBackdrop').classList.add('hidden');for(const id of ['#purchaseDrawer','#rewardDrawer']){$(id).classList.add('hidden');$(id).setAttribute('aria-hidden','true')}}
-function resetEverything(){if(!confirm('Reset everything except your selected theme? This clears filters, New Player settings, favorites, compare selections, purchase list, balances, and reward selections.'))return;const keepTheme=state.theme,keepCustom=state.customTheme,keepPreserve=state.preserveMitColors,keepFont=state.fontKey,keepScale=state.textScale;Object.assign(state,{view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],theme:keepTheme,customTheme:keepCustom,preserveMitColors:keepPreserve,simpleMode:false,mobileMode:false,navStyle:'hidden',fontKey:keepFont,textScale:keepScale});Object.assign(purchaseState,{character:'',command:'craft',tp:[0,0,0,0],gold:0,methods:{},optGoal:'balanced',shopMode:false,shopCurrency:'auto',attuneCap:3});Object.assign(rewardState,{mention:'',tier:1,majorCount:0,minorCount:0,mncCount:0,major:[],minor:[],mnc:[],customNames:{},modFriend:false});persist();applyTypography();buildClassList();renderFilterOptions();renderFiltersToInputs();setView('magic');toast('Reset complete')}
+function resetEverything(){if(!confirm('Reset everything except your selected theme? This clears filters, New Player settings, favorites, compare selections, purchase list, balances, and reward selections.'))return;const keepTheme=state.theme,keepCustom=state.customTheme,keepPreserve=state.preserveMitColors,keepFont=state.fontKey,keepScale=state.textScale;Object.assign(state,{view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],theme:keepTheme,customTheme:keepCustom,preserveMitColors:keepPreserve,simpleMode:false,mobileMode:false,navStyle:'hidden',fontKey:keepFont,textScale:keepScale,evolutionMode:'collapsed',expandedEvolutionChains:[]});Object.assign(purchaseState,{character:'',command:'craft',tp:[0,0,0,0],gold:0,methods:{},optGoal:'balanced',shopMode:false,shopCurrency:'auto',attuneCap:3,upgradeOwned:{}});Object.assign(rewardState,{mention:'',tier:1,majorCount:0,minorCount:0,mncCount:0,major:[],minor:[],mnc:[],customNames:{},modFriend:false});persist();applyTypography();buildClassList();renderFilterOptions();renderFiltersToInputs();setView('magic');toast('Reset complete')}
 
 function openThemeModal(){const m=$('#themeModal');document.body.classList.add('theme-modal-open');m.classList.remove('hidden');m.setAttribute('aria-hidden','false');initTheme();requestAnimationFrame(()=>{$('#themePreset')?.focus({preventScroll:true})})}
 function closeThemeModal(){const m=$('#themeModal');document.body.classList.remove('theme-modal-open');m.classList.add('hidden');m.setAttribute('aria-hidden','true');initTheme()}
@@ -1597,11 +1777,11 @@ function bind(){
  $('#clearFiltersBtn').onclick=clearFilters;
  $('#quickSearch').oninput=e=>{state.q=e.target.value;$('#filterSearch').value=state.q;autoHighlightFilters();renderAll()};$('#filterSearch').oninput=e=>{state.q=e.target.value;$('#quickSearch').value=state.q;autoHighlightFilters();renderAll()};
  $('#tierFilter').onchange=e=>{state.tier=e.target.value;autoHighlightFilters();renderAll()};$('#attuneFilter').onchange=e=>{state.attune=e.target.value;autoHighlightFilters();renderAll()};$('#tpMin').onchange=e=>{state.tpMin=e.target.value;autoHighlightFilters();renderAll()};$('#tpMax').onchange=e=>{state.tpMax=e.target.value;autoHighlightFilters();renderAll()};
- $('#displayMode').onchange=e=>{state.display=e.target.value;autoHighlightFromFilters=false;renderAll()};$('#logicMode').onchange=e=>{state.logic=e.target.value;renderAll()};
+ $('#displayMode').onchange=e=>{state.display=e.target.value;autoHighlightFromFilters=false;renderAll()};$('#logicMode').onchange=e=>{state.logic=e.target.value;renderAll()};$('#evolutionMode').onchange=e=>{state.evolutionMode=e.target.value==='all'?'all':'collapsed';state.expandedEvolutionChains=[];persist();renderAll()};
  $('#npMode').onchange=e=>{state.npMode=e.target.value;persist();renderAll()};$('#npShowHighTiers').onchange=e=>{state.npShowHighTiers=e.target.checked;persist();renderAll()};$('#compareModeToggle').onchange=e=>{state.compareMode=e.target.checked;persist();renderAll()};
  $('#purchaseBtn').onclick=()=>openDrawer('#purchaseDrawer');$('#rewardBuilderBtn').onclick=()=>openDrawer('#rewardDrawer');$('#drawerBackdrop').onclick=closeDrawers;$$('[data-close-drawer]').forEach(b=>b.onclick=closeDrawers);
  $('#characterName').oninput=e=>{purchaseState.character=e.target.value;persist();renderCart()};$('#commandType').onchange=e=>{purchaseState.command=e.target.value;persist();renderCart()};for(let i=1;i<=4;i++)$('#tp'+i).oninput=e=>{purchaseState.tp[i-1]=Number(e.target.value)||0;persist();renderAll()};$('#gold').oninput=e=>{purchaseState.gold=Number(e.target.value)||0;persist();renderAll()};$('#shopModeToggle').onclick=()=>{purchaseState.shopMode=!purchaseState.shopMode;persist();renderAll()};$('#shopCurrency').onchange=e=>{purchaseState.shopCurrency=e.target.value;persist();renderAll()};$('#purchaseOptimizeGoal').onchange=e=>{purchaseState.optGoal=e.target.value;persist();renderAll()};$('#attuneCap').oninput=e=>{purchaseState.attuneCap=Math.max(0,Number(e.target.value)||0);persist();renderAll()};
- $('#copyAllCommands').onclick=()=>copyText($('#allCommands').textContent==='Commands will appear here.'?'':$('#allCommands').textContent);$('#clearCart').onclick=()=>{state.cart=[];purchaseState.methods={};persist();renderAll()};
+ $('#copyAllCommands').onclick=()=>copyText($('#allCommands').textContent==='Commands will appear here.'?'':$('#allCommands').textContent);$('#clearCart').onclick=()=>{state.cart=[];purchaseState.methods={};purchaseState.upgradeOwned={};persist();renderAll()};
  for(const id of ['#discordMention','#rewardTier','#majorCount','#minorCount','#mncCount'])$(id).oninput=$(id).onchange=e=>{rewardState.mention=$('#discordMention').value;rewardState.tier=Number($('#rewardTier').value)||1;rewardState.majorCount=Math.max(0,Number($('#majorCount').value)||0);rewardState.minorCount=Math.max(0,Number($('#minorCount').value)||0);rewardState.mncCount=Math.max(0,Number($('#mncCount').value)||0);if(id==='#rewardTier')minorTierChooserOpen=false;persist();renderRewardBuilder()};
  $$('[data-random-reward]').forEach(b=>b.onclick=()=>{const kind=b.dataset.randomReward;if(kind==='minor')openMinorTierChooser();else{minorTierChooserOpen=false;renderMinorTierChooser();addRandomReward(kind)}});$('#rewardSearch').oninput=e=>{rewardSearchQuery=e.target.value;renderRewardBuilder()};$('#clearRewardSearch').onclick=()=>{rewardSearchQuery='';$('#rewardSearch').value='';renderRewardBuilder();$('#rewardSearch').focus()};$('#modFriendToggle').onchange=e=>{rewardState.modFriend=e.target.checked;persist();updateRewardCommand()};$('#copyRewardCommand').onclick=()=>copyText($('#rewardCommand').textContent);$('#clearReward').onclick=()=>{rewardState.major=[];rewardState.minor=[];rewardState.mnc=[];rewardState.customNames={};persist();renderRewardBuilder()};
  $('#compareBtn').onclick=()=>{if(state.compare.length<2){toast('Select at least two items in Compare Mode');return}$('#compareModal').classList.remove('hidden');renderCompare()};$('#closeCompare').onclick=()=>$('#compareModal').classList.add('hidden');
@@ -1661,7 +1841,7 @@ if(window.ResizeObserver){new ResizeObserver(()=>syncStickyTierHeaders(true)).ob
     refreshResponsiveClasses();
     updateScaleUi(scale);
     requestAnimationFrame(()=>{
-      try{syncMobileStickyOffset();syncStickyTierHeaders(true);syncNavigationDock();syncScrollNavigator();positionTextAppearanceMenu()}catch{}
+      try{syncMobileStickyOffset();syncStickyTierHeaders(true);syncNavigationDock();syncScrollNavigator();positionTextAppearanceMenu();scheduleTierRowHeightSync()}catch{}
     });
     if(!quiet)toast(`${prefs.autoFit?'Auto Fit':'Interface scale'}: ${Math.round(scale*100)}%`);
   }
@@ -1747,6 +1927,197 @@ if(window.ResizeObserver){new ResizeObserver(()=>syncStickyTierHeaders(true)).ob
 
   applyUiScale({quiet:true});
   syncResponsiveMenus();
+})();
+</script>
+
+<script>
+(()=>{
+  /* ----- Modes menu ----- */
+  const modesBtn=document.querySelector('#modesBtn'),modesMenu=document.querySelector('#modesMenu');
+  const placeModesMenu=()=>{if(!modesBtn||!modesMenu||modesMenu.classList.contains('hidden'))return;const r=modesBtn.getBoundingClientRect(),w=modesMenu.offsetWidth||320,h=modesMenu.offsetHeight||300,p=8;let left=Math.min(Math.max(p,r.left),window.innerWidth-w-p),top=r.bottom+6;if(top+h>window.innerHeight-p)top=Math.max(p,r.top-h-6);modesMenu.style.left=`${left}px`;modesMenu.style.top=`${top}px`};
+  const toggleModes=(force)=>{if(!modesBtn||!modesMenu)return;const open=force===undefined?modesMenu.classList.contains('hidden'):!!force;modesMenu.classList.toggle('hidden',!open);modesBtn.setAttribute('aria-expanded',open?'true':'false');if(open)requestAnimationFrame(placeModesMenu)};
+  modesBtn?.addEventListener('click',e=>{e.stopPropagation();toggleModes()});modesMenu?.addEventListener('click',e=>e.stopPropagation());document.addEventListener('click',e=>{if(modesMenu&&!modesMenu.classList.contains('hidden')&&!modesMenu.contains(e.target)&&e.target!==modesBtn)toggleModes(false)});window.addEventListener('resize',placeModesMenu,{passive:true});
+
+  /* ----- Artificer Mode state ----- */
+  let artSaved={};try{artSaved=JSON.parse(localStorage.getItem('mitArtificerMode')||'{}')}catch{}
+  state.artificerMode=!!artSaved.mode;{const lv=Number(artSaved.level||0)||0;state.artificerLevel=lv?Math.max(1,Math.min(20,lv)):0;}state.artificerFilter=['highlight','only','off'].includes(artSaved.filter)?artSaved.filter:'highlight';
+  const saveArt=()=>{try{localStorage.setItem('mitArtificerMode',JSON.stringify({mode:state.artificerMode,level:state.artificerLevel,filter:state.artificerFilter}))}catch{}};
+  const basePersist=persist;persist=function(){basePersist();saveArt()};
+  const ARTIFICER_PLANS={
+    2:['Alchemy Jug','Bag of Holding','Cap of Water Breathing','Goggles of Night','Manifold Tool','Repeating Shot','Returning Weapon','Rope of Climbing','Sending Stones','+1 Shield','Wand of Magic Detection','Wand of Secrets','+1 Wand of the War Mage','+1 Weapon','+1 Wraps of Unarmed Power'],
+    6:['+1 Armor','Boots of Elvenkind','Boots of the Winding Path','Cloak of Elvenkind','Cloak of the Manta Ray','Dazzling Weapon','Eyes of Charming','Eyes of Minute Seeing','Gloves of Thievery','Helm of Awareness','Lantern of Revealing','Mind Sharpener','Necklace of Adaptation','Pipes of Haunting','Repulsion Shield','Ring of Swimming','Ring of Water Walking','Sentinel Shield','Spell-Refueling Ring','Wand of Magic Missiles','Wand of Web','Weapon of Warning'],
+    10:['Armor of Resistance','Dagger of Venom','Elven Chain','Ring of Feather Falling','Ring of Jumping','Ring of Mind Shielding','+2 Shield','+2 Wand of the War Mage','+2 Weapon','+2 Wraps of Unarmed Power'],
+    14:['+2 Armor','Arrow-Catching Shield','Flame Tongue','Ring of Free Action','Ring of Protection','Ring of the Ram']
+  };
+  const artNorm=s=>norm(s).replace(/\u00a0/g,' ').replace(/[–—]/g,'-').replace(/\s+/g,' ').toLowerCase();
+  const artNameVariants=name=>{const n=artNorm(name),set=new Set([n]);const m=n.match(/^(\+\d+)\s+(.+)$/);if(m)set.add(`${m[2]} ${m[1]}`);const m2=n.match(/^(.+)\s+(\+\d+)$/);if(m2)set.add(`${m2[2]} ${m2[1]}`);return set};
+  const artExplicitForLevel=level=>{const set=new Set();for(const [threshold,names] of Object.entries(ARTIFICER_PLANS)){if(level>=Number(threshold))for(const name of names)for(const v of artNameVariants(name))set.add(v)}return set};
+  function artificerCapacity(level=state.artificerLevel){level=Number(level)||0;if(level<2)return 0;if(level<=5)return 2;if(level<=9)return 3;if(level<=13)return 4;if(level<=17)return 5;return 6}
+  function artificerEligible(x,level=state.artificerLevel){level=Number(level)||0;if(level<2||!x)return false;const nameVars=artNameVariants(x.Item),explicit=artExplicitForLevel(level);if([...nameVars].some(v=>explicit.has(v)))return true;const rarity=artNorm(x.Rarity),cat=artNorm(x.Category),item=artNorm(x.Item);if(level>=14&&rarity==='rare')return true;if(level>=10&&rarity==='uncommon')return true;if(level>=2&&rarity==='common'&&!cat.includes('potion')&&!cat.includes('scroll')&&!item.startsWith('potion of ')&&!item.startsWith('spell scroll'))return true;return false}
+  window.artificerEligible=artificerEligible;
+  const artModeBtn=document.querySelector('#artificerModeBtn'),artLevel=document.querySelector('#artificerLevel'),artFilter=document.querySelector('#artificerFilter'),artWrap=document.querySelector('#artificerFilterWrap'),artCap=document.querySelector('#artificerCapacityText');
+  function syncArtUI(){document.body.classList.toggle('artificer-mode',state.artificerMode);if(artModeBtn){artModeBtn.textContent=state.artificerMode?`Artificer: On${state.artificerLevel?` · Lv ${state.artificerLevel}`:''}`:'Artificer Mode';artModeBtn.classList.toggle('primary',state.artificerMode)}if(artLevel)artLevel.value=state.artificerLevel||'';if(artFilter)artFilter.value=state.artificerFilter;if(artWrap)artWrap.classList.toggle('hidden',!state.artificerMode);if(artCap){const cap=artificerCapacity();artCap.textContent=state.artificerLevel>=2?`Magical Item Plans: up to ${cap} crafted item${cap===1?'':'s'} at level ${state.artificerLevel}.`:'Enter level 2–20 to highlight eligible plans.'}}
+  artModeBtn?.addEventListener('click',()=>{state.artificerMode=!state.artificerMode;if(state.artificerMode&&state.artificerFilter==='off')state.artificerFilter='highlight';saveArt();renderAll();syncArtUI()});
+  artLevel?.addEventListener('input',()=>{const v=Math.max(1,Math.min(20,Number(artLevel.value)||0));state.artificerLevel=v;saveArt();renderAll();syncArtUI()});
+  artFilter?.addEventListener('change',()=>{state.artificerFilter=artFilter.value;saveArt();renderAll()});
+
+  /* Artificer filter integrates with browse/search visibility. */
+  const baseItemVisibleBrowse=itemVisibleBrowse;itemVisibleBrowse=function(x){if(!baseItemVisibleBrowse(x))return false;if(state.artificerMode&&state.artificerFilter==='only'&&state.artificerLevel>=2&&!artificerEligible(x))return false;return true};
+  const baseSearchResults=searchResults;searchResults=function(){let rows=baseSearchResults();if(state.artificerMode&&state.artificerFilter==='only'&&state.artificerLevel>=2)rows=rows.filter(x=>artificerEligible(x));return rows};
+
+  /* ----- Reward Table: Minor T2–T4 visibly includes previous-tier Major ----- */
+  const baseRewardCols=rewardCols;rewardCols=function(){const cols=baseRewardCols();for(const c of cols){if(c.kind!=='minor'||Number(c.tier)<2)continue;const prevTier=Number(c.tier)-1;const carry=dedupeSort(data.filter(x=>Number(x.Tier)===prevTier&&x['Consumable/Non Consumable']==='Consumable'&&norm(x['Cost (TP)'])==='Major'&&itemVisibleBrowse(x)).map(x=>({...x,_rewardCarryLabel:`Tier ${prevTier} Major`})));const seen=new Set(c.items.map(x=>x.Item));for(const x of carry)if(!seen.has(x.Item)){c.items.push(x);seen.add(x.Item)}c.items.sort((a,b)=>a.Item.localeCompare(b.Item,undefined,{numeric:true,sensitivity:'base'}));c.label=`Minor + Tier ${prevTier} Major`;c._carryTier=prevTier}return cols};
+  const baseCellHTML=cellHTML;cellHTML=function(x,groupClass=''){let html=baseCellHTML(x,groupClass);if(x?._rewardCarryLabel)html=html.replace(/(<span class="item-label">[\s\S]*?<\/span>)/,`$1<small class="reward-carry-note">${esc(x._rewardCarryLabel)}</small>`);return html};
+  const baseMobileItemHTML=mobileItemHTML;mobileItemHTML=function(x){let html=baseMobileItemHTML(x);if(x?._rewardCarryLabel)html=html.replace(/(<span class="item-label">[\s\S]*?<\/span>)/,`$1<small class="reward-carry-note">${esc(x._rewardCarryLabel)}</small>`);return html};
+
+  /* ----- Search & Filter is closed by default; move display controls into it. ----- */
+  const filterPanel=document.querySelector('#filterPanel'),filtersBtn=document.querySelector('#filtersBtn'),closeFilters=document.querySelector('#closeFilters'),applyFilters=document.querySelector('#applyFiltersBtn'),filterTop=document.querySelector('#filterPanel .filter-top');
+  let filterOpen=false;
+  const moveControl=(id,label)=>{const el=document.querySelector(id);if(!el||!filterTop)return;const source=el.closest('.toolbar-group');const lab=document.createElement('label');lab.innerHTML=`${label}`;lab.appendChild(el);filterTop.appendChild(lab);source?.remove()};
+  moveControl('#displayMode','Display');moveControl('#logicMode','Match');moveControl('#evolutionMode','Evolving Items');
+  const compare=document.querySelector('#compareModeToggle');if(compare&&filterTop){const source=compare.closest('.toolbar-group');const lab=document.createElement('label');lab.className='filter-check-label';lab.append(compare,document.createTextNode(' Compare Mode'));filterTop.appendChild(lab);source?.remove()}
+  function setFilterOpen(v){filterOpen=!!v;filterPanel?.classList.toggle('filter-collapsed',!filterOpen);filterPanel?.setAttribute('aria-hidden',filterOpen?'false':'true');if(filtersBtn){filtersBtn.setAttribute('aria-expanded',filterOpen?'true':'false');filtersBtn.classList.toggle('primary',filterOpen)}if(filterOpen){try{renderFiltersToInputs()}catch{}requestAnimationFrame(()=>document.querySelector('#filterSearch')?.focus())}}
+  setFilterOpen(false);if(filtersBtn)filtersBtn.onclick=()=>setFilterOpen(!filterOpen);if(closeFilters)closeFilters.onclick=()=>setFilterOpen(false);if(applyFilters)applyFilters.onclick=()=>{renderAll();setFilterOpen(false)};
+
+  /* ----- Hover details for every item ----- */
+  evolutionInfoAttrs=function(x){const m=evolutionMeta(x.Item),parts=[' data-item-info="1"'];if(norm(x.Errata))parts.push(` data-errata="${esc(norm(x.Errata))}"`);if(m?.next)parts.push(` data-evolution="${esc(m.next)}"`);if(m?.prev)parts.push(` data-evolution-prev="${esc(m.prev)}"`);return parts.join('')};
+  showItemInfoTooltip=function(target){const itemName=target?.closest?.('[data-item]')?.dataset?.item||'',x=itemName?getByName(itemName):null;if(!x)return;const meta=evolutionMeta(itemName),err=norm(x.Errata),next=meta?.next||'',prev=meta?.prev||'',tip=document.querySelector('#errataTooltip');if(!tip)return;const att=norm(x.Attunement)==='Yes'?'Requires Attunement':'No Attunement',cost=num(x['Cost (TP)'])!==null?`${x['Cost (TP)']} TP${num(x['Cost (Gold)'])!==null?` / ${Number(x['Cost (Gold)']).toLocaleString()} GP`:''}`:norm(x['Cost (TP)'])||'';let h=`<div class="item-info-title">${esc(x.Item)}</div><div class="item-info-tags"><span class="item-info-tag">${esc(x.Category||'Item')}</span><span class="item-info-tag">${esc(x.Rarity||'No Rarity')}</span><span class="item-info-tag">${esc(att)}</span>${x.Tier?`<span class="item-info-tag">Tier ${esc(x.Tier)}</span>`:''}${cost?`<span class="item-info-tag">${esc(cost)}</span>`:''}${state.artificerMode&&state.artificerLevel>=2&&artificerEligible(x)?'<span class="item-info-tag" style="border-color:#25d6a2;color:#25d6a2">Artificer Plan</span>':''}</div><div class="item-info-source"><strong>Source:</strong> ${esc(x.Source||'—')}</div>`;if(err)h+=`<div class="item-info-section"><div class="item-info-label">Errata</div><div>${esc(err)}</div></div>`;if(prev||next){h+=`<div class="item-info-section"><div class="item-info-label">Evolution Chain</div>`;if(prev)h+=`<div class="item-info-evolution requires">Requires previous version: <strong>${esc(prev)}</strong></div>`;if(next)h+=`<div class="item-info-evolution">Next: ${esc(next)}</div><button type="button" class="evolution-jump-btn" data-jump-evolution="${esc(next)}">Jump to ${esc(next)} →</button>`;h+='</div>'}tip.innerHTML=h;tip.classList.toggle('interactive',!!next);placeErrataTooltip(target)};
+  document.addEventListener('mouseover',e=>{const t=e.target.closest?.('[data-item-info]');if(t){cancelItemInfoHide();showItemInfoTooltip(t)}});document.addEventListener('mouseout',e=>{const t=e.target.closest?.('[data-item-info]');if(t){const tip=document.querySelector('#errataTooltip');if(e.relatedTarget&&tip?.contains(e.relatedTarget))return;if(!t.contains(e.relatedTarget))scheduleItemInfoHide()}});
+
+  /* ----- Purchase List title + Artificer eligibility guidance ----- */
+  const baseRenderCart=renderCart;renderCart=function(){baseRenderCart();const items=cartItems(),name=norm(purchaseState.character),title=document.querySelector('#purchaseDrawerTitle'),count=items.length;if(title)title.textContent=`Purchase List${name?` - ${name}`:''} - ${count} Item${count===1?'':'s'}`;const btn=document.querySelector('#purchaseBtn');if(btn)btn.title=title?.textContent||'Purchase List';let notice=document.querySelector('#artificerPurchaseNotice');if(!notice){notice=document.createElement('div');notice.id='artificerPurchaseNotice';notice.className='artificer-purchase-notice hidden';document.querySelector('#affordBox')?.before(notice)}if(state.artificerMode&&state.artificerLevel>=2){const eligible=items.filter(x=>artificerEligible(x)),cap=artificerCapacity(),over=Math.max(0,eligible.length-cap);notice.classList.remove('hidden');notice.innerHTML=`<strong>Artificer Magical Item Plans · Level ${state.artificerLevel}</strong><span>${eligible.length} selected item${eligible.length===1?' is':'s are'} eligible to craft instead of spending TP/GP. Capacity: ${eligible.length}/${cap}.${over?` <b>${over} over your plan capacity.</b>`:''}</span><small>Eligible purchases are marked below; choose whether to craft them before spending treasure points or gold.</small>`;document.querySelectorAll('.purchase-item').forEach(row=>{const nm=norm(row.querySelector('.purchase-item-name')?.textContent),x=getByName(nm);if(!x||!artificerEligible(x))return;row.classList.add('artificer-plan');const tags=row.querySelector('.purchase-item-tags');if(tags&&!tags.querySelector('.purchase-tag.artificer'))tags.insertAdjacentHTML('beforeend','<span class="purchase-tag artificer">Artificer Plan</span>');const controls=row.querySelector('.purchase-item-controls');if(controls&&!row.querySelector('.purchase-artificer-note'))controls.insertAdjacentHTML('afterbegin','<small class="purchase-artificer-note">You can craft this with a Magical Item Plan instead of paying TP/GP.</small>')})}else notice.classList.add('hidden');syncArtUI()};
+
+  /* Post-render Artificer highlights. */
+  function decorateArtificer(){document.querySelectorAll('[data-item]').forEach(el=>{const x=getByName(el.dataset.item);el.classList.toggle('artificer-plan',!!(state.artificerMode&&state.artificerLevel>=2&&state.artificerFilter!=='off'&&x&&artificerEligible(x)))})}
+  const baseRenderAll=renderAll;renderAll=function(){baseRenderAll();decorateArtificer();syncArtUI();requestAnimationFrame(()=>{decorateArtificer();try{scheduleTierRowHeightSync()}catch{}})};
+
+  /* Scrollbar navigation is the default for this release, including existing users once. */
+  try{if(localStorage.getItem('mitScrollbarDefaultArtificerV1')!=='1'){localStorage.setItem('mitScrollbarDefaultArtificerV1','1');state.navStyle='scrollbar';persist();syncModeUI()}}catch{state.navStyle='scrollbar';syncModeUI()}
+
+  /* Existing responsive migration used to force hidden navigation; mark that migration complete. */
+  try{const p=JSON.parse(localStorage.getItem('mitResponsivePrefs')||'{}');p.navHiddenDefaultMigrated=true;localStorage.setItem('mitResponsivePrefs',JSON.stringify(p))}catch{}
+
+  syncArtUI();renderAll();setFilterOpen(false);
+})();
+</script>
+
+<script id="purchase-sidebar-transfer-script">
+(()=>{
+  /* ---------- Purchase sidebar ---------- */
+  let purchaseSidebar=false;
+  try{purchaseSidebar=localStorage.getItem('mitPurchaseSidebar')==='1'}catch{}
+  const purchaseDrawer=document.querySelector('#purchaseDrawer'),drawerBackdrop=document.querySelector('#drawerBackdrop');
+  if(purchaseDrawer){
+    const head=purchaseDrawer.querySelector('.drawer-head'),close=head?.querySelector('[data-close-drawer]');
+    if(head&&close&&!document.querySelector('#purchaseSidebarToggle')){
+      const actions=document.createElement('div');actions.className='drawer-head-actions';
+      const toggle=document.createElement('button');toggle.type='button';toggle.className='mini-btn';toggle.id='purchaseSidebarToggle';
+      actions.append(toggle,close);head.append(actions);
+    }
+  }
+  const sidebarToggle=document.querySelector('#purchaseSidebarToggle');
+  function persistSidebar(){try{localStorage.setItem('mitPurchaseSidebar',purchaseSidebar?'1':'0')}catch{}}
+  function syncPurchaseSidebarButton(){if(sidebarToggle){sidebarToggle.textContent=purchaseSidebar?'Use Drawer':'Use Sidebar';sidebarToggle.title=purchaseSidebar?'Open Purchase List as the normal overlay drawer':'Pin Purchase List beside the table so the MIT stays interactive'}}
+  const oldOpenDrawer=openDrawer,oldCloseDrawers=closeDrawers;
+  function removePurchaseSidebarLayout(){document.body.classList.remove('purchase-sidebar-open');window.dispatchEvent(new Event('resize'))}
+  function openPurchasePanel(){
+    document.querySelector('#rewardDrawer')?.classList.add('hidden');
+    document.querySelector('#rewardDrawer')?.setAttribute('aria-hidden','true');
+    if(!purchaseSidebar){removePurchaseSidebarLayout();return oldOpenDrawer('#purchaseDrawer')}
+    if(!purchaseDrawer)return;
+    drawerBackdrop?.classList.add('hidden');purchaseDrawer.classList.remove('hidden');purchaseDrawer.setAttribute('aria-hidden','false');document.body.classList.add('purchase-sidebar-open');syncPurchaseSidebarButton();requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')))
+  }
+  openDrawer=function(id){if(id==='#purchaseDrawer')return openPurchasePanel();removePurchaseSidebarLayout();return oldOpenDrawer(id)};
+  closeDrawers=function(){removePurchaseSidebarLayout();return oldCloseDrawers()};
+  const purchaseBtn=document.querySelector('#purchaseBtn');if(purchaseBtn)purchaseBtn.onclick=openPurchasePanel;
+  if(drawerBackdrop)drawerBackdrop.onclick=()=>closeDrawers();
+  purchaseDrawer?.querySelector('[data-close-drawer]')?.addEventListener('click',e=>{e.preventDefault();closeDrawers()});
+  sidebarToggle?.addEventListener('click',()=>{purchaseSidebar=!purchaseSidebar;persistSidebar();syncPurchaseSidebarButton();if(!purchaseDrawer?.classList.contains('hidden')){purchaseDrawer.classList.add('hidden');removePurchaseSidebarLayout();requestAnimationFrame(openPurchasePanel)}});
+  syncPurchaseSidebarButton();
+
+  /* ---------- Selective import/export ---------- */
+  const navTheme=document.querySelector('#themeBtn'),navReset=document.querySelector('#resetBtn');
+  if(navTheme&&!document.querySelector('#dataTransferBtn')){
+    const b=document.createElement('button');b.type='button';b.className='mini-btn';b.id='dataTransferBtn';b.textContent='Import / Export';navTheme.after(b);
+  }
+  const moreMenu=document.querySelector('#responsiveMoreMenu');
+  if(moreMenu&&!moreMenu.querySelector('[data-proxy="#dataTransferBtn"]')){
+    const b=document.createElement('button');b.type='button';b.dataset.proxy='#dataTransferBtn';b.textContent='Import / Export';
+    const reset=moreMenu.querySelector('[data-proxy="#resetBtn"]');moreMenu.insertBefore(b,reset||null);
+  }
+  if(!document.querySelector('#transferModal')){
+    const modal=document.createElement('div');modal.id='transferModal';modal.className='modal hidden';modal.setAttribute('aria-hidden','true');
+    modal.innerHTML=`<div class="modal-card transfer-modal-card"><div class="dialog-title"><div><h2>Import / Export</h2><small>Move selected MIT settings between browsers or share them with another player.</small></div><button class="xbtn" id="closeTransferModal" aria-label="Close">×</button></div><div class="transfer-body"><div class="transfer-intro">Choose exactly which parts of the application to include. Imported data only replaces the sections checked below.</div><div class="transfer-grid" id="transferSections"></div><div class="transfer-summary" id="transferSummary">All sections are selected.</div><div class="transfer-tools"><button class="mini-btn" type="button" id="transferSelectAll">Select All</button><button class="mini-btn" type="button" id="transferSelectNone">Select None</button><span class="spacer"></span><button class="mini-btn" type="button" id="importSelectedData">Import Selected</button><button class="mini-btn primary" type="button" id="exportSelectedData">Export Selected</button><input id="importSelectedDataFile" type="file" accept="application/json,.json" hidden></div></div></div>`;
+    document.body.append(modal);
+  }
+  const transferDefs=[
+    ['purchase','Purchase List & Wallet','Selected items, character name, TP/GP, payment choices, Shop Mode settings, upgrade confirmations, and sidebar preference.'],
+    ['filters','MIT Filters & View','Search/filter values, display mode, active tab, compare-mode toggle, and evolution-chain visibility.'],
+    ['modes','Modes','Simple, Mobile, Spreadsheet, New Player, Navigation, and Artificer Mode settings.'],
+    ['theme','Theme & Display','Theme/custom colors, MIT-color preference, font, text size, and responsive display preferences.'],
+    ['reward','Reward Builder','Reward tier/counts, selected rewards, custom reward names, Discord mention, and ModFriend setting.'],
+    ['personal','Favorites & Compare','Favorite items and Compare selections.']
+  ];
+  const transferSections=document.querySelector('#transferSections');
+  if(transferSections&&!transferSections.children.length)transferSections.innerHTML=transferDefs.map(([k,t,d])=>`<label class="transfer-option"><input type="checkbox" data-transfer-section="${k}" checked><span><strong>${t}</strong><small>${d}</small></span></label>`).join('');
+  const selectedTransferKeys=()=>[...document.querySelectorAll('[data-transfer-section]:checked')].map(x=>x.dataset.transferSection);
+  function updateTransferSummary(){const keys=selectedTransferKeys(),el=document.querySelector('#transferSummary');if(!el)return;el.textContent=keys.length===transferDefs.length?'All sections are selected.':keys.length?`${keys.length} section${keys.length===1?'':'s'} selected: ${transferDefs.filter(x=>keys.includes(x[0])).map(x=>x[1]).join(', ')}.`:'Nothing selected.'}
+  transferSections?.addEventListener('change',updateTransferSummary);updateTransferSummary();
+  function openTransferModal(){const m=document.querySelector('#transferModal');m?.classList.remove('hidden');m?.setAttribute('aria-hidden','false')}
+  function closeTransferModal(){const m=document.querySelector('#transferModal');m?.classList.add('hidden');m?.setAttribute('aria-hidden','true')}
+  document.querySelector('#dataTransferBtn')?.addEventListener('click',openTransferModal);document.querySelector('#closeTransferModal')?.addEventListener('click',closeTransferModal);
+  document.querySelector('#transferModal')?.addEventListener('click',e=>{if(e.target.id==='transferModal')closeTransferModal()});
+  document.querySelector('#transferSelectAll')?.addEventListener('click',()=>{document.querySelectorAll('[data-transfer-section]').forEach(x=>x.checked=true);updateTransferSummary()});
+  document.querySelector('#transferSelectNone')?.addEventListener('click',()=>{document.querySelectorAll('[data-transfer-section]').forEach(x=>x.checked=false);updateTransferSummary()});
+
+  const clone=v=>JSON.parse(JSON.stringify(v));
+  function transferSnapshot(keys){
+    const sections={};
+    if(keys.includes('purchase'))sections.purchase={cart:[...state.cart],character:purchaseState.character,command:purchaseState.command,tp:[...purchaseState.tp],gold:purchaseState.gold,methods:clone(purchaseState.methods),optGoal:purchaseState.optGoal,shopMode:purchaseState.shopMode,shopCurrency:purchaseState.shopCurrency,attuneCap:purchaseState.attuneCap,upgradeOwned:clone(purchaseState.upgradeOwned),sidebar:purchaseSidebar};
+    if(keys.includes('filters'))sections.filters={view:state.view,display:state.display,logic:state.logic,q:state.q,tier:state.tier,attune:state.attune,tpMin:state.tpMin,tpMax:state.tpMax,filters:clone(state.filters),compareMode:state.compareMode,evolutionMode:state.evolutionMode,expandedEvolutionChains:[...state.expandedEvolutionChains]};
+    if(keys.includes('modes'))sections.modes={simpleMode:state.simpleMode,mobileMode:state.mobileMode,spreadsheetMode:state.spreadsheetMode,newPlayer:state.newPlayer,npMode:state.npMode,npShowHighTiers:state.npShowHighTiers,classes:[...state.classes],navStyle:state.navStyle,artificerMode:!!state.artificerMode,artificerLevel:Number(state.artificerLevel||0),artificerFilter:state.artificerFilter||'highlight'};
+    if(keys.includes('theme')){let responsive=null;try{responsive=JSON.parse(localStorage.getItem('mitResponsivePrefs')||'null')}catch{}sections.theme={theme:state.theme,customTheme:clone(state.customTheme),customBaseTheme:state.customBaseTheme,preserveMitColors:state.preserveMitColors,fontKey:state.fontKey,textScale:state.textScale,responsivePrefs:responsive}}
+    if(keys.includes('reward'))sections.reward={mention:rewardState.mention,tier:rewardState.tier,majorCount:rewardState.majorCount,minorCount:rewardState.minorCount,mncCount:rewardState.mncCount,major:[...rewardState.major],minor:[...rewardState.minor],mnc:[...rewardState.mnc],customNames:clone(rewardState.customNames),modFriend:rewardState.modFriend};
+    if(keys.includes('personal'))sections.personal={favorites:[...state.favorites],compare:[...state.compare]};
+    return {format:'dnd-friends-mit-state',version:1,exportedAt:new Date().toISOString(),sections};
+  }
+  function downloadTransfer(obj){const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`dnd-friends-mit-${new Date().toISOString().slice(0,10)}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+  document.querySelector('#exportSelectedData')?.addEventListener('click',()=>{const keys=selectedTransferKeys();if(!keys.length){toast('Select at least one section to export');return}downloadTransfer(transferSnapshot(keys));toast('Selected MIT data exported')});
+
+  function applyTransfer(raw,keys){
+    const sections=raw?.sections||raw;if(!sections||typeof sections!=='object')throw new Error('Invalid MIT transfer file');
+    if(keys.includes('purchase')&&sections.purchase){const p=sections.purchase;state.cart=Array.isArray(p.cart)?p.cart.filter(n=>!!getByName(n)):[];Object.assign(purchaseState,{character:norm(p.character),command:['find','craft','meme'].includes(p.command)?p.command:'craft',tp:Array.isArray(p.tp)?p.tp.slice(0,4).map(v=>Math.max(0,Number(v)||0)):[0,0,0,0],gold:Math.max(0,Number(p.gold)||0),methods:p.methods&&typeof p.methods==='object'?clone(p.methods):{},optGoal:['balanced','preserveTp','preserveGp'].includes(p.optGoal)?p.optGoal:'balanced',shopMode:!!p.shopMode,shopCurrency:['auto','tp','gp'].includes(p.shopCurrency)?p.shopCurrency:'auto',attuneCap:Math.max(0,Number(p.attuneCap??3)),upgradeOwned:p.upgradeOwned&&typeof p.upgradeOwned==='object'?clone(p.upgradeOwned):{}});purchaseSidebar=!!p.sidebar;persistSidebar()}
+    if(keys.includes('filters')&&sections.filters){const f=sections.filters;state.view=['magic','reward','search'].includes(f.view)?f.view:'magic';state.display=['none','highlight','only'].includes(f.display)?f.display:'none';state.logic=f.logic==='or'?'or':'and';state.q=norm(f.q);state.tier=norm(f.tier);state.attune=norm(f.attune);state.tpMin=f.tpMin??'';state.tpMax=f.tpMax??'';state.filters=f.filters&&typeof f.filters==='object'?clone(f.filters):{};state.compareMode=!!f.compareMode;state.evolutionMode=f.evolutionMode==='all'?'all':'collapsed';state.expandedEvolutionChains=Array.isArray(f.expandedEvolutionChains)?[...f.expandedEvolutionChains]:[]}
+    if(keys.includes('modes')&&sections.modes){const m=sections.modes;state.simpleMode=!!m.simpleMode;state.mobileMode=!!m.mobileMode;state.spreadsheetMode=!!m.spreadsheetMode;state.newPlayer=!!m.newPlayer;state.npMode=['highlight','only','all'].includes(m.npMode)?m.npMode:'highlight';state.npShowHighTiers=!!m.npShowHighTiers;state.classes=Array.isArray(m.classes)?[...m.classes]:[];state.navStyle=['hidden','buttons','scrollbar'].includes(m.navStyle)?m.navStyle:'scrollbar';state.artificerMode=!!m.artificerMode;state.artificerLevel=Math.max(0,Math.min(20,Number(m.artificerLevel)||0));state.artificerFilter=['highlight','only','off'].includes(m.artificerFilter)?m.artificerFilter:'highlight';try{localStorage.setItem('mitArtificerMode',JSON.stringify({mode:state.artificerMode,level:state.artificerLevel,filter:state.artificerFilter}))}catch{}}
+    if(keys.includes('theme')&&sections.theme){const t=sections.theme;state.theme=(t.theme==='custom'||THEMES[t.theme])?t.theme:'default';state.customTheme=t.customTheme&&typeof t.customTheme==='object'?clone(t.customTheme):null;state.customBaseTheme=THEMES[t.customBaseTheme]?t.customBaseTheme:'default';state.preserveMitColors=t.preserveMitColors!==false;state.fontKey=FONT_OPTIONS[t.fontKey]?t.fontKey:'inter';state.textScale=Math.max(.8,Math.min(1.8,Number(t.textScale)||1.3));if(t.responsivePrefs&&typeof t.responsivePrefs==='object')try{localStorage.setItem('mitResponsivePrefs',JSON.stringify(t.responsivePrefs))}catch{}}
+    if(keys.includes('reward')&&sections.reward){const r=sections.reward;Object.assign(rewardState,{mention:norm(r.mention),tier:Math.max(1,Math.min(4,Number(r.tier)||1)),majorCount:Math.max(0,Number(r.majorCount)||0),minorCount:Math.max(0,Number(r.minorCount)||0),mncCount:Math.max(0,Number(r.mncCount)||0),major:Array.isArray(r.major)?[...r.major]:[],minor:Array.isArray(r.minor)?[...r.minor]:[],mnc:Array.isArray(r.mnc)?[...r.mnc]:[],customNames:r.customNames&&typeof r.customNames==='object'?clone(r.customNames):{},modFriend:!!r.modFriend})}
+    if(keys.includes('personal')&&sections.personal){state.favorites=Array.isArray(sections.personal.favorites)?[...sections.personal.favorites]:[];state.compare=Array.isArray(sections.personal.compare)?sections.personal.compare.slice(0,4):[]}
+    persist();applyTypography();const themeObj=state.theme==='custom'?(state.customTheme||THEMES.default):(THEMES[state.theme]||THEMES.default);applyTheme(themeObj,{preserve:state.preserveMitColors,themeName:state.theme});buildClassList();renderFilterOptions();renderFiltersToInputs();removePurchaseSidebarLayout();syncPurchaseSidebarButton();setView(state.view);closeTransferModal();toast('Selected MIT data imported')
+  }
+  const importFile=document.querySelector('#importSelectedDataFile');document.querySelector('#importSelectedData')?.addEventListener('click',()=>{if(!selectedTransferKeys().length){toast('Select at least one section to import');return}importFile?.click()});
+  importFile?.addEventListener('change',async()=>{const file=importFile.files?.[0];if(!file)return;try{applyTransfer(JSON.parse(await file.text()),selectedTransferKeys())}catch(err){console.error(err);toast('Could not import MIT data')}finally{importFile.value=''}});
+
+  /* ---------- Reset modal: resets every mode; theme reset is optional. ---------- */
+  if(!document.querySelector('#resetAppModal')){
+    const modal=document.createElement('div');modal.id='resetAppModal';modal.className='modal hidden';modal.setAttribute('aria-hidden','true');modal.innerHTML=`<div class="modal-card" style="width:min(520px,calc(100vw - 18px))"><div class="dialog-title"><h2>Reset MIT</h2><button class="xbtn" id="closeResetAppModal">×</button></div><div class="reset-options"><p>This clears filters, favorites, compare selections, purchases, balances, rewards, and resets <strong>Simple, Mobile, Spreadsheet, New Player, Artificer, Shop, and sidebar modes</strong>. The default draggable scrollbar remains enabled.</p><label class="reset-theme-choice"><input type="checkbox" id="resetThemeToo"><span><strong>Reset theme too</strong><small>Return colors to Modern MIT. Leave unchecked to keep the current theme.</small></span></label><div class="dialog-actions" style="position:static;margin:0 -12px -12px"><button class="mini-btn" id="cancelResetApp">Cancel</button><button class="mini-btn warn" id="confirmResetApp">Reset Everything</button></div></div></div>`;document.body.append(modal)
+  }
+  function closeResetModal(){document.querySelector('#resetAppModal')?.classList.add('hidden');document.querySelector('#resetAppModal')?.setAttribute('aria-hidden','true')}
+  function openResetModal(){const m=document.querySelector('#resetAppModal');m?.classList.remove('hidden');m?.setAttribute('aria-hidden','false');const c=document.querySelector('#resetThemeToo');if(c)c.checked=false}
+  function performFullReset(resetTheme){
+    const keepTheme=state.theme,keepCustom=clone(state.customTheme),keepBase=state.customBaseTheme,keepPreserve=state.preserveMitColors,keepFont=state.fontKey,keepScale=state.textScale;
+    Object.assign(state,{view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],simpleMode:false,mobileMode:false,spreadsheetMode:false,navStyle:'scrollbar',evolutionMode:'collapsed',expandedEvolutionChains:[],artificerMode:false,artificerLevel:0,artificerFilter:'highlight'});
+    if(resetTheme){Object.assign(state,{theme:'default',customTheme:null,customBaseTheme:'default',preserveMitColors:true,fontKey:keepFont,textScale:keepScale})}else Object.assign(state,{theme:keepTheme,customTheme:keepCustom,customBaseTheme:keepBase,preserveMitColors:keepPreserve,fontKey:keepFont,textScale:keepScale});
+    Object.assign(purchaseState,{character:'',command:'craft',tp:[0,0,0,0],gold:0,methods:{},optGoal:'balanced',shopMode:false,shopCurrency:'auto',attuneCap:3,upgradeOwned:{}});
+    Object.assign(rewardState,{mention:'',tier:1,majorCount:0,minorCount:0,mncCount:0,major:[],minor:[],mnc:[],customNames:{},modFriend:false});
+    purchaseSidebar=false;persistSidebar();try{localStorage.setItem('mitArtificerMode',JSON.stringify({mode:false,level:0,filter:'highlight'}))}catch{}
+    persist();removePurchaseSidebarLayout();closeDrawers();document.querySelector('#modesMenu')?.classList.add('hidden');document.querySelector('#closeFilters')?.click();applyTypography();const themeObj=state.theme==='custom'?(state.customTheme||THEMES.default):(THEMES[state.theme]||THEMES.default);applyTheme(themeObj,{preserve:state.preserveMitColors,themeName:state.theme});buildClassList();renderFilterOptions();renderFiltersToInputs();syncPurchaseSidebarButton();setView('magic');closeResetModal();toast(resetTheme?'Reset complete — theme restored to Modern MIT':'Reset complete — current theme kept')
+  }
+  const resetBtn=document.querySelector('#resetBtn');if(resetBtn)resetBtn.onclick=openResetModal;
+  document.querySelector('#closeResetAppModal')?.addEventListener('click',closeResetModal);document.querySelector('#cancelResetApp')?.addEventListener('click',closeResetModal);document.querySelector('#resetAppModal')?.addEventListener('click',e=>{if(e.target.id==='resetAppModal')closeResetModal()});document.querySelector('#confirmResetApp')?.addEventListener('click',()=>performFullReset(!!document.querySelector('#resetThemeToo')?.checked));
+  /* Responsive Reset proxy already targets #resetBtn, so it inherits the new dialog. */
+
+  /* Ensure current content immediately reflects evolving-over-attunement styling and sidebar state. */
+  syncPurchaseSidebarButton();
 })();
 </script>
 </body>
