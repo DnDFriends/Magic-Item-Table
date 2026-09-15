@@ -36,7 +36,7 @@ button,input,select{font:inherit}button{color:inherit}a{color:inherit}
 .mit-table{border-collapse:collapse;table-layout:fixed;min-width:1920px;width:100%;background:var(--surface);font-size:11px;line-height:1.05}.mit-table.reward{min-width:1650px}
 .mit-table th,.mit-table td{border:1px solid var(--grid);padding:2px 4px;height:20px;vertical-align:middle}.mit-table thead th{background:#23282c;color:var(--headerText);font-weight:700;text-align:center}.mit-table .tier-head{background:#2c3237;font-size:12px;height:24px}.mit-table .cost-head{background:#353b40;font-size:10px;height:22px}.mit-table .group-start{border-left-width:4px}.mit-table .group-end{border-right-width:4px}.mit-table tbody tr:nth-child(even) td{background:var(--alt)}.mit-table tbody tr:nth-child(odd) td{background:var(--surface)}
 .item-cell{position:relative;min-width:0;padding-right:34px!important}.item-name{display:block;width:100%;border:0;background:transparent;text-align:left;padding:0;color:var(--nonattune);cursor:pointer;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:15px}.item-name.attune{color:var(--attune)}.item-name:hover{text-decoration:underline}.item-cell.no-match .item-name{opacity:.20}.item-cell.matching{box-shadow:inset 0 0 0 1px rgba(255,255,255,.13)}.item-cell.np-friendly{background-image:linear-gradient(90deg,color-mix(in srgb,var(--newplayer) 18%,transparent),transparent 38%)}.item-cell.class-rec{background-image:linear-gradient(90deg,color-mix(in srgb,var(--classrec) 19%,transparent),transparent 38%)}.item-cell.np-friendly.class-rec{background-image:linear-gradient(90deg,color-mix(in srgb,var(--newplayer) 17%,transparent),color-mix(in srgb,var(--classrec) 13%,transparent),transparent 55%)}
-.cell-actions{position:absolute;right:2px;top:1px;height:17px;display:flex;align-items:center;gap:1px;opacity:0}.item-cell:hover .cell-actions,.item-cell:focus-within .cell-actions,.cell-actions.keep{opacity:1}.cell-action{appearance:none;border:0;background:#1c2125;color:#e8ecef;width:16px;height:16px;padding:0;line-height:15px;text-align:center;font-size:10px;cursor:pointer}.cell-action:hover{background:#59636b}.cell-action.star.on{color:#ffd34d}.cell-action.buy{color:#8ee3a0}.cell-action.compare.on{color:var(--compare)}
+.cell-actions{position:absolute;right:2px;top:1px;height:17px;display:flex;align-items:center;gap:1px;opacity:0}.item-cell:hover .cell-actions,.item-cell:focus-within .cell-actions,.cell-actions.keep{opacity:1}.cell-action{appearance:none;border:0;background:#1c2125;color:#e8ecef;width:16px;height:16px;padding:0;line-height:15px;text-align:center;font-size:10px;cursor:pointer}.cell-action:hover{background:#59636b}.cell-action.star.on{color:#ffd34d}.cell-action.buy{color:#8ee3a0}.cell-action.buy.on{color:var(--warning);background:color-mix(in srgb,var(--warning) 14%,#1c2125)}.cell-action.compare.on{color:var(--compare)}
 .sheet-footer{padding:7px 9px;background:#292e33;border-bottom:1px solid var(--grid);font-size:11px;color:#cbd0d4;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .panel{margin:10px;border:1px solid var(--grid);background:#2d3338;box-shadow:var(--shadow)}.panel-head{background:#1f2428;border-bottom:1px solid var(--grid);padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:10px}.panel-head h2{font-size:14px;margin:0}.panel-body{padding:9px}
 .search-table{width:100%;border-collapse:collapse;background:var(--surface);font-size:11px}.search-table th,.search-table td{border:1px solid var(--grid);padding:5px 6px;text-align:left}.search-table th{position:sticky;top:0;background:#23282c;color:#fff;z-index:2}.search-table tbody tr:nth-child(even){background:var(--alt)}.search-table .item-anchor{font-weight:700;text-decoration:none}.search-table .item-anchor.attune{color:var(--attune)}.search-table .item-anchor.noattune{color:var(--nonattune)}.search-table .item-anchor:hover{text-decoration:underline}.search-actions{display:flex;gap:3px;white-space:nowrap}
@@ -352,7 +352,7 @@ body.theme-bear .ellen-bear-theme-art{display:none!important}
 
 
 /* === 2026-09-14 typography / aligned rows / purchase & reward UI refinement === */
-:root{--text-scale:1.3;--tier-row-height:calc(44px * var(--text-scale));--tier-head-height:calc(48px * var(--text-scale));--cost-head-height:calc(38px * var(--text-scale))}
+:root{--text-scale:1.3;--tier-row-height:calc(40px * var(--text-scale));--tier-head-height:calc(48px * var(--text-scale));--cost-head-height:calc(38px * var(--text-scale))}
 body{font-size:calc(14px * var(--text-scale))!important}
 .ad-title{font-size:calc(15px * var(--text-scale))!important}.ad-note{font-size:calc(10px * var(--text-scale))!important}.ad-fun{font-size:calc(13px * var(--text-scale))!important}
 .status-pill{font-size:calc(11px * var(--text-scale))!important}.legend{font-size:calc(10px * var(--text-scale))!important}.sheet-footer{font-size:calc(11px * var(--text-scale))!important}
@@ -372,6 +372,15 @@ body{font-size:calc(14px * var(--text-scale))!important}
 /* Purchase List cleanup */
 #purchaseDrawer{width:min(650px,100vw)}#purchaseDrawer .drawer-head{padding:12px 14px}#purchaseDrawer .drawer-head>div{display:grid;gap:2px}#purchaseDrawer .drawer-head small{color:var(--muted);font-size:calc(9px * var(--text-scale))}.purchase-body{display:grid;gap:9px;padding:10px!important}.purchase-section{border:1px solid var(--grid);border-radius:11px;background:color-mix(in srgb,var(--surface) 93%,var(--page));overflow:hidden}.purchase-section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border-bottom:1px solid color-mix(in srgb,var(--grid) 70%,transparent);background:color-mix(in srgb,var(--header) 36%,var(--surface))}.purchase-section-head>div{display:grid;gap:1px}.purchase-section-head strong{font-size:calc(11px * var(--text-scale))}.purchase-section-head small{color:var(--muted);font-size:calc(8.5px * var(--text-scale))}.purchase-form-grid,.purchase-wallet .balance-grid,.purchase-shop-settings .shop-config-grid{padding:9px;margin:0}.purchase-shop-settings .shop-config-grid{grid-template-columns:1fr 1fr 110px}.purchase-shop-settings .shop-help{display:block;padding:0 10px 9px;margin:0}.purchase-summary{margin:0!important;border-radius:11px!important;padding:0!important;overflow:hidden}.purchase-summary-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:0}.purchase-summary-cell{padding:9px 10px;border-right:1px solid var(--grid)}.purchase-summary-cell:last-child{border-right:0}.purchase-summary-cell small{display:block;color:var(--muted);font-size:calc(8px * var(--text-scale));font-weight:800;text-transform:uppercase;letter-spacing:.06em}.purchase-summary-cell strong{display:block;margin-top:3px;font-size:calc(11px * var(--text-scale));line-height:1.3}.cart-list{padding:7px;margin:0!important;gap:6px!important}.purchase-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:9px;border:1px solid color-mix(in srgb,var(--grid) 86%,transparent);border-radius:9px;background:color-mix(in srgb,var(--alt) 88%,var(--surface))}.purchase-item-main{min-width:0}.purchase-item-name{font-size:calc(11px * var(--text-scale));line-height:1.25}.purchase-item-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}.purchase-tag{padding:2px 6px;border:1px solid color-mix(in srgb,var(--grid) 70%,transparent);border-radius:999px;background:var(--surface);color:var(--muted);font-size:calc(8px * var(--text-scale));font-weight:750}.purchase-tag.attune{color:var(--attune);border-color:color-mix(in srgb,var(--attune) 45%,var(--grid))}.purchase-item-controls{display:grid;grid-template-columns:minmax(118px,150px) auto;gap:6px;align-items:center}.purchase-pay{display:grid;gap:3px}.purchase-pay select{min-height:32px;background:var(--surface);color:var(--text);border:1px solid var(--grid);border-radius:6px;padding:4px 6px}.purchase-pay small{text-align:right;color:var(--muted);font-size:calc(8px * var(--text-scale))}.purchase-item-actions{display:flex;gap:4px}.purchase-item-actions .mini-btn{margin:0;padding:5px 7px}.purchase-command-section .copybox{margin:0;border:0;border-radius:0;max-height:230px;overflow:auto}.purchase-command-section .purchase-section-head .mini-btn,.purchase-items-section .purchase-section-head .mini-btn{margin:0}
 @media(max-width:680px){.purchase-summary-grid{grid-template-columns:1fr}.purchase-summary-cell{border-right:0;border-bottom:1px solid var(--grid)}.purchase-summary-cell:last-child{border-bottom:0}.purchase-item{grid-template-columns:1fr}.purchase-item-controls{grid-template-columns:minmax(0,1fr) auto}.purchase-shop-settings .shop-config-grid{grid-template-columns:1fr}.reward-search-row{grid-template-columns:1fr auto}.reward-search-count{grid-column:1/-1;padding:0}.text-appearance-menu{left:9px!important;right:9px!important;width:auto!important}}
+
+
+/* Theme editor base/reset controls + contrast-safe themed labels. */
+.theme-preset-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:7px 0 2px}.theme-preset-actions .hint{font-size:10px;color:var(--muted);font-weight:650}.theme-preset-actions .mini-btn{margin-left:0}
+/* Tier headers can become very bright in pastel themes; use the theme's audited foreground instead of forcing white. */
+.tier-kicker{color:var(--text)!important;text-shadow:none!important}.mobile-cost-group>summary,.mobile-cost-group>summary::before{color:var(--text)}
+
+/* Hidden is the default bottom-navigation state; users can opt into tier buttons or the draggable scrollbar. */
+.nav-style-btn:not(.primary){opacity:.86}
 
 </style>
 
@@ -459,6 +468,262 @@ body.theme-nation .version-badge{border-color:color-mix(in srgb,var(--tri2) 58%,
 @media(max-width:760px){.nation-flag-badge{width:36px;height:24px}}
 
 </style>
+
+<style id="application-wide-theme-contrast">
+/* ===== Application-wide theme contrast =====
+   Semantic foreground roles are recalculated by applyTheme() for every preset/custom theme.
+   This layer intentionally covers the whole application, not only the item tables. */
+:root{
+ --ui-page-text:var(--text);--ui-surface-text:var(--text);--ui-muted:var(--muted);
+ --ui-header-text:var(--headerText);--ui-header-muted:var(--muted);
+ --ui-panel-head-bg:var(--surface);--ui-panel-head-text:var(--text);--ui-panel-head-muted:var(--muted);
+ --ui-control-bg:var(--surface);--ui-control-text:var(--text);--ui-control-muted:var(--muted);
+ --ui-button-bg:var(--surface);--ui-button-text:var(--text);--ui-button-hover-bg:var(--selected);--ui-button-hover-text:var(--text);
+ --ui-active-bg:var(--selected);--ui-active-text:var(--text);--ui-copy-bg:var(--header);--ui-copy-text:var(--headerText);
+ --ui-toast-bg:var(--header);--ui-toast-text:var(--headerText);--ui-warning-text:var(--warning);--ui-success-text:var(--success);--ui-accent-text:var(--accent)
+}
+body{color:var(--ui-page-text)!important}
+.content,.panel,.panel-body,.drawer,.drawer-body,.modal-card,.filter-dialog,.filter-body,.reward-pool,.purchase-section,.shop-config-card,.text-appearance-menu,.tricolor-builder,.color-field,.theme-preserve-row,.reward-tools{color:var(--ui-surface-text)!important}
+
+/* Header, navigation and persistent chrome */
+.top-sheet,.app-header,.nav-row,.toolbar,.legend,.npbar,.shop-bar,.nav-dock,.scroll-navigator{color:var(--ui-header-text)!important}
+.app-header .eyebrow,.app-header .brand-note,.header-key small,.flavor-chip.subtle,.status-pill,.toolbar label,.legend .legend-key,.npbar label,.scroll-nav-label{color:var(--ui-header-muted)!important}
+.brand-title-row h1,.header-key strong,.ad-cell,.ad-note,.ad-fun{color:var(--ui-header-text)!important}
+.sheet-tab{color:var(--ui-header-muted)!important}
+.sheet-tab:hover{color:var(--ui-header-text)!important}
+.sheet-tab.active{background:var(--ui-button-bg)!important;color:var(--ui-button-text)!important}
+.flavor-chip,.header-key,.status-pill{color:var(--ui-header-text)!important}
+
+/* Panels, drawers, dialogs, modal headers */
+.panel-head,.drawer-head,.dialog-title,.modal-title,.purchase-section-head,.reward-pool h3,.multi h3{
+ background:var(--ui-panel-head-bg)!important;color:var(--ui-panel-head-text)!important;border-color:var(--grid)!important
+}
+.panel-head h2,.drawer-head h2,.dialog-title h2,.modal-title h2,.purchase-section-head strong,.reward-pool h3{color:var(--ui-panel-head-text)!important}
+.panel-head small,.drawer-head small,.dialog-title small,.modal-title small,.purchase-section-head small,.reward-pool h3 small{color:var(--ui-panel-head-muted)!important}
+.filter-dialog,.modal-card,.drawer,.panel,.reward-pool,.purchase-section,.text-appearance-menu,.filter-dock .multi-popover{background:var(--surface)!important;color:var(--ui-surface-text)!important}
+.dialog-actions,.theme-actions{background:var(--surface)!important;color:var(--ui-surface-text)!important;border-color:var(--grid)!important}
+
+/* Form controls everywhere, including theme editor/reward/purchase/filter/mobile. */
+input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="range"]),select,textarea,
+.toolbar input[type=search],.toolbar input[type=text],.toolbar input[type=number],.toolbar select,
+.filter-top input,.filter-top select,.multi-search,.filter-dock .multi-search,.npbar select,
+.form-grid input,.form-grid select,.reward-config input,.reward-config select,.spell-name-editor input,
+.cart-method select,.purchase-pay select,.shop-config-grid select,.shop-config-grid input,.text-font-field select{
+ background:var(--ui-control-bg)!important;color:var(--ui-control-text)!important;border-color:var(--grid)!important
+}
+input::placeholder,textarea::placeholder,.multi-search::placeholder{color:var(--ui-control-muted)!important;opacity:1!important}
+select option{background:var(--ui-control-bg)!important;color:var(--ui-control-text)!important}
+label,.form-grid label,.reward-config label,.filter-top label,.text-font-field,.shop-config-grid label{color:var(--ui-surface-text)}
+.filter-help,.shop-help,.reward-search-count,.text-appearance-head small,.spell-name-editor small,.cart-method small,.purchase-pay small,.purchase-summary-cell small,.purchase-item-tags .purchase-tag:not(.attune),.theme-preset-actions .hint,.tricolor-builder-head small,.tricolor-builder-actions .hint,.tricolor-color span{color:var(--ui-muted)!important}
+
+/* Buttons receive their own foreground computed for their actual themed background. */
+.mini-btn,.xbtn,.nav-dock-btn,.scroll-nav-edge,.mobile-collapse-tools button,.random-reward,.evolution-jump-btn,.text-size-controls .mini-btn{
+ background:var(--ui-button-bg)!important;color:var(--ui-button-text)!important;border-color:var(--grid)!important
+}
+.mini-btn:hover,.xbtn:hover,.nav-dock-btn:hover,.scroll-nav-edge:hover,.mobile-collapse-tools button:hover,.random-reward:hover,.evolution-jump-btn:hover{
+ background:var(--ui-button-hover-bg)!important;color:var(--ui-button-hover-text)!important
+}
+.mini-btn.primary,.nav-dock-btn.active,.nav-style-btn.primary{
+ background:var(--ui-active-bg)!important;color:var(--ui-active-text)!important;border-color:color-mix(in srgb,var(--accent) 55%,var(--grid))!important
+}
+.mini-btn.warn{color:var(--ui-warning-text)!important}
+
+/* Utility/readout surfaces */
+.copybox{background:var(--ui-copy-bg)!important;color:var(--ui-copy-text)!important;border-color:var(--grid)!important}
+.toast{background:var(--ui-toast-bg)!important;color:var(--ui-toast-text)!important;border-color:var(--grid)!important}
+.empty-state,.form-grid label,.reward-config label,.tier-meta span,.purchase-section-head small,.purchase-summary-cell small,.purchase-pay small,.cart-row small,.reward-pool h3 small{color:var(--ui-muted)!important}
+.afford,.purchase-summary,.cart-row,.purchase-item,.reward-choice-wrap,.spell-name-editor,.shop-stat,.class-pill,.np-tier-toggle,.modfriend-toggle,.tricolor-color,.color-field{
+ color:var(--ui-surface-text)!important;border-color:var(--grid)!important
+}
+.method-gp,.ok{color:var(--ui-success-text)!important}.slot-borrow-note,.multi-count{color:var(--ui-accent-text)!important}
+
+/* Compare/Search tables have their own non-item text; preserve attunement/non-attunement item colors. */
+.search-table,.compare-table{color:var(--ui-surface-text)!important}
+.search-table th,.compare-table th{background:var(--ui-panel-head-bg)!important;color:var(--ui-panel-head-text)!important;border-color:var(--grid)!important}
+.search-table td,.compare-table td{color:var(--ui-surface-text);border-color:var(--grid)!important}
+
+/* Theme editor text should remain legible while previewing very light or very bright presets. */
+#themeModal,.theme-grid,.tricolor-builder{color:var(--ui-surface-text)!important}
+#themeModal .theme-preserve-row strong,#themeModal .tricolor-builder-head strong,#themeModal .tricolor-color b,#themeModal .color-field span{color:var(--ui-surface-text)!important}
+#themeModal .theme-preserve-row small,#themeModal .tricolor-builder-head small,#themeModal .tricolor-color span{color:var(--ui-muted)!important}
+
+/* Mobile chrome uses the same semantic roles. */
+body.mobile-mode .nav-row,body.mobile-mode .toolbar,body.mobile-mode .npbar{color:var(--ui-header-text)!important}
+.mobile-cost-group>summary,.mobile-collapse-tools,.mobile-item-row{color:var(--ui-surface-text)}
+
+/* Keep special semantic item colors intact. */
+.item-name.attune,.mobile-item-name.attune,.search-table .item-anchor.attune{color:var(--attune)}
+.item-name.noattune,.mobile-item-name.noattune,.search-table .item-anchor.noattune{color:var(--nonattune)}
+.purchase-tag.attune{color:var(--attune)!important}
+
+
+/* === Spreadsheet / Low-Performance Mode === */
+body.spreadsheet-mode{
+  --page:#202124;--surface:#292a2d;--alt:#252629;--text:#f1f3f4;--muted:#bdc1c6;
+  --header:#202124;--headerText:#f1f3f4;--grid:#5f6368;--accent:#8ab4f8;--selected:#3c4043;
+  --attune:#ff9d00;--nonattune:#f1f3f4;--evolving:#81c995;--classrec:#8ab4f8;
+  --success:#81c995;--warning:#f28b82;--compare:#8ab4f8;
+  font-family:Arial,"Segoe UI",sans-serif!important;background:#202124!important;color:#f1f3f4!important;
+}
+body.spreadsheet-mode *,body.spreadsheet-mode *::before,body.spreadsheet-mode *::after{
+  animation:none!important;transition:none!important;box-shadow:none!important;filter:none!important;backdrop-filter:none!important;text-shadow:none!important;
+}
+body.spreadsheet-mode .bear-theme-art-cluster,
+body.spreadsheet-mode .ellen-bear-theme-art,
+body.spreadsheet-mode .nation-flag-badge,
+body.spreadsheet-mode .theme-flag-preview{display:none!important}
+body.spreadsheet-mode .top-sheet{background:#202124!important;border-color:#5f6368!important;box-shadow:none!important;backdrop-filter:none!important}
+body.spreadsheet-mode .app-header{min-height:0!important;padding:6px 10px!important;display:flex!important;align-items:center!important;gap:10px!important;background:#202124!important;background-image:none!important;border-color:#5f6368!important}
+body.spreadsheet-mode .app-header::before{display:none!important}
+body.spreadsheet-mode .eyebrow,body.spreadsheet-mode .brand-note,body.spreadsheet-mode .header-legend,body.spreadsheet-mode .flavor-row{display:none!important}
+body.spreadsheet-mode .brand-lockup{flex:1 1 auto!important}
+body.spreadsheet-mode .brand-title-row h1{font-family:Arial,"Segoe UI",sans-serif!important;font-size:calc(14px * var(--text-scale))!important;letter-spacing:0!important;color:#f1f3f4!important}
+body.spreadsheet-mode .version-badge{border-radius:2px!important;background:#303134!important;border:1px solid #5f6368!important;color:#bdc1c6!important;padding:2px 5px!important}
+body.spreadsheet-mode .nav-row{padding:4px 6px!important;gap:3px!important;background:#202124!important;border-color:#5f6368!important}
+body.spreadsheet-mode .sheet-tab,body.spreadsheet-mode .mini-btn,body.spreadsheet-mode .mode-btn,body.spreadsheet-mode button{
+  border-radius:2px!important;background:#303134!important;background-image:none!important;color:#f1f3f4!important;border-color:#5f6368!important;box-shadow:none!important;
+}
+body.spreadsheet-mode .sheet-tab.active,body.spreadsheet-mode .mini-btn.primary,body.spreadsheet-mode .mode-btn.primary{background:#3c4043!important;color:#fff!important;border-color:#8ab4f8!important}
+body.spreadsheet-mode .sheet-tab:hover,body.spreadsheet-mode .mini-btn:hover,body.spreadsheet-mode button:hover{background:#3c4043!important}
+body.spreadsheet-mode .toolbar,body.spreadsheet-mode .legend,body.spreadsheet-mode .npbar{background:#202124!important;background-image:none!important;border-color:#5f6368!important;padding-block:4px!important}
+body.spreadsheet-mode .toolbar input,body.spreadsheet-mode .toolbar select,body.spreadsheet-mode input,body.spreadsheet-mode select,body.spreadsheet-mode textarea{
+  border-radius:0!important;background:#292a2d!important;color:#f1f3f4!important;border-color:#5f6368!important;box-shadow:none!important;
+}
+body.spreadsheet-mode .content{padding:7px 7px 34px!important;background:#202124!important}
+body.spreadsheet-mode .sheet-view{background:#202124!important}
+body.spreadsheet-mode .modern-board-wrap{padding:0 0 8px!important;scrollbar-color:#80868b #202124!important}
+body.spreadsheet-mode .modern-board-wrap::-webkit-scrollbar-track{background:#202124!important;border-radius:0!important}
+body.spreadsheet-mode .modern-board-wrap::-webkit-scrollbar-thumb{background:#80868b!important;background-image:none!important;border:2px solid #202124!important;border-radius:0!important}
+body.spreadsheet-mode .tier-board{gap:0!important;background:#202124!important}
+body.spreadsheet-mode .tier-panel{border-radius:0!important;border:1px solid #5f6368!important;border-right:0!important;background:#202124!important;box-shadow:none!important}
+body.spreadsheet-mode .tier-panel:last-child{border-right:1px solid #5f6368!important}
+body.spreadsheet-mode .tier-panel-head{border-radius:0!important;padding:5px 6px!important;background:#202124!important;background-image:none!important;border-top:3px solid var(--tier-accent)!important;border-bottom:1px solid #5f6368!important}
+body.spreadsheet-mode .tier-panel-head h2,body.spreadsheet-mode .tier-kicker{color:#f1f3f4!important}
+body.spreadsheet-mode .tier-meta span{border-radius:0!important;border-color:#5f6368!important;background:#292a2d!important;color:#bdc1c6!important}
+body.spreadsheet-mode .tier-table{border-spacing:0!important;background:#202124!important}
+body.spreadsheet-mode .tier-table th,body.spreadsheet-mode .tier-table td,
+body.spreadsheet-mode .search-table th,body.spreadsheet-mode .search-table td{
+  border-color:#5f6368!important;border-radius:0!important;background:#202124!important;background-image:none!important;
+}
+body.spreadsheet-mode .tier-table tbody tr:nth-child(even) td,body.spreadsheet-mode .search-table tbody tr:nth-child(even) td{background:#252629!important}
+body.spreadsheet-mode .cost-head,body.spreadsheet-mode .reward-head{background:#292a2d!important;background-image:none!important;color:#f1f3f4!important;border-color:#5f6368!important}
+body.spreadsheet-mode .aligned-empty{background:#202124!important}
+body.spreadsheet-mode .item-name,body.spreadsheet-mode .mobile-item-name,body.spreadsheet-mode .search-table .item-anchor{background:transparent!important;background-image:none!important;box-shadow:none!important}
+body.spreadsheet-mode .item-name.noattune,body.spreadsheet-mode .mobile-item-name.noattune{color:#f1f3f4!important;-webkit-text-fill-color:#f1f3f4!important}
+body.spreadsheet-mode .item-name.attune,body.spreadsheet-mode .mobile-item-name.attune{color:#ff9d00!important;-webkit-text-fill-color:#ff9d00!important}
+body.spreadsheet-mode .evolving-item .item-name,body.spreadsheet-mode .evolving-item .mobile-item-name,body.spreadsheet-mode .item-cell.evolving-item .item-name{color:#81c995!important;-webkit-text-fill-color:#81c995!important}
+body.spreadsheet-mode .cell-action{border-radius:0!important;background:#292a2d!important;border-color:#5f6368!important;color:#f1f3f4!important}
+body.spreadsheet-mode .cell-action.on{background:#3c4043!important;border-color:#8ab4f8!important}
+body.spreadsheet-mode .modern-footer,body.spreadsheet-mode .sheet-footer{background:#202124!important;border-color:#5f6368!important;color:#bdc1c6!important}
+body.spreadsheet-mode .panel,body.spreadsheet-mode .panel-head,body.spreadsheet-mode .drawer,body.spreadsheet-mode .drawer-head,
+body.spreadsheet-mode .dialog-card,body.spreadsheet-mode .modal-card,body.spreadsheet-mode .filter-dialog,body.spreadsheet-mode .multi-popover,
+body.spreadsheet-mode .text-appearance-menu,body.spreadsheet-mode .theme-card,body.spreadsheet-mode .reward-builder,
+body.spreadsheet-mode .purchase-card,body.spreadsheet-mode .shop-bar{
+  border-radius:0!important;background:#202124!important;background-image:none!important;border-color:#5f6368!important;box-shadow:none!important;backdrop-filter:none!important;
+}
+body.spreadsheet-mode .cart-row,body.spreadsheet-mode .reward-choice,body.spreadsheet-mode .shop-stat,body.spreadsheet-mode .command-box{border-radius:0!important;background:#292a2d!important;border-color:#5f6368!important}
+body.spreadsheet-mode .mobile-stack,body.spreadsheet-mode .mobile-tier-panel,body.spreadsheet-mode .mobile-cost-group,
+body.spreadsheet-mode .mobile-cost-head,body.spreadsheet-mode .mobile-item-row{border-radius:0!important;background:#202124!important;background-image:none!important;border-color:#5f6368!important;box-shadow:none!important}
+body.spreadsheet-mode .mobile-item-row:nth-child(even){background:#252629!important}
+body.spreadsheet-mode .nav-dock,body.spreadsheet-mode .scroll-navigator{border-radius:0!important;background:#202124!important;border-color:#5f6368!important;box-shadow:none!important;backdrop-filter:none!important}
+body.spreadsheet-mode .scroll-nav-track{background:#303134!important;border-radius:0!important}
+body.spreadsheet-mode .scroll-nav-thumb{background:#80868b!important;background-image:none!important;border-radius:0!important;box-shadow:none!important}
+body.spreadsheet-mode .sticky-tier-headers{display:none!important}
+body.spreadsheet-mode .theme-preserve-row,body.spreadsheet-mode .tricolor-builder,body.spreadsheet-mode .color-field{border-radius:0!important;box-shadow:none!important}
+body.spreadsheet-mode .toast{border-radius:0!important;background:#303134!important;color:#f1f3f4!important;border:1px solid #5f6368!important;box-shadow:none!important}
+body.spreadsheet-mode .np-friendly,body.spreadsheet-mode .class-rec{box-shadow:none!important;background:#303134!important}
+body.spreadsheet-mode .np-friendly .item-name,body.spreadsheet-mode .class-rec .item-name{font-weight:700!important}
+body.spreadsheet-mode .theme-actions,body.spreadsheet-mode #themeModal .theme-actions{backdrop-filter:none!important;background:#202124!important}
+body.spreadsheet-mode .theme-card *,body.spreadsheet-mode .color-field *{filter:none!important}
+</style>
+
+<style id="responsive-ui-overrides">
+/* === Responsive monitor fit / compact UI pass === */
+:root{--responsive-ui-scale:1}
+body{transform-origin:top left}
+/* Keep the real table scrollbars unobtrusive unless the user explicitly selects scrollbar navigation. */
+body:not(.bottom-scroll-active) .modern-board-wrap{scrollbar-width:none}
+body:not(.bottom-scroll-active) .modern-board-wrap::-webkit-scrollbar{height:0!important;width:0!important}
+body:not(.bottom-scroll-active) #scrollNavigator{display:none!important}
+
+/* Display popover additions */
+.interface-scale-block{margin-top:9px;padding-top:9px;border-top:1px solid var(--grid)}
+.interface-scale-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;font-size:calc(10px * var(--text-scale));font-weight:800;color:var(--text)}
+.interface-scale-head strong{font-variant-numeric:tabular-nums;color:var(--accent)}
+.interface-scale-controls{display:grid;grid-template-columns:42px minmax(90px,1fr) 42px;gap:5px}
+.interface-scale-controls .mini-btn{margin:0;min-height:32px}
+.interface-scale-block small{display:block;margin-top:6px;line-height:1.35;color:var(--muted);font-size:calc(8.8px * var(--text-scale))}
+
+/* Secondary controls collapse into More on constrained monitors. */
+.responsive-more{position:relative;display:none;align-items:center}
+.responsive-more-btn{min-width:62px}
+.responsive-more-menu{position:fixed;z-index:260;min-width:210px;max-width:min(290px,calc(100vw - 18px));padding:6px;border:1px solid var(--grid);border-radius:11px;background:var(--surface);box-shadow:0 14px 36px rgba(0,0,0,.38)}
+.responsive-more-menu button{display:flex;width:100%;align-items:center;justify-content:flex-start;min-height:38px;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:var(--text);font:inherit;font-weight:750;cursor:pointer;text-align:left}
+.responsive-more-menu button:hover,.responsive-more-menu button:focus-visible{background:var(--selected);outline:none}
+.responsive-more-menu button.danger{color:var(--warning)}
+
+/* General cleanup: denser control chrome without sacrificing click areas. */
+.nav-row{align-items:center}
+.toolbar{row-gap:4px}
+.toolbar-group{min-width:0}
+.toolbar input[type=search]{max-width:100%}
+.drawer,.modal-card,.filter-dialog{max-width:calc(100vw - 18px)}
+.modern-board-wrap{overscroll-behavior-x:contain}
+
+/* Medium/small desktop monitors. Auto Fit also reduces the whole interface, while these rules remove visual-only bulk. */
+@media (max-width:1400px),(max-height:820px){
+  .app-header{min-height:58px;padding:8px 12px;grid-template-columns:minmax(260px,1fr) auto;gap:9px}
+  .header-legend{display:none!important}
+  .brand-note{display:none}
+  .brand-title-row h1{font-size:18px}
+  .header-flavor{max-width:none;gap:4px}
+  .flavor-chip{padding:4px 7px}
+  .nav-row{padding:4px 7px;gap:3px}
+  .sheet-tab{padding:6px 9px;min-height:31px}
+  .mini-btn{padding:5px 7px}
+  .toolbar{padding:4px 6px;gap:4px}
+  .legend{padding:3px 7px}
+}
+
+@media (max-width:1180px),(max-height:700px){
+  .responsive-more{display:flex}
+  #dataStatus,#refreshBtn,#compareBtn,#themeBtn,#resetBtn,#navStyleBtn{display:none!important}
+  .header-flavor .sheet-updated{display:none}
+  .legend{display:none}
+  .nav-row{flex-wrap:nowrap;overflow-x:auto;overflow-y:visible;scrollbar-width:none}
+  .nav-row::-webkit-scrollbar{display:none}
+  .nav-spacer{min-width:2px}
+  .toolbar-group:last-child{display:none}
+  .app-header{grid-template-columns:1fr auto}
+}
+
+@media (max-width:980px),(max-height:620px){
+  .app-header{display:none}
+  .top-sheet{box-shadow:0 3px 12px rgba(0,0,0,.22)}
+  .nav-row{padding:4px 5px}
+  .sheet-tab{flex:0 0 auto}
+  #purchaseBtn,#rewardBuilderBtn{display:none!important}
+  .toolbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .toolbar::-webkit-scrollbar{display:none}
+  .toolbar-group{flex:0 0 auto;border-right:0;padding-right:3px;margin-right:0}
+  .toolbar input[type=search]{width:min(300px,42vw)}
+  .nav-dock{bottom:8px;padding:4px;gap:3px;border-radius:10px}
+  .nav-dock-btn{min-height:34px;padding:0 8px}
+}
+
+@media (max-width:760px){
+  /* Mobile Mode remains the preferred phone UI. If desktop layout is used, keep the shell compact. */
+  .toolbar input[type=search]{width:52vw}
+  .responsive-more-menu{min-width:190px}
+}
+
+/* Low vertical-height screens: reduce fixed/sticky chrome further. */
+@media (max-height:560px) and (min-width:761px){
+  .toolbar{display:none}
+  .nav-row{min-height:38px}
+  .content{padding-top:2px}
+}
+</style>
 </head>
 <body>
 <div class="top-sheet">
@@ -485,15 +750,38 @@ body.theme-nation .version-badge{border-color:color-mix(in srgb,var(--tri2) 58%,
     <button class="mini-btn mode-btn" id="simpleModeBtn" type="button" title="Hide everything except the tabs and table">Simple Mode</button>
     <button class="mini-btn mode-btn" id="mobileModeBtn" type="button" title="Use a touch-friendly vertical table layout">Mobile Mode</button>
     <button class="mini-btn mode-btn" id="newPlayerModeBtn" type="button" title="Toggle New Player recommendations">New Player Mode</button>
+    <button class="mini-btn mode-btn" id="spreadsheetModeBtn" type="button" title="Performance-optimized Google Sheet-style layout">Spreadsheet Mode</button>
     <div class="appearance-controls" aria-label="Text appearance">
-      <button class="mini-btn mode-btn text-appearance-btn" id="textAppearanceBtn" type="button" aria-expanded="false" aria-controls="textAppearanceMenu" title="Text size and font">Text <span id="textAppearanceLabel">130%</span></button>
+      <button class="mini-btn mode-btn text-appearance-btn" id="textAppearanceBtn" type="button" aria-expanded="false" aria-controls="textAppearanceMenu" title="Text, font, and interface scale">Display <span id="textAppearanceLabel">130%</span></button>
       <div class="text-appearance-menu hidden" id="textAppearanceMenu" role="dialog" aria-label="Text appearance controls">
-        <div class="text-appearance-head"><strong>Text Appearance</strong><small>Changes apply everywhere</small></div>
+        <div class="text-appearance-head"><strong>Display</strong><small>Text + responsive interface scale</small></div>
         <div class="text-size-controls"><button class="mini-btn" id="textSizeDown" type="button" title="Decrease text size">A−</button><button class="mini-btn text-size-value" id="textSizeReset" type="button" title="Reset to default">130%</button><button class="mini-btn" id="textSizeUp" type="button" title="Increase text size">A+</button></div>
+        <div class="interface-scale-block" aria-label="Interface scale controls">
+          <div class="interface-scale-head"><span>Interface Scale</span><strong id="uiScaleLabel">Auto</strong></div>
+          <div class="interface-scale-controls">
+            <button class="mini-btn" id="uiScaleDown" type="button" title="Reduce interface scale">−</button>
+            <button class="mini-btn primary" id="uiScaleAuto" type="button" title="Automatically fit the interface to this window">Auto Fit</button>
+            <button class="mini-btn" id="uiScaleUp" type="button" title="Increase interface scale">+</button>
+          </div>
+          <small>Auto Fit uses the current window size. Hold <b>Alt</b> and use the mouse wheel anywhere to resize manually.</small>
+        </div>
         <label class="text-font-field">Font<select id="fontChoice" title="Font"><option value="inter">Inter</option><option value="atkinson">Atkinson Hyperlegible</option><option value="georgia">Georgia</option><option value="trebuchet">Trebuchet MS</option><option value="mono">Monospace</option></select></label>
       </div>
     </div>
-    <button class="mini-btn mode-btn nav-style-btn" id="navStyleBtn" type="button" title="Switch between the draggable scrollbar and tier navigation buttons">Navigation: Scrollbar</button>
+    <button class="mini-btn mode-btn nav-style-btn" id="navStyleBtn" type="button" title="Cycle bottom navigation between hidden, tier buttons, and draggable scrollbar">Navigation: Hidden</button>
+    <div class="responsive-more">
+      <button class="mini-btn mode-btn responsive-more-btn" id="responsiveMoreBtn" type="button" aria-expanded="false" aria-controls="responsiveMoreMenu">More ▾</button>
+      <div class="responsive-more-menu hidden" id="responsiveMoreMenu" role="menu" aria-label="More tools">
+        <button type="button" data-proxy="#purchaseBtn">Purchase List</button>
+        <button type="button" data-proxy="#rewardBuilderBtn">Reward Builder</button>
+        <button type="button" data-proxy="#compareBtn">Compare</button>
+        <button type="button" data-proxy="#themeBtn">Theme</button>
+        <button type="button" data-proxy="#randomItemBtn">Random Item</button>
+        <button type="button" data-proxy="#refreshBtn">Refresh Data</button>
+        <button type="button" data-proxy="#navStyleBtn" id="responsiveNavProxy">Navigation Style</button>
+        <button type="button" data-proxy="#resetBtn" class="danger">Reset</button>
+      </div>
+    </div>
     <div class="nav-spacer"></div>
     <span class="status-pill snapshot" id="dataStatus" title="Checks the Google Sheet every 15 seconds while this page is open"><span class="status-dot"></span><span>Snapshot</span></span>
     <button class="mini-btn" id="refreshBtn">Refresh Now</button>
@@ -624,7 +912,7 @@ body.theme-nation .version-badge{border-color:color-mix(in srgb,var(--tri2) 58%,
 <option value="default">Modern MIT</option><option value="white">Light</option><option value="black">Dark</option><option value="ddb">D&amp;D Beyond</option><option value="roll20">Roll20</option><option value="foundry">Foundry VTT</option><option value="bear">Bear</option><option value="pride">Pride — Progress</option><option value="prideLgbt">Pride — Classic Rainbow</option><option value="prideTrans">Pride — Trans</option>
 <optgroup label="Nations of the World"><option value="austria">Austria</option><option value="canada">Canada</option><option value="germany">Germany</option><option value="ireland">Ireland</option><option value="mexico">Mexico</option><option value="norway">Norway</option><option value="unitedKingdom">United Kingdom</option><option value="unitedStates">United States of America</option></optgroup>
 <optgroup label="Additional Themes"><option value="baldursGate3">Baldur's Gate 3</option><option value="earth">Earth</option><option value="ffxiv">Final Fantasy XIV</option><option value="neonSunset">Neon Sunset</option><option value="knicks">New York Knicks</option></optgroup>
-<optgroup label="Campaign / Faction Themes"><option value="hydaelyn">Chosen of Hydaelyn</option><option value="crucible">The Crucible</option><option value="draconic">Draconic Conclave</option><option value="dreamFoundation">The Dream Foundation</option><option value="flayersCloth">The Flayers Cloth</option><option value="grandDawn">Grand Order of Dawn</option><option value="guardians">The Guardians</option><option value="harmony">Harmony</option><option value="harpers">The Harpers</option><option value="houseWisdom">House of Wisdom</option><option value="kingsReapers">King's Reapers</option><option value="magicalGirls">Magical Girls</option><option value="ministryMuses">Ministry of Muses</option><option value="monsterSlayers">Monster Slayers</option><option value="arcaneInquiry">Office of Arcane Inquiry</option><option value="rocketRescue">Rocket Rescue</option><option value="sanctuary">Sanctuary</option><option value="sigilPostal">Sigil Postal Service</option><option value="sigilScouts">Sigil Scouts</option><option value="timeCops">The Time Cops</option><option value="trinitySociety">Trinity Society</option><option value="wanderingCourt">The Wandering Court</option></optgroup><option value="custom">Custom</option></select><span class="theme-flag-preview" id="themeFlagPreview" aria-hidden="true"></span></label><label class="theme-preserve-row"><input type="checkbox" id="preserveMitColors" checked><span><strong>Preserve MIT colors</strong><small>Keep attunement orange and Tier 1–4 on the standard MIT gradients. Turn this off to let the selected theme recolor attunement and tiers too. Pride and Bear presets turn this off automatically so their intended attunement and tier colors appear.</small></span></label></div>
+<optgroup label="Campaign / Faction Themes"><option value="hydaelyn">Chosen of Hydaelyn</option><option value="crucible">The Crucible</option><option value="draconic">Draconic Conclave</option><option value="dreamFoundation">The Dream Foundation</option><option value="flayersCloth">The Flayers Cloth</option><option value="grandDawn">Grand Order of Dawn</option><option value="guardians">The Guardians</option><option value="harmony">Harmony</option><option value="harpers">The Harpers</option><option value="houseWisdom">House of Wisdom</option><option value="kingsReapers">King's Reapers</option><option value="magicalGirls">Magical Girls</option><option value="ministryMuses">Ministry of Muses</option><option value="monsterSlayers">Monster Slayers</option><option value="arcaneInquiry">Office of Arcane Inquiry</option><option value="rocketRescue">Rocket Rescue</option><option value="sanctuary">Sanctuary</option><option value="sigilPostal">Sigil Postal Service</option><option value="sigilScouts">Sigil Scouts</option><option value="timeCops">The Time Cops</option><option value="trinitySociety">Trinity Society</option><option value="wanderingCourt">The Wandering Court</option></optgroup><option value="custom">Custom</option></select><span class="theme-flag-preview" id="themeFlagPreview" aria-hidden="true"></span></label><div class="theme-preset-actions"><button class="mini-btn" type="button" id="usePresetAsCustomBase">Use Preset as Custom Base</button><span class="hint" id="customBaseHint">Start a custom theme from any preset, then fine-tune it below.</span></div><label class="theme-preserve-row"><input type="checkbox" id="preserveMitColors" checked><span><strong>Preserve MIT colors</strong><small>Restore the standard MIT orange attunement color and Tier 1–4 gradients. Presets preview their own full colors by default; turn this on whenever you want the classic MIT colors instead.</small></span></label></div>
 <div class="tricolor-builder" id="tricolorBuilder">
   <div class="tricolor-builder-head"><div><strong>Quick Tricolor Theme Builder</strong><small>Choose three colors and the site will automatically build a readable theme around them. The generated result becomes a Custom theme and can still be adjusted below.</small></div></div>
   <div class="tricolor-builder-grid">
@@ -633,9 +921,9 @@ body.theme-nation .version-badge{border-color:color-mix(in srgb,var(--tri2) 58%,
     <label class="tricolor-color"><input type="color" id="triBuilder3" value="#77838e"><span><b>Color 3 — Highlight</b><span>Secondary emphasis and supporting color</span></span></label>
   </div>
   <div class="tricolor-preview" id="tricolorPreview" aria-label="Tricolor preview"></div>
-  <div class="tricolor-builder-actions"><span class="hint">Text and surface contrast are calculated automatically. If Preserve MIT Colors is off, the builder also derives four tier gradients and the attunement color from your tricolor palette.</span><div class="button-row"><button class="mini-btn" type="button" id="loadThemeTricolor">Use Current Theme Colors</button><button class="mini-btn primary" type="button" id="buildTricolorTheme">Build Tricolor Theme</button></div></div>
+  <div class="tricolor-builder-actions"><span class="hint">Theme colors are balanced for readable text, calmer large surfaces, and restrained accent use. If Preserve MIT Colors is off, the builder also derives four tier gradients and the attunement color from your tricolor palette.</span><div class="button-row"><button class="mini-btn" type="button" id="loadThemeTricolor">Use Current Theme Colors</button><button class="mini-btn primary" type="button" id="buildTricolorTheme">Build Tricolor Theme</button></div></div>
 </div>
-<div class="theme-advanced-label">Advanced custom colors</div><div class="theme-grid" id="themeGrid"></div><div class="theme-actions"><button class="mini-btn" type="button" id="importTheme">Import Theme</button><button class="mini-btn" type="button" id="exportTheme">Export Theme</button><input type="file" id="importThemeFile" accept="application/json,.json" hidden><span class="theme-action-spacer"></span><button class="mini-btn" id="resetThemeColors">Reset Preset Colors</button><button class="mini-btn primary" id="saveTheme">Save Theme</button></div></div></div>
+<div class="theme-advanced-label">Advanced custom colors</div><div class="theme-grid" id="themeGrid"></div><div class="theme-actions"><button class="mini-btn" type="button" id="importTheme">Import Theme</button><button class="mini-btn" type="button" id="exportTheme">Export Theme</button><input type="file" id="importThemeFile" accept="application/json,.json" hidden><span class="theme-action-spacer"></span><button class="mini-btn" id="resetThemeColors">Reset to Base</button><button class="mini-btn primary" id="saveTheme">Save Theme</button></div></div></div>
 <div id="toast" class="toast hidden"></div>
 <div id="errataTooltip" class="errata-tooltip hidden" role="tooltip"></div>
 <div id="stickyTierHeaders" class="sticky-tier-headers" aria-hidden="true"><div class="sticky-tier-track"></div></div>
@@ -689,7 +977,7 @@ const THEMES={
 ,draconic:{page:'#271215',surface:'#2e1a1f',alt:'#382824',text:'#f5f7fa',muted:'#b8c1ca',header:'#1b0d10',headerText:'#f5f7fa',grid:'#5d4840',accent:'#dd4e00',selected:'#582618',attune:'#dd4e00',nonattune:'#f5f7fa',newplayer:'#66aa77',classrec:'#7fa4b5',success:'#79c98f',warning:'#e47777',compare:'#bc79a3',tri1:'#a11f1f',tri2:'#dd4e00',tri3:'#bf3710','tier1-start':'#871f1f','tier1-end':'#cb8484','tier2-start':'#bb4606','tier2-end':'#ec9e73','tier3-start':'#bf3710','tier3-end':'#df9b88','tier4-start':'#ca3f0a','tier4-end':'#e9ae98'}
 ,dreamFoundation:{page:'#d8b7ca',surface:'#e6c9d8',alt:'#ead2c4',text:'#30242d',muted:'#66515f',header:'#c493ae',headerText:'#2b2028',grid:'#9b7589',accent:'#a95f8d',selected:'#d2aabd',attune:'#985078',nonattune:'#30242d',newplayer:'#50896e',classrec:'#687c9a',success:'#3f7656',warning:'#984a4f',compare:'#8d6a9a',tri1:'#fbb4db',tri2:'#fdcc81',tri3:'#c8a9cf','tier1-start':'#c888aa','tier1-end':'#edbad5','tier2-start':'#c99d71','tier2-end':'#e6c49a','tier3-start':'#ae8fb9','tier3-end':'#d5badb','tier4-start':'#bd8f9e','tier4-end':'#e3b8bf'}
 ,flayersCloth:{page:'#1a122b',surface:'#221a35',alt:'#353647',text:'#f5f7fa',muted:'#b8c1ca',header:'#130e1f',headerText:'#f5f7fa',grid:'#595c72',accent:'#cab2fb',selected:'#4a3e65',attune:'#cab2fb',nonattune:'#f5f7fa',newplayer:'#59ab8d',classrec:'#7abaec',success:'#79c98f',warning:'#e47777',compare:'#b792e2',tri1:'#5b209a',tri2:'#cab2fb',tri3:'#9269ca','tier1-start':'#4f2082','tier1-end':'#a584c7','tier2-start':'#ab98d4','tier2-end':'#e2d5fd','tier3-start':'#9269ca','tier3-end':'#c8b4e4','tier4-start':'#a683dc','tier4-end':'#dacbf0'}
-,grandDawn:{page:'#302a17',surface:'#383221',alt:'#2b262e',text:'#f5f7fa',muted:'#b8c1ca',header:'#211d11',headerText:'#f5f7fa',grid:'#4b444d',accent:'#d5a32b',selected:'#5e4d23',attune:'#d5a32b',nonattune:'#f5f7fa',newplayer:'#6fc279',classrec:'#6ba0c4',success:'#79c98f',warning:'#e47777',compare:'#a574b4',tri1:'#d5a32b',tri2:'#823b43',tri3:'#ac6f37','tier1-start':'#b18929','tier1-end':'#e8cc8a','tier2-start':'#70363d','tier2-end':'#ba9398','tier3-start':'#ac6f37','tier3-end':'#d6b79b','tier4-start':'#9d5c3b','tier4-end':'#d6bbad'}
+,grandDawn:{page:'#21181b',surface:'#2d2124',alt:'#38282b',text:'#f4ead8',muted:'#cdbd9f',header:'#160f11',headerText:'#f6e8c8',grid:'#6d5949',accent:'#d0ad4f',selected:'#493432',attune:'#e0bf66',nonattune:'#f4ead8',newplayer:'#82ba8c',classrec:'#82a8c0',success:'#7db686',warning:'#e07979',compare:'#b68caf',evolve:'#70ae7d',tri1:'#d0ad4f',tri2:'#7a2630',tri3:'#9b6a36','tier1-start':'#8c6b2a','tier1-end':'#d7bb69','tier2-start':'#6e232d','tier2-end':'#ad525a','tier3-start':'#72502d','tier3-end':'#ae8249','tier4-start':'#8a3938','tier4-end':'#c99e56'}
 ,guardians:{page:'#131a22',surface:'#1a222b',alt:'#222c34',text:'#f5f7fa',muted:'#b8c1ca',header:'#0e1318',headerText:'#f5f7fa',grid:'#3d4d56',accent:'#65878b',selected:'#2c3a42',attune:'#65878b',nonattune:'#f5f7fa',newplayer:'#52b283',classrec:'#5caacd',success:'#79c98f',warning:'#e47777',compare:'#9480bf',tri1:'#314b64',tri2:'#3e696e',tri3:'#385a69','tier1-start':'#2e4256','tier1-end':'#8e9caa','tier2-start':'#395c60','tier2-end':'#95acaf','tier3-start':'#385a69','tier3-end':'#9cacb4','tier4-start':'#3a5f6b','tier4-end':'#acbcc1'}
 ,harmony:{page:'#38392a',surface:'#3f4134',alt:'#1f222b',text:'#f5f7fa',muted:'#b8c1ca',header:'#27281e',headerText:'#f5f7fa',grid:'#393f49',accent:'#fff992',selected:'#6d6d4b',attune:'#fff992',nonattune:'#f5f7fa',newplayer:'#77d28b',classrec:'#579abf',success:'#79c98f',warning:'#e47777',compare:'#8f6eaf',tri1:'#fff992',tri2:'#29232e',tri3:'#948e60','tier1-start':'#d2ce7b','tier1-end':'#fffcc3','tier2-start':'#27222b','tier2-end':'#89868c','tier3-start':'#948e60','tier3-end':'#cac6b0','tier4-start':'#6d674e','tier4-end':'#c2bfb5'}
 ,harpers:{page:'#161a26',surface:'#1d2230',alt:'#2c3038',text:'#f5f7fa',muted:'#b8c1ca',header:'#10131b',headerText:'#f5f7fa',grid:'#4c535c',accent:'#87888e',selected:'#363a47',attune:'#87888e',nonattune:'#f5f7fa',newplayer:'#55b287',classrec:'#6cb1d4',success:'#79c98f',warning:'#e47777',compare:'#a687c7',tri1:'#414a7c',tri2:'#87888e',tri3:'#646985','tier1-start':'#3a426a','tier1-end':'#969bb7','tier2-start':'#74757a','tier2-end':'#bdbec1','tier3-start':'#646985','tier3-end':'#b2b4c2','tier4-start':'#717488','tier4-end':'#c3c5cd'}
@@ -729,6 +1017,53 @@ Object.assign(THEMES,{
  neonSunset:themedPreset('#20142e','#2c1b3d','#37224a','#140b20','#e653ad','#ff8a4c','#55d4df'),
  knicks:themedPreset('#102641','#183754','#22445f','#0a192c','#006bb6','#f58426','#b8bcc2')
 });
+
+/* === 2026-09-14 palette best-practice refinement ===
+   Design goals: a restrained 60/30/10 hierarchy, softer large-area colors,
+   WCAG-AA text contrast, and 3:1 structural/UI contrast where practical. */
+function hexHsl(hex){
+ const {r,g,b}=hexRgb(hex),R=r/255,G=g/255,B=b/255,max=Math.max(R,G,B),min=Math.min(R,G,B);let h=0,s=0,l=(max+min)/2;
+ if(max!==min){const d=max-min;s=l>.5?d/(2-max-min):d/(max+min);switch(max){case R:h=(G-B)/d+(G<B?6:0);break;case G:h=(B-R)/d+2;break;default:h=(R-G)/d+4}h/=6}
+ return{h,s,l}
+}
+function hslHex(h,s,l){
+ h=((h%1)+1)%1;s=Math.max(0,Math.min(1,s));l=Math.max(0,Math.min(1,l));
+ const hue=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p};
+ if(s===0){const v=l*255;return rgbHex({r:v,g:v,b:v})}const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;return rgbHex({r:hue(p,q,h+1/3)*255,g:hue(p,q,h)*255,b:hue(p,q,h-1/3)*255})
+}
+function softenChroma(hex,maxSat=.58){const x=hexHsl(hex);return x.s>maxSat?hslHex(x.h,maxSat,x.l):hex}
+function nudgeContrastColor(fg,bg,min=4.5){
+ if(!fg)return contrastText(bg);if(colorContrast(fg,bg)>=min)return fg;
+ for(let i=1;i<=24;i++){const q=i/24,d=mixHex(fg,'#07090b',q),l=mixHex(fg,'#f6f3ed',q),dc=colorContrast(d,bg),lc=colorContrast(l,bg);if(dc>=min||lc>=min)return dc>=min&&lc>=min?(q<=.5?d:l):(dc>=min?d:l)}
+ return colorContrast('#11161b',bg)>=colorContrast('#f5f2eb',bg)?'#11161b':'#f5f2eb'
+}
+function refinePresetTheme(name,t){
+ const o={...(t||{})},light=colorLuma(o.page||'#10151a')>.42;
+ // Large-area colors stay intentionally quieter than accents so the identity color does not overwhelm the table.
+ o.page=softenChroma(o.page||'#10151a',light?.44:.50);
+ o.surface=softenChroma(mixHex(o.surface||o.page,o.page,light?.12:.10),light?.38:.46);
+ o.alt=softenChroma(mixHex(o.alt||o.surface,o.surface,.08),light?.42:.49);
+ o.header=softenChroma(o.header||o.page,light?.50:.54);
+ o.accent=softenChroma(o.accent||o.tri2||o.tri1||'#7c8792',.78);
+ // 60/30/10-style hierarchy: dominant page, supporting surfaces, restrained accent/selection.
+ o.selected=mixHex(o.surface,o.accent,light?.15:.22);
+ // Text is AA-targeted. Muted copy is still normal-sized throughout much of this app, so keep it at 4.5:1 too.
+ o.text=nudgeContrastColor(o.text||contrastText(o.surface),o.surface,4.5);
+ o.headerText=nudgeContrastColor(o.headerText||contrastText(o.header),o.header,4.5);
+ o.nonattune=nudgeContrastColor(o.nonattune||o.text,o.surface,4.5);
+ o.muted=nudgeContrastColor(o.muted||mixHex(o.text,o.surface,.38),o.surface,4.5);
+ o.attune=nudgeContrastColor(softenChroma(o.attune||o.accent,.82),o.surface,4.5);
+ // Borders/components should remain distinguishable even without relying on hue alone.
+ o.grid=nudgeContrastColor(softenChroma(o.grid||mixHex(o.surface,o.text,.30),.38),o.surface,3);
+ // Semantic colors are used as text, strokes and small indicators; preserve hue while raising contrast.
+ for(const k of ['newplayer','classrec','success','warning','compare','evolve'])o[k]=nudgeContrastColor(softenChroma(o[k]||o.accent,.78),o.surface,4.5);
+ // Tier colors may be more expressive than large surfaces, but cap saturation to prevent glare.
+ for(let i=1;i<=4;i++)for(const side of ['start','end']){const k=`tier${i}-${side}`;if(o[k])o[k]=softenChroma(o[k],.76)}
+ return o
+}
+for(const [name,t] of Object.entries(THEMES))THEMES[name]=refinePresetTheme(name,t);
+/* Team-specific accessibility override: Knicks attunement stays unmistakably Knicks orange. */
+if(THEMES.knicks){THEMES.knicks.attune='#f58426';THEMES.knicks.alt='#1e3b55';THEMES.knicks.selected='#193a55';}
 for(const t of Object.values(THEMES))if(!t.evolve)t.evolve=t.success||'#55c77b';
 
 const THEME_LABELS={page:'Page Background',surface:'Table Background',alt:'Alternate Row',text:'Primary Text',muted:'Secondary Text',header:'Header Background',headerText:'Header Text',grid:'Grid / Borders',accent:'Accent',selected:'Selected / Hover',attune:'Attunement Item',nonattune:'Non-Attunement Item',newplayer:'New Player Highlight',classrec:'Class Recommendation',success:'Success / Affordable',warning:'Warning / Unaffordable',compare:'Compare Highlight',evolve:'Evolving Item Highlight',tri1:'Primary Theme Color 1',tri2:'Primary Theme Color 2',tri3:'Primary Theme Color 3','tier1-start':'Tier 1 Gradient Start','tier1-end':'Tier 1 Gradient End','tier2-start':'Tier 2 Gradient Start','tier2-end':'Tier 2 Gradient End','tier3-start':'Tier 3 Gradient Start','tier3-end':'Tier 3 Gradient End','tier4-start':'Tier 4 Gradient Start','tier4-end':'Tier 4 Gradient End'};
@@ -753,17 +1088,17 @@ const isYes=v=>/^(yes|y|true)$/i.test(norm(v));
 let data=SNAPSHOT.items.map((x,i)=>({...x,_id:i}));
 let dataMode='snapshot';
 let liveRefreshInFlight=false,lastLiveSignature='',lastSuccessfulLiveAt=null,lastChangeDetectedAt=null;
-const STATE_VERSION=8;
-const state={view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],theme:'default',customTheme:null,preserveMitColors:true,simpleMode:false,mobileMode:false,navStyle:'scrollbar',fontKey:'inter',textScale:1.3};
+const STATE_VERSION=10;
+const state={view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],theme:'default',customTheme:null,customBaseTheme:'default',preserveMitColors:true,simpleMode:false,mobileMode:false,spreadsheetMode:false,navStyle:'hidden',fontKey:'inter',textScale:1.3};
 const saved=(()=>{try{return JSON.parse(localStorage.getItem('mitGuiState')||'{}')}catch{return {}}})();
 const savedIsCurrent=Number(saved.stateVersion||0)>=7;
-Object.assign(state,{newPlayer:savedIsCurrent?!!saved.newPlayer:false,npMode:savedIsCurrent?(saved.npMode||'highlight'):'highlight',npShowHighTiers:savedIsCurrent?!!saved.npShowHighTiers:false,classes:Array.isArray(saved.classes)?saved.classes:[],compareMode:!!saved.compareMode,compare:Array.isArray(saved.compare)?saved.compare.slice(0,4):[],favorites:Array.isArray(saved.favorites)?saved.favorites:[],cart:Array.isArray(saved.cart)?saved.cart:[],theme:(saved.theme==='parchment'?'default':(saved.theme||'default')),customTheme:saved.customTheme||null,preserveMitColors:savedIsCurrent?saved.preserveMitColors!==false:true,simpleMode:!!saved.simpleMode,mobileMode:!!saved.mobileMode,navStyle:(saved.navStyle==='buttons'?'buttons':'scrollbar'),fontKey:['inter','atkinson','georgia','trebuchet','mono'].includes(saved.fontKey)?saved.fontKey:'inter',textScale:Math.max(.8,Math.min(1.8,Number((Number(saved.typographyVersion||0)<2&&Math.abs(Number(saved.textScale||1)-1)<.001)?1.3:(saved.textScale||1.3)))) });
+Object.assign(state,{newPlayer:savedIsCurrent?!!saved.newPlayer:false,npMode:savedIsCurrent?(saved.npMode||'highlight'):'highlight',npShowHighTiers:savedIsCurrent?!!saved.npShowHighTiers:false,classes:Array.isArray(saved.classes)?saved.classes:[],compareMode:!!saved.compareMode,compare:Array.isArray(saved.compare)?saved.compare.slice(0,4):[],favorites:Array.isArray(saved.favorites)?saved.favorites:[],cart:Array.isArray(saved.cart)?saved.cart:[],theme:(saved.theme==='parchment'?'default':(saved.theme||'default')),customTheme:saved.customTheme||null,customBaseTheme:(typeof saved.customBaseTheme==='string'&&THEMES[saved.customBaseTheme]?saved.customBaseTheme:'default'),preserveMitColors:savedIsCurrent?saved.preserveMitColors!==false:true,simpleMode:!!saved.simpleMode,mobileMode:!!saved.mobileMode,spreadsheetMode:!!saved.spreadsheetMode,navStyle:(['hidden','buttons','scrollbar'].includes(saved.navStyle)?saved.navStyle:'hidden'),fontKey:['inter','atkinson','georgia','trebuchet','mono'].includes(saved.fontKey)?saved.fontKey:'inter',textScale:Math.max(.8,Math.min(1.8,Number((Number(saved.typographyVersion||0)<2&&Math.abs(Number(saved.textScale||1)-1)<.001)?1.3:(saved.textScale||1.3)))) });
 /* special themes migrated to their intended palette defaults */
 if(!savedIsCurrent&&(/^pride/i.test(state.theme)||state.theme==='bear'))state.preserveMitColors=false;
 if(state.theme!=='custom'&&!THEMES[state.theme]){state.theme='default';state.customTheme=null;state.preserveMitColors=true;}
 const purchaseState={character:saved.character||'',command:saved.command||'craft',tp:saved.tp||[0,0,0,0],gold:Number(saved.gold||0),methods:(saved.purchaseMethods&&typeof saved.purchaseMethods==='object')?saved.purchaseMethods:{},optGoal:['balanced','preserveTp','preserveGp'].includes(saved.purchaseOptimizeGoal)?saved.purchaseOptimizeGoal:'balanced',shopMode:!!saved.shopMode,shopCurrency:['auto','tp','gp'].includes(saved.shopCurrency)?saved.shopCurrency:'auto',attuneCap:Math.max(0,Number(saved.attuneCap??3))};
 const rewardState={mention:saved.rewardMention||'',tier:Number(saved.rewardTier||1),majorCount:Number(saved.majorCount||0),minorCount:Number(saved.minorCount||0),mncCount:Number(saved.mncCount||0),major:Array.isArray(saved.rewardMajor)?saved.rewardMajor:[],minor:Array.isArray(saved.rewardMinor)?saved.rewardMinor:[],mnc:Array.isArray(saved.rewardMnc)?saved.rewardMnc:[],customNames:(saved.rewardCustomNames&&typeof saved.rewardCustomNames==='object')?saved.rewardCustomNames:{},modFriend:!!saved.rewardModFriend};
-function persist(){try{localStorage.setItem('mitGuiState',JSON.stringify({stateVersion:STATE_VERSION,typographyVersion:2,newPlayer:state.newPlayer,npMode:state.npMode,npShowHighTiers:state.npShowHighTiers,classes:state.classes,compareMode:state.compareMode,compare:state.compare,favorites:state.favorites,cart:state.cart,theme:state.theme,customTheme:state.customTheme,preserveMitColors:state.preserveMitColors,simpleMode:state.simpleMode,mobileMode:state.mobileMode,navStyle:state.navStyle,fontKey:state.fontKey,textScale:state.textScale,character:purchaseState.character,command:purchaseState.command,tp:purchaseState.tp,gold:purchaseState.gold,purchaseMethods:purchaseState.methods,purchaseOptimizeGoal:purchaseState.optGoal,shopMode:purchaseState.shopMode,shopCurrency:purchaseState.shopCurrency,attuneCap:purchaseState.attuneCap,rewardMention:rewardState.mention,rewardTier:rewardState.tier,majorCount:rewardState.majorCount,minorCount:rewardState.minorCount,mncCount:rewardState.mncCount,rewardMajor:rewardState.major,rewardMinor:rewardState.minor,rewardMnc:rewardState.mnc,rewardCustomNames:rewardState.customNames,rewardModFriend:rewardState.modFriend}))}catch(e){/* Storage may be unavailable in local previews/private contexts. */}}
+function persist(){try{localStorage.setItem('mitGuiState',JSON.stringify({stateVersion:STATE_VERSION,typographyVersion:2,newPlayer:state.newPlayer,npMode:state.npMode,npShowHighTiers:state.npShowHighTiers,classes:state.classes,compareMode:state.compareMode,compare:state.compare,favorites:state.favorites,cart:state.cart,theme:state.theme,customTheme:state.customTheme,customBaseTheme:state.customBaseTheme,preserveMitColors:state.preserveMitColors,simpleMode:state.simpleMode,mobileMode:state.mobileMode,spreadsheetMode:state.spreadsheetMode,navStyle:state.navStyle,fontKey:state.fontKey,textScale:state.textScale,character:purchaseState.character,command:purchaseState.command,tp:purchaseState.tp,gold:purchaseState.gold,purchaseMethods:purchaseState.methods,purchaseOptimizeGoal:purchaseState.optGoal,shopMode:purchaseState.shopMode,shopCurrency:purchaseState.shopCurrency,attuneCap:purchaseState.attuneCap,rewardMention:rewardState.mention,rewardTier:rewardState.tier,majorCount:rewardState.majorCount,minorCount:rewardState.minorCount,mncCount:rewardState.mncCount,rewardMajor:rewardState.major,rewardMinor:rewardState.minor,rewardMnc:rewardState.mnc,rewardCustomNames:rewardState.customNames,rewardModFriend:rewardState.modFriend}))}catch(e){/* Storage may be unavailable in local previews/private contexts. */}}
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.add('hidden'),1800)}
 const FONT_OPTIONS={inter:'Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif',atkinson:'"Atkinson Hyperlegible","Segoe UI",Arial,sans-serif',georgia:'Georgia,"Times New Roman",serif',trebuchet:'"Trebuchet MS",Verdana,Arial,sans-serif',mono:'"Cascadia Mono","SFMono-Regular",Consolas,"Liberation Mono",monospace'};
 function applyTypography(){document.documentElement.style.setProperty('--font',FONT_OPTIONS[state.fontKey]||FONT_OPTIONS.inter);document.documentElement.style.setProperty('--text-scale',String(state.textScale));const f=$('#fontChoice'),v=$('#textSizeReset'),l=$('#textAppearanceLabel');if(f)f.value=state.fontKey;const pct=`${Math.round(state.textScale*100)}%`;if(v)v.textContent=pct;if(l)l.textContent=pct}
@@ -799,14 +1134,14 @@ function itemVisibleBrowse(x){if(!npVisible(x))return false;if(state.display==='
 function getByName(name){return data.find(x=>x.Item===name)}
 function openItem(x){const u=norm(x.Link);if(u)window.open(u,'_blank','noopener');else toast('No item reference link is set')}
 function toggleFavorite(name){state.favorites=state.favorites.includes(name)?state.favorites.filter(x=>x!==name):[...state.favorites,name];persist();renderAll()}
-function addCart(name){const x=getByName(name);if(!x)return;if(x['Consumable/Non Consumable']!=='Non-Consumable'||num(x['Cost (TP)'])===null){toast('Only Magic Item Table non-consumables can be purchased');return}if(state.cart.includes(name)){toast('That item is already in the purchase list');return}state.cart.push(name);if(purchaseState.shopMode)purchaseState.methods[name]=purchaseState.shopCurrency==='auto'?'auto':purchaseState.shopCurrency;persist();renderCart();renderAll();toast('Added to purchase list')}
+function addCart(name){const x=getByName(name);if(!x)return;if(x['Consumable/Non Consumable']!=='Non-Consumable'||num(x['Cost (TP)'])===null){toast('Only Magic Item Table non-consumables can be purchased');return}if(state.cart.includes(name)){state.cart=state.cart.filter(n=>n!==name);delete purchaseState.methods[name];persist();renderAll();toast('Removed from purchase list');return}state.cart.push(name);if(purchaseState.shopMode)purchaseState.methods[name]=purchaseState.shopCurrency==='auto'?'auto':purchaseState.shopCurrency;persist();renderAll();toast('Added to purchase list')}
 function toggleCompare(name){if(state.compare.includes(name))state.compare=state.compare.filter(x=>x!==name);else{if(state.compare.length>=4){toast('Compare supports up to 4 items');return}state.compare.push(name)}persist();renderAll()}
 function cellHTML(x,groupClass=''){
   const fav=state.favorites.includes(x.Item),cmp=state.compare.includes(x.Item),inCart=state.cart.includes(x.Item),err=norm(x.Errata),next=isYes(x['Evolving Item'])?norm(x['Next Evolution']):'';
   const infoAttr=(err?` data-errata="${esc(err)}"`:'')+(next?` data-evolution="${esc(next)}"`:'');
   const infoMark=err?'<span class="errata-mark" aria-hidden="true">i</span>':'';const evolveMark=isYes(x['Evolving Item'])?'<span class="evolve-mark" aria-label="Evolving item">↗</span>':'';
   const title=next?`Evolving item${err?' • Errata available':''} — hover for details`:err?'Errata available — hover to read':'Open '+esc(x.Item)+' in a new tab';
-  return `<td class="${cellClasses(x)} ${groupClass}" data-item="${esc(x.Item)}"><button class="item-name ${norm(x.Attunement)==='Yes'?'attune':'noattune'}"${infoAttr} title="${title}" onclick="openItemByName('${esc(x.Item).replace(/&#39;/g,"\\'")}')"><span>${esc(x.Item)}</span>${evolveMark}${infoMark}</button><span class="cell-actions ${fav||cmp||inCart?'keep':''}"><button class="cell-action star ${fav?'on':''}" title="Favorite" onclick="event.stopPropagation();toggleFavoriteSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy" title="Add to purchase list" onclick="event.stopPropagation();addCartSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">+</button>`:''}${state.compareMode?`<button class="cell-action compare ${cmp?'on':''}" title="Compare" onclick="event.stopPropagation();toggleCompareSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">⇄</button>`:''}</span></td>`
+  return `<td class="${cellClasses(x)} ${groupClass}" data-item="${esc(x.Item)}"><button class="item-name ${norm(x.Attunement)==='Yes'?'attune':'noattune'}"${infoAttr} title="${title}" onclick="openItemByName('${esc(x.Item).replace(/&#39;/g,"\\'")}')"><span>${esc(x.Item)}</span>${evolveMark}${infoMark}</button><span class="cell-actions ${fav||cmp||inCart?'keep':''}"><button class="cell-action star ${fav?'on':''}" title="Favorite" onclick="event.stopPropagation();toggleFavoriteSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy ${inCart?'on':''}" title="${inCart?'Remove from':'Add to'} purchase list" onclick="event.stopPropagation();addCartSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">${inCart?'−':'+'}</button>`:''}${state.compareMode?`<button class="cell-action compare ${cmp?'on':''}" title="Compare" onclick="event.stopPropagation();toggleCompareSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">⇄</button>`:''}</span></td>`
 }
 
 window.openItemByName=name=>{const x=getByName(name);if(x)openItem(x)};window.toggleFavoriteSafe=name=>toggleFavorite(name);window.addCartSafe=name=>addCart(name);window.toggleCompareSafe=name=>toggleCompare(name);
@@ -816,7 +1151,7 @@ function mobileItemHTML(x){
  const fav=state.favorites.includes(x.Item),cmp=state.compare.includes(x.Item),inCart=state.cart.includes(x.Item),err=norm(x.Errata),next=isYes(x['Evolving Item'])?norm(x['Next Evolution']):'',classes=cellClasses(x).replace('item-cell','').trim();
  const infoAttr=(err?` data-errata="${esc(err)}"`:'')+(next?` data-evolution="${esc(next)}"`:'');const errMark=err?'<span class="errata-mark" aria-hidden="true">i</span>':'';const evolveMark=isYes(x['Evolving Item'])?'<span class="evolve-mark" aria-label="Evolving item">↗</span>':'';
  const safe=esc(x.Item).replace(/&#39;/g,"\\'");
- return `<div class="mobile-item-row ${classes}" data-item="${esc(x.Item)}"><button class="mobile-item-name ${norm(x.Attunement)==='Yes'?'attune':'noattune'}"${infoAttr} onclick="openItemByName('${safe}')"><span>${esc(x.Item)}</span>${evolveMark}${errMark}</button><div class="mobile-item-actions"><button class="cell-action star ${fav?'on':''}" title="Favorite" onclick="event.stopPropagation();toggleFavoriteSafe('${safe}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy" title="Add to purchase list" onclick="event.stopPropagation();addCartSafe('${safe}')">+</button>`:''}${state.compareMode?`<button class="cell-action compare ${cmp?'on':''}" title="Compare" onclick="event.stopPropagation();toggleCompareSafe('${safe}')">⇄</button>`:''}</div></div>`
+ return `<div class="mobile-item-row ${classes}" data-item="${esc(x.Item)}"><button class="mobile-item-name ${norm(x.Attunement)==='Yes'?'attune':'noattune'}"${infoAttr} onclick="openItemByName('${safe}')"><span>${esc(x.Item)}</span>${evolveMark}${errMark}</button><div class="mobile-item-actions"><button class="cell-action star ${fav?'on':''}" title="Favorite" onclick="event.stopPropagation();toggleFavoriteSafe('${safe}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy ${inCart?'on':''}" title="${inCart?'Remove from':'Add to'} purchase list" onclick="event.stopPropagation();addCartSafe('${safe}')">${inCart?'−':'+'}</button>`:''}${state.compareMode?`<button class="cell-action compare ${cmp?'on':''}" title="Compare" onclick="event.stopPropagation();toggleCompareSafe('${safe}')">⇄</button>`:''}</div></div>`
 }
 
 function renderMagicMobile(){
@@ -891,7 +1226,7 @@ function renderSearch(){
    const recClass=(state.newPlayer&&state.npMode==='highlight')?(rec.friendly&&rec.classMatch?'np-friendly class-rec':rec.friendly?'np-friendly':rec.classMatch?'class-rec':''):'';
    const evolving=isYes(x['Evolving Item'])?' evolving':'';const infoAttr=(err?` data-errata="${esc(err)}"`:'')+(next?` data-evolution="${esc(next)}"`:'');
    const errMark=err?'<span class="errata-mark" aria-hidden="true">i</span>':'';const evolveMark=isYes(x['Evolving Item'])?'<span class="evolve-mark" aria-label="Evolving item">↗</span>':'';
-   h+=`<tr class="${recClass}${evolving}" data-item="${esc(x.Item)}"><td><a class="item-anchor ${att?'attune':'noattune'}"${infoAttr} href="${esc(x.Link||'#')}" target="_blank" rel="noopener"><span>${esc(x.Item)}</span>${evolveMark}${errMark}</a></td><td>${esc(x.Tier)}</td><td>${esc(x['Cost (TP)'])}</td><td>${num(x['Cost (Gold)'])!==null?Number(x['Cost (Gold)']).toLocaleString():'—'}</td><td>${esc(x.Rarity)}</td><td>${esc(x.Category)}</td><td>${esc(x.Attunement)}</td><td>${esc(x.Source)}</td><td><div class="search-actions"><button class="cell-action star ${state.favorites.includes(x.Item)?'on':''}" onclick="toggleFavoriteSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy" onclick="addCartSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">+</button>`:''}${state.compareMode?`<button class="cell-action compare ${state.compare.includes(x.Item)?'on':''}" onclick="toggleCompareSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">⇄</button>`:''}</div></td></tr>`
+   h+=`<tr class="${recClass}${evolving}" data-item="${esc(x.Item)}"><td><a class="item-anchor ${att?'attune':'noattune'}"${infoAttr} href="${esc(x.Link||'#')}" target="_blank" rel="noopener"><span>${esc(x.Item)}</span>${evolveMark}${errMark}</a></td><td>${esc(x.Tier)}</td><td>${esc(x['Cost (TP)'])}</td><td>${num(x['Cost (Gold)'])!==null?Number(x['Cost (Gold)']).toLocaleString():'—'}</td><td>${esc(x.Rarity)}</td><td>${esc(x.Category)}</td><td>${esc(x.Attunement)}</td><td>${esc(x.Source)}</td><td><div class="search-actions"><button class="cell-action star ${state.favorites.includes(x.Item)?'on':''}" onclick="toggleFavoriteSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">★</button>${x['Consumable/Non Consumable']==='Non-Consumable'&&num(x['Cost (TP)'])!==null?`<button class="cell-action buy ${state.cart.includes(x.Item)?'on':''}" title="${state.cart.includes(x.Item)?'Remove from':'Add to'} purchase list" onclick="addCartSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">${state.cart.includes(x.Item)?'−':'+'}</button>`:''}${state.compareMode?`<button class="cell-action compare ${state.compare.includes(x.Item)?'on':''}" onclick="toggleCompareSafe('${esc(x.Item).replace(/&#39;/g,"\\'")}')">⇄</button>`:''}</div></td></tr>`
  }
  h+=`</tbody></table>${rows.length?'':'<div class="empty-state">No items match the current filters.</div>'}</div></div>`;$('#viewSearch').innerHTML=h;updateShareHash()
 }
@@ -936,6 +1271,7 @@ function rebuildStickyTierHeaders(ctx){
 }
 function syncStickyTierHeaders(force=false){
  const overlay=$('#stickyTierHeaders');if(!overlay)return;
+ if(state.spreadsheetMode){overlay.classList.remove('on');return}
  const ctx=stickyBoardContext();if(!ctx){overlay.classList.remove('on');return}
  const topSheet=$('.top-sheet'),topH=topSheet?topSheet.getBoundingClientRect().height:0,wr=ctx.wrap.getBoundingClientRect();
  const shouldShow=wr.top<topH&&wr.bottom>topH+70;
@@ -949,8 +1285,8 @@ function syncStickyTierHeaders(force=false){
 }
 function syncMobileStickyOffset(){requestAnimationFrame(()=>{const top=$('.top-sheet'),shop=$('#shopBar');const h=top?Math.ceil(top.getBoundingClientRect().height):0,sh=shop&&!shop.classList.contains('hidden')?Math.ceil(shop.getBoundingClientRect().height):0;document.documentElement.style.setProperty('--mobile-sticky-top',`${h+sh}px`)})}
 function syncModeUI(){
- document.body.classList.toggle('simple-mode',state.simpleMode);document.body.classList.toggle('mobile-mode',state.mobileMode);
- const sb=$('#simpleModeBtn'),mb=$('#mobileModeBtn'),npb=$('#newPlayerModeBtn'),nb=$('#navStyleBtn');if(sb){sb.textContent=state.simpleMode?'Exit Simple Mode':'Simple Mode';sb.classList.toggle('primary',state.simpleMode)}if(mb){mb.textContent=state.mobileMode?'Desktop Layout':'Mobile Mode';mb.classList.toggle('primary',state.mobileMode)}if(npb){npb.textContent=state.newPlayer?'New Player: On':'New Player Mode';npb.classList.toggle('primary',state.newPlayer)}if(nb){nb.textContent=state.navStyle==='buttons'?'Navigation: Buttons':'Navigation: Scrollbar';nb.classList.toggle('primary',state.navStyle==='buttons');nb.disabled=state.mobileMode;nb.title=state.mobileMode?'Mobile Mode uses touch tier navigation automatically':'Switch between the draggable scrollbar and tier navigation buttons'}applyTypography()
+ document.body.classList.toggle('simple-mode',state.simpleMode);document.body.classList.toggle('mobile-mode',state.mobileMode);document.body.classList.toggle('spreadsheet-mode',state.spreadsheetMode);
+ const sb=$('#simpleModeBtn'),mb=$('#mobileModeBtn'),npb=$('#newPlayerModeBtn'),spb=$('#spreadsheetModeBtn'),nb=$('#navStyleBtn');if(sb){sb.textContent=state.simpleMode?'Exit Simple Mode':'Simple Mode';sb.classList.toggle('primary',state.simpleMode)}if(mb){mb.textContent=state.mobileMode?'Desktop Layout':'Mobile Mode';mb.classList.toggle('primary',state.mobileMode)}if(npb){npb.textContent=state.newPlayer?'New Player: On':'New Player Mode';npb.classList.toggle('primary',state.newPlayer)}if(spb){spb.textContent=state.spreadsheetMode?'Spreadsheet: On':'Spreadsheet Mode';spb.classList.toggle('primary',state.spreadsheetMode);spb.title=state.spreadsheetMode?'Return to the full themed interface':'Performance-optimized Google Sheet-style layout'}if(nb){nb.textContent=state.navStyle==='hidden'?'Navigation: Hidden':state.navStyle==='buttons'?'Navigation: Buttons':'Navigation: Scrollbar';nb.classList.toggle('primary',state.navStyle!=='hidden');nb.disabled=state.mobileMode;nb.title=state.mobileMode?'Mobile Mode uses touch tier navigation automatically':'Cycle bottom navigation between hidden, tier buttons, and draggable scrollbar'}applyTypography()
  syncMobileStickyOffset();syncNavigationDock();syncScrollNavigator();
 }
 function activeTableRoot(){return document.querySelector(activeViewSelector())}
@@ -969,17 +1305,18 @@ function bindScrollNavigator(){
  const end=e=>{if(!scrollNavDrag||scrollNavDrag.id!==e.pointerId)return;scrollNavDrag=null;thumb.classList.remove('dragging');try{thumb.releasePointerCapture?.(e.pointerId)}catch{}};thumb.addEventListener('pointerup',end);thumb.addEventListener('pointercancel',end);
  track.addEventListener('keydown',e=>{const wrap=activeHorizontalWrap();if(!wrap)return;const step=Math.max(80,wrap.clientWidth*.12);if(e.key==='ArrowLeft'){wrap.scrollBy({left:-step});e.preventDefault()}else if(e.key==='ArrowRight'){wrap.scrollBy({left:step});e.preventDefault()}else if(e.key==='Home'){wrap.scrollLeft=0;e.preventDefault()}else if(e.key==='End'){wrap.scrollLeft=wrap.scrollWidth;e.preventDefault()}syncScrollNavigator()});
 }
-function setNavigationStyle(style){state.navStyle=style==='buttons'?'buttons':'scrollbar';persist();syncModeUI();toast(state.navStyle==='scrollbar'?'Draggable scrollbar navigation':'Button navigation')}
-function tableTop(){const el=activeTableRoot()?.querySelector('.sheet-view,.mobile-stack,.panel');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
-function tableBottom(){const el=activeTableRoot()?.querySelector('.sheet-footer')||activeTableRoot();if(el){const r=el.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.bottom-window.innerHeight+24,behavior:'smooth'})}}
-function horizontalTableScroll(dir){const wrap=activeTableRoot()?.querySelector('.modern-board-wrap');if(wrap)wrap.scrollBy({left:dir*Math.max(320,wrap.clientWidth*.75),behavior:'smooth'})}
-function jumpToTier(t){const root=activeTableRoot(),panel=root?.querySelector(`[data-tier="${t}"]`);if(!panel)return;if(state.mobileMode){panel.scrollIntoView({behavior:'smooth',block:'start'})}else{const wrap=root.querySelector('.modern-board-wrap');if(wrap)wrap.scrollTo({left:Math.max(0,panel.offsetLeft-10),behavior:'smooth'})}}
+function setNavigationStyle(style){state.navStyle=['hidden','buttons','scrollbar'].includes(style)?style:'hidden';persist();syncModeUI();toast(state.navStyle==='hidden'?'Bottom navigation hidden':state.navStyle==='buttons'?'Button navigation':'Draggable scrollbar navigation')}
+function tableTop(){const el=activeTableRoot()?.querySelector('.sheet-view,.mobile-stack,.panel');if(el)el.scrollIntoView({behavior:state.spreadsheetMode?'auto':'smooth',block:'start'})}
+function tableBottom(){const el=activeTableRoot()?.querySelector('.sheet-footer')||activeTableRoot();if(el){const r=el.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.bottom-window.innerHeight+24,behavior:state.spreadsheetMode?'auto':'smooth'})}}
+function horizontalTableScroll(dir){const wrap=activeTableRoot()?.querySelector('.modern-board-wrap');if(wrap)wrap.scrollBy({left:dir*Math.max(320,wrap.clientWidth*.75),behavior:state.spreadsheetMode?'auto':'smooth'})}
+function jumpToTier(t){const root=activeTableRoot(),panel=root?.querySelector(`[data-tier="${t}"]`);if(!panel)return;if(state.mobileMode){panel.scrollIntoView({behavior:state.spreadsheetMode?'auto':'smooth',block:'start'})}else{const wrap=root.querySelector('.modern-board-wrap');if(wrap)wrap.scrollTo({left:Math.max(0,panel.offsetLeft-10),behavior:state.spreadsheetMode?'auto':'smooth'})}}
 function syncNavigationDock(){
- const dock=$('#navDock');if(!dock)return;const tiered=state.view==='magic'||state.view==='reward';const showDock=!state.simpleMode&&(state.mobileMode||state.navStyle==='buttons');dock.classList.toggle('nav-hidden',!showDock);dock.classList.toggle('search-nav',!tiered);dock.classList.toggle('mobile-nav',state.mobileMode);$$('.tier-jump').forEach(b=>{const t=Number(b.dataset.navTier);b.hidden=!tiered||!activeTableRoot()?.querySelector(`[data-tier="${t}"]`) });$$('.nav-horizontal').forEach(b=>b.hidden=!tiered||state.mobileMode);
+ const dock=$('#navDock');if(!dock)return;const tiered=state.view==='magic'||state.view==='reward';const showDock=!state.simpleMode&&state.navStyle==='buttons';dock.classList.toggle('nav-hidden',!showDock);dock.classList.toggle('search-nav',!tiered);dock.classList.toggle('mobile-nav',state.mobileMode);$$('.tier-jump').forEach(b=>{const t=Number(b.dataset.navTier);b.hidden=!tiered||!activeTableRoot()?.querySelector(`[data-tier="${t}"]`) });$$('.nav-horizontal').forEach(b=>b.hidden=!tiered||state.mobileMode);
  syncScrollNavigator();if(!tiered)return;let active=1;if(state.mobileMode){const panels=[...activeTableRoot().querySelectorAll('[data-tier]')];const target=(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mobile-sticky-top'))||0)+90;let best=Infinity;for(const p of panels){const d=Math.abs(p.getBoundingClientRect().top-target);if(d<best){best=d;active=Number(p.dataset.tier)||1}}}else{const wrap=activeTableRoot()?.querySelector('.modern-board-wrap');const panels=[...activeTableRoot().querySelectorAll('.tier-panel[data-tier]')];if(wrap&&panels.length){const x=wrap.scrollLeft+30;let best=Infinity;for(const p of panels){const d=Math.abs(p.offsetLeft-x);if(d<best){best=d;active=Number(p.dataset.tier)||1}}}}$$('.tier-jump').forEach(b=>b.classList.toggle('active',Number(b.dataset.navTier)===active));
 }
 function setSimpleMode(v){state.simpleMode=!!v;persist();syncModeUI();syncStickyTierHeaders(true)}
 function setMobileMode(v){const pos=captureScrollState();state.mobileMode=!!v;persist();syncModeUI();renderAll();restoreScrollState(pos)}
+function setSpreadsheetMode(v){const pos=captureScrollState();state.spreadsheetMode=!!v;persist();syncModeUI();renderAll();restoreScrollState(pos);toast(state.spreadsheetMode?'Spreadsheet Mode enabled — lightweight Google Sheet layout':'Spreadsheet Mode disabled — full visual interface restored')}
 function bindMobileCollapseTools(){document.addEventListener('click',e=>{const ex=e.target.closest?.('[data-expand-tier]'),cl=e.target.closest?.('[data-collapse-tier]');if(!ex&&!cl)return;const t=Number((ex||cl).dataset[ex?'expandTier':'collapseTier']);const panel=activeTableRoot()?.querySelector(`[data-tier="${t}"]`);if(panel)panel.querySelectorAll('details.mobile-cost-group').forEach(d=>d.open=!!ex)})}
 
 function renderAll(){syncModeUI();const scrollPos=captureScrollState();renderMagic();renderReward();renderSearch();renderCounts();renderNp();renderCart();renderShopBar();renderRewardBuilder();renderCompare();updateFilterText();restoreScrollState(scrollPos)}
@@ -1061,16 +1398,29 @@ function colorLuma(hex){const {r,g,b}=hexRgb(hex);const f=v=>{v/=255;return v<=.
 function contrastText(bg){return colorLuma(bg)>.42?'#15171a':'#f7f8fa'}
 function colorContrast(a,b){const A=colorLuma(a),B=colorLuma(b);return (Math.max(A,B)+.05)/(Math.min(A,B)+.05)}
 function readableColor(fg,bg,min=4.5){if(colorContrast(fg,bg)>=min)return fg;const dark='#182027',light='#f1f3f4';return colorContrast(dark,bg)>=colorContrast(light,bg)?dark:light}
+function nudgeContrastAcross(fg,bgs,min=4.5){
+ const backgrounds=(bgs||[]).filter(Boolean);if(!backgrounds.length)return fg;
+ const passes=c=>backgrounds.every(bg=>colorContrast(c,bg)>=min);
+ if(fg&&passes(fg))return fg;
+ const seed=fg||'#707070';
+ for(let i=1;i<=32;i++){const q=i/32,d=mixHex(seed,'#0b0d10',q),l=mixHex(seed,'#f7f4ee',q);if(passes(d))return d;if(passes(l))return l}
+ const candidates=['#0b0d10','#15191e','#f7f8fa','#fffaf2'];let best=candidates[0],score=-1;
+ for(const c of candidates){const v=Math.min(...backgrounds.map(bg=>colorContrast(c,bg)));if(v>score){score=v;best=c}}return best
+}
 function themeForScreen(obj){
  const o={...(obj||{})},tint=o.tri1||o.accent||'#65727c';
- for(const k of ['page','surface','alt','header']){
-  const v=o[k];if(v&&colorLuma(v)>.95)o[k]=mixHex(v,tint,.14)
- }
- o.text=readableColor(o.text||'#eef2f5',o.surface||o.page,4.5);
- o.headerText=readableColor(o.headerText||o.text,o.header||o.page,4.5);
- o.nonattune=readableColor(o.nonattune||o.text,o.surface||o.page,4.5);
- o.muted=readableColor(o.muted||o.text,o.surface||o.page,3.1);o.evolve=o.evolve||o.success||'#55c77b';
- return o
+ for(const k of ['page','surface','alt','header']){const v=o[k];if(v&&colorLuma(v)>.95)o[k]=mixHex(v,tint,.14)}
+ const surface=o.surface||o.page||'#171e24',header=o.header||o.page||'#0d1216';
+ o.alt=o.alt||surface;o.selected=o.selected||mixHex(surface,o.accent||o.text||'#888',.18);
+ const tableBgs=[surface,o.alt,o.selected],appBgs=[o.page||surface,surface,o.alt,o.selected];
+ o.text=nudgeContrastAcross(o.text||'#eef2f5',appBgs,4.5);
+ o.headerText=nudgeContrastColor(o.headerText||o.text,header,4.5);
+ o.nonattune=nudgeContrastAcross(o.nonattune||o.text,tableBgs,4.5);
+ o.muted=nudgeContrastAcross(o.muted||o.text,appBgs,4.5);
+ o.attune=nudgeContrastAcross(o.attune||o.accent||'#d19a49',tableBgs,4.5);
+ o.grid=nudgeContrastAcross(o.grid||mixHex(surface,o.text,.30),[surface,o.alt],3);
+ for(const k of ['newplayer','classrec','success','warning','compare','evolve'])o[k]=nudgeContrastAcross(o[k]||o.accent||o.text,tableBgs,4.5);
+ o.evolve=o.evolve||o.success||'#55c77b';return o
 }
 function syncTricolorPreview(){const a=$('#triBuilder1')?.value||'#10151a',b=$('#triBuilder2')?.value||'#d19a49',c=$('#triBuilder3')?.value||'#77838e',p=$('#tricolorPreview');if(p){p.style.setProperty('--builder1',a);p.style.setProperty('--builder2',b);p.style.setProperty('--builder3',c)}}
 function syncTricolorBuilder(obj){if(!obj)return;const vals=[obj.tri1||obj.page||'#10151a',obj.tri2||obj.accent||'#d19a49',obj.tri3||obj.classrec||'#77838e'];['#triBuilder1','#triBuilder2','#triBuilder3'].forEach((sel,i)=>{const el=$(sel);if(el)el.value=vals[i]});syncTricolorPreview()}
@@ -1094,16 +1444,53 @@ function buildTricolorObject(c1,c2,c3){
  const tier4s=mixHex(c1,c3,.64),tier4e=mixHex(mixHex(c2,c3,.55),'#ffffff',.48);
  return{page,surface,alt,text,muted,header,headerText,grid,accent,selected,attune,nonattune:text,newplayer:highlight,classrec:mixHex(c2,c3,.5),success:mixHex('#67d88b',c3,.18),warning:mixHex('#f06d6d',c2,.12),compare:highlight,evolve:mixHex('#55c77b',c3,.18),tri1:c1,tri2:c2,tri3:c3,'tier1-start':tier1s,'tier1-end':tier1e,'tier2-start':tier2s,'tier2-end':tier2e,'tier3-start':tier3s,'tier3-end':tier3e,'tier4-start':tier4s,'tier4-end':tier4e}
 }
-function buildTricolorFromInputs(){const a=$('#triBuilder1').value,b=$('#triBuilder2').value,c=$('#triBuilder3').value,vals=buildTricolorObject(a,b,c);$('#themePreset').value='custom';renderThemeGrid(vals);syncTricolorBuilder(vals);applyTheme(vals,{preserve:$('#preserveMitColors').checked,themeName:'custom'});toast('Tricolor theme built — review or Save Theme')}
+function buildTricolorFromInputs(){const a=$('#triBuilder1').value,b=$('#triBuilder2').value,c=$('#triBuilder3').value,vals=buildTricolorObject(a,b,c);editorBaseTheme='default';$('#themePreset').value='custom';renderThemeGrid(vals);syncTricolorBuilder(vals);applyTheme(vals,{preserve:$('#preserveMitColors').checked,themeName:'custom'});toast('Tricolor theme built — review or Save Theme')}
 
-function applyTheme(obj,opts={}){const preserve=opts.preserve??state.preserveMitColors,themeName=opts.themeName??state.theme,safe=themeForScreen(obj);for(const [k,v] of Object.entries(safe||{}))document.documentElement.style.setProperty('--'+k,v);if(preserve)for(const [k,v] of Object.entries(FIXED_MIT_COLORS))document.documentElement.style.setProperty('--'+k,v);setThemeBodyClass(themeName,preserve)}
+let editorBaseTheme=state.customBaseTheme||'default';
+function validBaseTheme(name){return name&&name!=='custom'&&THEMES[name]?name:'default'}
+function syncCustomBaseHint(){const el=$('#customBaseHint');if(!el)return;const p=$('#themePreset')?.value||'default',base=p==='custom'?validBaseTheme(editorBaseTheme||state.customBaseTheme):validBaseTheme(p),opt=[...($('#themePreset')?.options||[])].find(o=>o.value===base);el.textContent=p==='custom'?`Custom base: ${opt?.textContent?.trim()||'Modern MIT'} — Reset to Base restores this preset.`:'Start a custom theme from this preset, then fine-tune it below.'}
+function usePresetAsCustomBase(){const p=$('#themePreset').value,baseKey=validBaseTheme(p==='custom'?(editorBaseTheme||state.customBaseTheme):p),base={...THEMES[baseKey]};editorBaseTheme=baseKey;state.customBaseTheme=baseKey;$('#themePreset').value='custom';renderThemeGrid(base);syncTricolorBuilder(base);applyTheme(base,{preserve:$('#preserveMitColors').checked,themeName:'custom'});syncThemeLockUI();syncCustomBaseHint();{const opt=[...$('#themePreset').options].find(o=>o.value===baseKey);toast('Custom theme started from '+(opt?.textContent?.trim()||'Modern MIT'))}}
+function resetThemeToBase(){const p=$('#themePreset').value,baseKey=validBaseTheme(p==='custom'?(editorBaseTheme||state.customBaseTheme):p),base={...THEMES[baseKey]};renderThemeGrid(base);syncTricolorBuilder(base);applyTheme(base,{preserve:$('#preserveMitColors').checked,themeName:p==='custom'?'custom':baseKey});syncThemeLockUI();syncCustomBaseHint();toast('Theme editor reset to base preset')}
+function applicationContrastTokens(o){
+ const page=o.page||'#20252a',surface=o.surface||page,alt=o.alt||surface,header=o.header||page,accent=o.accent||o.text||'#7c8790',selected=o.selected||mixHex(surface,accent,.18);
+ const nav=mixHex(header,surface,.11),toolbar=mixHex(header,surface,.17),legend=mixHex(header,surface,.24),panelHead=mixHex(surface,accent,.08),control=mixHex(surface,page,.26),button=mixHex(surface,accent,.08),active=mixHex(surface,accent,.23);
+ const copyBg=colorLuma(surface)>.55?mixHex(surface,'#000000',.12):mixHex(surface,'#000000',.32),toastBg=colorLuma(page)>.55?mixHex(page,'#000000',.72):mixHex(page,'#ffffff',.08);
+ return{
+  'ui-page-text':nudgeContrastAcross(o.text||'#eef2f5',[page],4.5),
+  'ui-surface-text':nudgeContrastAcross(o.text||'#eef2f5',[surface,alt],4.5),
+  'ui-muted':nudgeContrastAcross(o.muted||o.text,[page,surface,alt],4.5),
+  'ui-header-text':nudgeContrastAcross(o.headerText||o.text,[header,nav,toolbar,legend],4.5),
+  'ui-header-muted':nudgeContrastAcross(o.muted||o.headerText||o.text,[header,nav,toolbar,legend],4.5),
+  'ui-panel-head-bg':panelHead,
+  'ui-panel-head-text':nudgeContrastAcross(o.text||'#eef2f5',[panelHead],4.5),
+  'ui-panel-head-muted':nudgeContrastAcross(o.muted||o.text,[panelHead],4.5),
+  'ui-control-bg':control,
+  'ui-control-text':nudgeContrastAcross(o.text||'#eef2f5',[control],4.5),
+  'ui-control-muted':nudgeContrastAcross(o.muted||o.text,[control],4.5),
+  'ui-button-bg':button,
+  'ui-button-text':nudgeContrastAcross(o.text||'#eef2f5',[button],4.5),
+  'ui-button-hover-bg':selected,
+  'ui-button-hover-text':nudgeContrastAcross(o.text||'#eef2f5',[selected],4.5),
+  'ui-active-bg':active,
+  'ui-active-text':nudgeContrastAcross(o.text||'#eef2f5',[active],4.5),
+  'ui-copy-bg':copyBg,
+  'ui-copy-text':nudgeContrastAcross(o.text||'#eef2f5',[copyBg],4.5),
+  'ui-toast-bg':toastBg,
+  'ui-toast-text':nudgeContrastAcross(o.text||'#eef2f5',[toastBg],4.5),
+  'ui-warning-text':nudgeContrastAcross(o.warning||'#c62828',[button,active],4.5),
+  'ui-success-text':nudgeContrastAcross(o.success||'#267a42',[surface,alt,button],4.5),
+  'ui-accent-text':nudgeContrastAcross(o.accent||o.text,[surface,alt,button],4.5)
+ }
+}
+function applyApplicationContrastTokens(o){const root=document.documentElement,t=applicationContrastTokens(o);for(const [k,v] of Object.entries(t))root.style.setProperty('--'+k,v);const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.setAttribute('content',o.header||o.page||'#1d2125')}
+function applyTheme(obj,opts={}){const preserve=opts.preserve??state.preserveMitColors,themeName=opts.themeName??state.theme,safe=themeForScreen(obj);for(const [k,v] of Object.entries(safe||{}))document.documentElement.style.setProperty('--'+k,v);if(preserve)for(const [k,v] of Object.entries(FIXED_MIT_COLORS))document.documentElement.style.setProperty('--'+k,v);applyApplicationContrastTokens(safe);setThemeBodyClass(themeName,preserve)}
 function currentThemeObject(){return state.theme==='custom'&&state.customTheme?state.customTheme:(THEMES[state.theme]||THEMES.default)}
-function initTheme(){const base=currentThemeObject();$('#themePreset').value=state.theme in THEMES?state.theme:'custom';$('#preserveMitColors').checked=state.preserveMitColors;applyTheme(base,{preserve:state.preserveMitColors,themeName:state.theme});renderThemeGrid(base);syncTricolorBuilder(base);syncThemeLockUI()}
+function initTheme(){const base=currentThemeObject();editorBaseTheme=validBaseTheme(state.customBaseTheme);$('#themePreset').value=state.theme in THEMES?state.theme:'custom';$('#preserveMitColors').checked=state.preserveMitColors;applyTheme(base,{preserve:state.preserveMitColors,themeName:state.theme});renderThemeGrid(base);syncTricolorBuilder(base);syncThemeLockUI();syncCustomBaseHint()}
 function renderThemeGrid(obj){const g=$('#themeGrid');g.innerHTML='';for(const [k,label] of Object.entries(THEME_LABELS)){const v=obj[k]||THEMES.default[k]||'#000000';const d=document.createElement('label');d.className='color-field';d.innerHTML=`<input type="color" data-theme-key="${esc(k)}" value="${v}"><span>${esc(label)}</span>`;g.appendChild(d)}syncThemeLockUI()}
 function syncThemeLockUI(){const locked=$('#preserveMitColors')?.checked!==false;$$('[data-theme-key]').forEach(i=>{const k=i.dataset.themeKey,isLocked=locked&&(k==='attune'||/^tier[1-4]-(start|end)$/.test(k));i.disabled=isLocked;i.closest('.color-field')?.classList.toggle('locked',isLocked)})}
 function gridThemeValues(){const vals={};$$('[data-theme-key]').forEach(i=>vals[i.dataset.themeKey]=i.value);return vals}
 function previewTheme(){const p=$('#themePreset').value,preserve=$('#preserveMitColors').checked,vals=gridThemeValues();applyTheme(vals,{preserve,themeName:p==='custom'?'custom':p});syncThemeLockUI()}
-function saveTheme(){const vals=gridThemeValues();state.theme='custom';state.customTheme=vals;state.preserveMitColors=$('#preserveMitColors').checked;applyTheme(vals,{preserve:state.preserveMitColors,themeName:'custom'});$('#themePreset').value='custom';persist();closeThemeModal();toast('Theme saved')}
+function saveTheme(){const vals=gridThemeValues();state.theme='custom';state.customTheme=vals;state.customBaseTheme=validBaseTheme(editorBaseTheme);state.preserveMitColors=$('#preserveMitColors').checked;applyTheme(vals,{preserve:state.preserveMitColors,themeName:'custom'});$('#themePreset').value='custom';persist();closeThemeModal();toast('Theme saved')}
 function buildClassList(){const el=$('#classList');el.innerHTML='';for(const c of CLASSES){const lab=document.createElement('label');lab.className='class-pill';const cb=document.createElement('input');cb.type='checkbox';cb.checked=state.classes.includes(c);cb.onchange=()=>{const s=new Set(state.classes);cb.checked?s.add(c):s.delete(c);state.classes=[...s];persist();renderAll()};lab.append(cb,document.createTextNode(c));el.appendChild(lab)}}
 function renderFiltersToInputs(){$('#filterSearch').value=state.q;$('#quickSearch').value=state.q;$('#tierFilter').value=state.tier;$('#attuneFilter').value=state.attune;$('#tpMin').value=state.tpMin;$('#tpMax').value=state.tpMax;$('#displayMode').value=state.display;$('#logicMode').value=state.logic}
 function csvParse(text){let out=[],row=[],field='',q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(q){if(c==='"'&&n==='"'){field+='"';i++}else if(c==='"')q=false;else field+=c}else{if(c==='"')q=true;else if(c===','){row.push(field);field=''}else if(c==='\n'){row.push(field.replace(/\r$/,''));out.push(row);row=[];field=''}else field+=c}}row.push(field.replace(/\r$/,''));if(row.some(x=>x!==''))out.push(row);return out}
@@ -1176,7 +1563,7 @@ function loadShareHash(){if(!location.hash.startsWith('#search='))return false;t
 function openRandomItem(){let pool=data.filter(x=>norm(x.Link));if(state.view==='magic')pool=pool.filter(x=>x['Consumable/Non Consumable']==='Non-Consumable');else if(state.view==='reward')pool=pool.filter(x=>x['Consumable/Non Consumable']==='Consumable');else if(state.view==='search')pool=pool.filter(x=>filterMatch(x)&&npVisible(x));if(!pool.length)pool=data.filter(x=>norm(x.Link));const x=pool[Math.floor(Math.random()*pool.length)];if(!x){toast('No linked items are available');return}toast(`Bot Friend found: ${x.Item}`);openItem(x)}
 function openDrawer(id){$('#drawerBackdrop').classList.remove('hidden');$('#purchaseDrawer').classList.add('hidden');$('#rewardDrawer').classList.add('hidden');$(id).classList.remove('hidden');$(id).setAttribute('aria-hidden','false')}
 function closeDrawers(){$('#drawerBackdrop').classList.add('hidden');for(const id of ['#purchaseDrawer','#rewardDrawer']){$(id).classList.add('hidden');$(id).setAttribute('aria-hidden','true')}}
-function resetEverything(){if(!confirm('Reset everything except your selected theme? This clears filters, New Player settings, favorites, compare selections, purchase list, balances, and reward selections.'))return;const keepTheme=state.theme,keepCustom=state.customTheme,keepPreserve=state.preserveMitColors,keepFont=state.fontKey,keepScale=state.textScale;Object.assign(state,{view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],theme:keepTheme,customTheme:keepCustom,preserveMitColors:keepPreserve,simpleMode:false,mobileMode:false,navStyle:'scrollbar',fontKey:keepFont,textScale:keepScale});Object.assign(purchaseState,{character:'',command:'craft',tp:[0,0,0,0],gold:0,methods:{},optGoal:'balanced',shopMode:false,shopCurrency:'auto',attuneCap:3});Object.assign(rewardState,{mention:'',tier:1,majorCount:0,minorCount:0,mncCount:0,major:[],minor:[],mnc:[],customNames:{},modFriend:false});persist();applyTypography();buildClassList();renderFilterOptions();renderFiltersToInputs();setView('magic');toast('Reset complete')}
+function resetEverything(){if(!confirm('Reset everything except your selected theme? This clears filters, New Player settings, favorites, compare selections, purchase list, balances, and reward selections.'))return;const keepTheme=state.theme,keepCustom=state.customTheme,keepPreserve=state.preserveMitColors,keepFont=state.fontKey,keepScale=state.textScale;Object.assign(state,{view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],theme:keepTheme,customTheme:keepCustom,preserveMitColors:keepPreserve,simpleMode:false,mobileMode:false,navStyle:'hidden',fontKey:keepFont,textScale:keepScale});Object.assign(purchaseState,{character:'',command:'craft',tp:[0,0,0,0],gold:0,methods:{},optGoal:'balanced',shopMode:false,shopCurrency:'auto',attuneCap:3});Object.assign(rewardState,{mention:'',tier:1,majorCount:0,minorCount:0,mncCount:0,major:[],minor:[],mnc:[],customNames:{},modFriend:false});persist();applyTypography();buildClassList();renderFilterOptions();renderFiltersToInputs();setView('magic');toast('Reset complete')}
 
 function openThemeModal(){const m=$('#themeModal');document.body.classList.add('theme-modal-open');m.classList.remove('hidden');m.setAttribute('aria-hidden','false');initTheme();requestAnimationFrame(()=>{$('#themePreset')?.focus({preventScroll:true})})}
 function closeThemeModal(){const m=$('#themeModal');document.body.classList.remove('theme-modal-open');m.classList.add('hidden');m.setAttribute('aria-hidden','true');initTheme()}
@@ -1185,7 +1572,7 @@ function exportCurrentTheme(){
  const p=$('#themePreset')?.value||state.theme||'custom';
  const option=$('#themePreset')?.selectedOptions?.[0];
  const theme=gridThemeValues();
- const payload={format:'dndfriends-mit-theme',version:2,name:option?.textContent?.trim()||p,sourcePreset:p,preserveMitColors:$('#preserveMitColors')?.checked!==false,fontKey:state.fontKey,textScale:state.textScale,theme};
+ const payload={format:'dndfriends-mit-theme',version:2,name:option?.textContent?.trim()||p,sourcePreset:p,basePreset:(p==='custom'?validBaseTheme(editorBaseTheme||state.customBaseTheme):validBaseTheme(p)),preserveMitColors:$('#preserveMitColors')?.checked!==false,fontKey:state.fontKey,textScale:state.textScale,theme};
  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
  a.href=url;a.download=`mit-theme-${themeFileSlug(payload.name)}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Theme exported')
 }
@@ -1195,14 +1582,14 @@ function normalizedImportedTheme(raw){
  if(Object.keys(out).length<Object.keys(THEME_LABELS).length)throw new Error('Theme file is incomplete');return out
 }
 async function importThemeFile(file){
- if(!file)return;try{const raw=JSON.parse(await file.text()),theme=normalizedImportedTheme(raw);const preserve=raw&&typeof raw==='object'&&'preserveMitColors'in raw?raw.preserveMitColors!==false:true;state.theme='custom';state.customTheme=theme;state.preserveMitColors=preserve;if(FONT_OPTIONS[raw.fontKey])state.fontKey=raw.fontKey;if(Number.isFinite(Number(raw.textScale)))state.textScale=Math.max(.8,Math.min(1.8,Number(raw.textScale)));applyTypography();persist();$('#themePreset').value='custom';$('#preserveMitColors').checked=preserve;renderThemeGrid(theme);syncTricolorBuilder(theme);applyTheme(theme,{preserve,themeName:'custom'});syncThemeLockUI();toast(`Theme imported${raw.name?': '+raw.name:''}`)}catch(e){console.error(e);toast('Could not import theme file')}finally{$('#importThemeFile').value=''}
+ if(!file)return;try{const raw=JSON.parse(await file.text()),theme=normalizedImportedTheme(raw);const preserve=raw&&typeof raw==='object'&&'preserveMitColors'in raw?raw.preserveMitColors!==false:true;state.theme='custom';state.customTheme=theme;state.customBaseTheme=validBaseTheme(raw?.basePreset||raw?.sourcePreset);editorBaseTheme=state.customBaseTheme;state.preserveMitColors=preserve;if(FONT_OPTIONS[raw.fontKey])state.fontKey=raw.fontKey;if(Number.isFinite(Number(raw.textScale)))state.textScale=Math.max(.8,Math.min(1.8,Number(raw.textScale)));applyTypography();persist();$('#themePreset').value='custom';$('#preserveMitColors').checked=preserve;renderThemeGrid(theme);syncTricolorBuilder(theme);applyTheme(theme,{preserve,themeName:'custom'});syncThemeLockUI();syncCustomBaseHint();toast(`Theme imported${raw.name?': '+raw.name:''}`)}catch(e){console.error(e);toast('Could not import theme file')}finally{$('#importThemeFile').value=''}
 }
 
 function positionTextAppearanceMenu(){const btn=$('#textAppearanceBtn'),menu=$('#textAppearanceMenu');if(!btn||!menu||menu.classList.contains('hidden'))return;const r=btn.getBoundingClientRect(),mw=Math.min(310,window.innerWidth-18),left=Math.max(9,Math.min(window.innerWidth-mw-9,r.left));menu.style.left=`${left}px`;menu.style.top=`${Math.min(window.innerHeight-menu.offsetHeight-9,r.bottom+6)}px`}
 function toggleTextAppearanceMenu(force){const menu=$('#textAppearanceMenu'),btn=$('#textAppearanceBtn');if(!menu||!btn)return;const open=force===undefined?menu.classList.contains('hidden'):!!force;menu.classList.toggle('hidden',!open);btn.setAttribute('aria-expanded',open?'true':'false');if(open)requestAnimationFrame(positionTextAppearanceMenu)}
 function bind(){
  $$('.sheet-tab').forEach(b=>b.onclick=()=>setView(b.dataset.view));
- $('#simpleModeBtn').onclick=()=>setSimpleMode(!state.simpleMode);$('#mobileModeBtn').onclick=()=>setMobileMode(!state.mobileMode);$('#newPlayerModeBtn').onclick=()=>{state.newPlayer=!state.newPlayer;if(state.newPlayer&&state.npMode==='all')state.npMode='highlight';persist();renderAll()};$('#navStyleBtn').onclick=()=>setNavigationStyle(state.navStyle==='scrollbar'?'buttons':'scrollbar');$('#textAppearanceBtn').onclick=e=>{e.stopPropagation();toggleTextAppearanceMenu()};$('#textAppearanceMenu').onclick=e=>e.stopPropagation();$('#textSizeDown').onclick=()=>setTextScale(state.textScale-.05);$('#textSizeUp').onclick=()=>setTextScale(state.textScale+.05);$('#textSizeReset').onclick=()=>setTextScale(1.3);$('#fontChoice').onchange=e=>setFontChoice(e.target.value);
+ $('#simpleModeBtn').onclick=()=>setSimpleMode(!state.simpleMode);$('#mobileModeBtn').onclick=()=>setMobileMode(!state.mobileMode);$('#spreadsheetModeBtn').onclick=()=>setSpreadsheetMode(!state.spreadsheetMode);$('#newPlayerModeBtn').onclick=()=>{state.newPlayer=!state.newPlayer;if(state.newPlayer&&state.npMode==='all')state.npMode='highlight';persist();renderAll()};$('#navStyleBtn').onclick=()=>setNavigationStyle(state.navStyle==='hidden'?'buttons':state.navStyle==='buttons'?'scrollbar':'hidden');$('#textAppearanceBtn').onclick=e=>{e.stopPropagation();toggleTextAppearanceMenu()};$('#textAppearanceMenu').onclick=e=>e.stopPropagation();$('#textSizeDown').onclick=()=>setTextScale(state.textScale-.05);$('#textSizeUp').onclick=()=>setTextScale(state.textScale+.05);$('#textSizeReset').onclick=()=>setTextScale(1.3);$('#fontChoice').onchange=e=>setFontChoice(e.target.value);
  $('#navTableTop').onclick=tableTop;$('#navTableBottom').onclick=tableBottom;$('#navLeft').onclick=()=>horizontalTableScroll(-1);$('#navRight').onclick=()=>horizontalTableScroll(1);$$('.tier-jump').forEach(b=>b.onclick=()=>jumpToTier(Number(b.dataset.navTier)));$('#scrollNavStart').onclick=()=>{const w=activeHorizontalWrap();if(w)w.scrollTo({left:0,behavior:'smooth'})};$('#scrollNavEnd').onclick=()=>{const w=activeHorizontalWrap();if(w)w.scrollTo({left:w.scrollWidth,behavior:'smooth'})};
  $('#randomItemBtn').onclick=openRandomItem;
  $('#filtersBtn').onclick=()=>{renderFiltersToInputs()};
@@ -1218,7 +1605,7 @@ function bind(){
  for(const id of ['#discordMention','#rewardTier','#majorCount','#minorCount','#mncCount'])$(id).oninput=$(id).onchange=e=>{rewardState.mention=$('#discordMention').value;rewardState.tier=Number($('#rewardTier').value)||1;rewardState.majorCount=Math.max(0,Number($('#majorCount').value)||0);rewardState.minorCount=Math.max(0,Number($('#minorCount').value)||0);rewardState.mncCount=Math.max(0,Number($('#mncCount').value)||0);if(id==='#rewardTier')minorTierChooserOpen=false;persist();renderRewardBuilder()};
  $$('[data-random-reward]').forEach(b=>b.onclick=()=>{const kind=b.dataset.randomReward;if(kind==='minor')openMinorTierChooser();else{minorTierChooserOpen=false;renderMinorTierChooser();addRandomReward(kind)}});$('#rewardSearch').oninput=e=>{rewardSearchQuery=e.target.value;renderRewardBuilder()};$('#clearRewardSearch').onclick=()=>{rewardSearchQuery='';$('#rewardSearch').value='';renderRewardBuilder();$('#rewardSearch').focus()};$('#modFriendToggle').onchange=e=>{rewardState.modFriend=e.target.checked;persist();updateRewardCommand()};$('#copyRewardCommand').onclick=()=>copyText($('#rewardCommand').textContent);$('#clearReward').onclick=()=>{rewardState.major=[];rewardState.minor=[];rewardState.mnc=[];rewardState.customNames={};persist();renderRewardBuilder()};
  $('#compareBtn').onclick=()=>{if(state.compare.length<2){toast('Select at least two items in Compare Mode');return}$('#compareModal').classList.remove('hidden');renderCompare()};$('#closeCompare').onclick=()=>$('#compareModal').classList.add('hidden');
- $('#themeBtn').onclick=openThemeModal;$('#mobileThemeQuickBtn').onclick=openThemeModal;$('#closeTheme').onclick=closeThemeModal;$('#themePreset').onchange=e=>{const name=e.target.value,base=name==='custom'?(state.customTheme||THEMES.default):THEMES[name];if(/^pride/i.test(name)||name==='bear')$('#preserveMitColors').checked=false;renderThemeGrid(base);syncTricolorBuilder(base);applyTheme(base,{preserve:$('#preserveMitColors').checked,themeName:name});syncThemeLockUI()};$('#preserveMitColors').onchange=()=>previewTheme();$('#resetThemeColors').onclick=()=>{const p=$('#themePreset').value==='custom'?'default':$('#themePreset').value,base=THEMES[p]||THEMES.default;renderThemeGrid(base);syncTricolorBuilder(base);applyTheme(base,{preserve:$('#preserveMitColors').checked,themeName:p});syncThemeLockUI()};['#triBuilder1','#triBuilder2','#triBuilder3'].forEach(sel=>$(sel).oninput=syncTricolorPreview);$('#loadThemeTricolor').onclick=()=>syncTricolorBuilder(gridThemeValues());$('#buildTricolorTheme').onclick=buildTricolorFromInputs;$('#exportTheme').onclick=exportCurrentTheme;$('#importTheme').onclick=()=>$('#importThemeFile').click();$('#importThemeFile').onchange=e=>importThemeFile(e.target.files?.[0]);$('#saveTheme').onclick=()=>{const p=$('#themePreset').value;state.preserveMitColors=$('#preserveMitColors').checked;if(p!=='custom'&&THEMES[p]){state.theme=p;state.customTheme=null;applyTheme(THEMES[p],{preserve:state.preserveMitColors,themeName:p});persist();closeThemeModal();toast('Theme saved')}else saveTheme()};
+ $('#themeBtn').onclick=openThemeModal;$('#mobileThemeQuickBtn').onclick=openThemeModal;$('#closeTheme').onclick=closeThemeModal;$('#themePreset').onchange=e=>{const name=e.target.value,base=name==='custom'?(state.customTheme||THEMES[validBaseTheme(editorBaseTheme)]||THEMES.default):THEMES[name];if(name!=='custom'){editorBaseTheme=validBaseTheme(name);$('#preserveMitColors').checked=(name==='default')}renderThemeGrid(base);syncTricolorBuilder(base);applyTheme(base,{preserve:$('#preserveMitColors').checked,themeName:name});syncThemeLockUI();syncCustomBaseHint()};$('#preserveMitColors').onchange=()=>previewTheme();$('#resetThemeColors').onclick=resetThemeToBase;$('#usePresetAsCustomBase').onclick=usePresetAsCustomBase;['#triBuilder1','#triBuilder2','#triBuilder3'].forEach(sel=>$(sel).oninput=syncTricolorPreview);$('#loadThemeTricolor').onclick=()=>syncTricolorBuilder(gridThemeValues());$('#buildTricolorTheme').onclick=buildTricolorFromInputs;$('#exportTheme').onclick=exportCurrentTheme;$('#importTheme').onclick=()=>$('#importThemeFile').click();$('#importThemeFile').onchange=e=>importThemeFile(e.target.files?.[0]);$('#saveTheme').onclick=()=>{const p=$('#themePreset').value;state.preserveMitColors=$('#preserveMitColors').checked;if(p!=='custom'&&THEMES[p]){state.theme=p;state.customTheme=null;state.customBaseTheme=validBaseTheme(p);applyTheme(THEMES[p],{preserve:state.preserveMitColors,themeName:p});persist();closeThemeModal();toast('Theme saved')}else saveTheme()};
  $('#resetBtn').onclick=resetEverything;$('#refreshBtn').onclick=()=>refreshLive(false,false);
  document.addEventListener('click',e=>{if(!e.target.closest?.('.appearance-controls'))toggleTextAppearanceMenu(false)});document.addEventListener('keydown',e=>{if(e.key==='Escape'){toggleTextAppearanceMenu(false);$('#compareModal').classList.add('hidden');closeThemeModal();closeDrawers()}});
 }
@@ -1231,6 +1618,136 @@ document.addEventListener('scroll',e=>{syncStickyTierHeaders(false);syncNavigati
 window.addEventListener('resize',()=>{syncStickyTierHeaders(true);syncMobileStickyOffset();syncNavigationDock();syncScrollNavigator();positionTextAppearanceMenu()},{passive:true});
 if(window.ResizeObserver){new ResizeObserver(()=>syncStickyTierHeaders(true)).observe(document.querySelector('.top-sheet'));}
 
+</script>
+<script id="responsive-ui-script">
+(() => {
+  const PREF_KEY='mitResponsiveUiV1';
+  let prefs;
+  try{prefs=JSON.parse(localStorage.getItem(PREF_KEY)||'{}')}catch{prefs={}}
+  prefs.autoFit=prefs.autoFit!==false;
+  prefs.manualScale=Math.max(.70,Math.min(1.15,Number(prefs.manualScale||1)));
+
+  const savePrefs=()=>{try{localStorage.setItem(PREF_KEY,JSON.stringify(prefs))}catch{}};
+  const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+  const viewport=()=>({
+    w:window.visualViewport?.width||window.innerWidth||1440,
+    h:window.visualViewport?.height||window.innerHeight||900
+  });
+  function autoFitValue(){
+    if(state.mobileMode || viewport().w<=700)return 1;
+    const {w,h}=viewport();
+    /* Design reference is a comfortable 1600×900 desktop canvas. Never auto-enlarge above 100%. */
+    return Math.round(clamp(Math.min(w/1600,h/900),.70,1)*20)/20;
+  }
+  function currentScale(){return prefs.autoFit?autoFitValue():prefs.manualScale}
+  function refreshResponsiveClasses(){
+    const {w,h}=viewport();
+    document.body.classList.toggle('compact-monitor',w<1400||h<820);
+    document.body.classList.toggle('small-monitor',w<1180||h<700);
+    document.body.classList.toggle('bottom-scroll-active',state.navStyle==='scrollbar'&&!state.mobileMode&&!state.simpleMode);
+  }
+  function updateScaleUi(scale){
+    const label=document.querySelector('#uiScaleLabel');
+    const auto=document.querySelector('#uiScaleAuto');
+    if(label)label.textContent=`${prefs.autoFit?'Auto ':''}${Math.round(scale*100)}%`;
+    if(auto){auto.textContent=prefs.autoFit?'Auto Fit ✓':'Auto Fit';auto.classList.toggle('primary',prefs.autoFit)}
+    const textBtn=document.querySelector('#textAppearanceBtn');
+    if(textBtn)textBtn.title=`Text, font, and interface scale • interface ${Math.round(scale*100)}%`;
+  }
+  function applyUiScale({quiet=false}={}){
+    const scale=currentScale();
+    document.body.style.zoom=String(scale);
+    document.documentElement.style.setProperty('--responsive-ui-scale',String(scale));
+    refreshResponsiveClasses();
+    updateScaleUi(scale);
+    requestAnimationFrame(()=>{
+      try{syncMobileStickyOffset();syncStickyTierHeaders(true);syncNavigationDock();syncScrollNavigator();positionTextAppearanceMenu()}catch{}
+    });
+    if(!quiet)toast(`${prefs.autoFit?'Auto Fit':'Interface scale'}: ${Math.round(scale*100)}%`);
+  }
+  function setManualScale(next,{quiet=false}={}){
+    prefs.autoFit=false;
+    prefs.manualScale=Math.round(clamp(next,.70,1.15)*20)/20;
+    savePrefs();applyUiScale({quiet});
+  }
+  function stepScale(dir){setManualScale(currentScale()+(dir>0 ? .05 : -.05))}
+  function setAutoFit(){prefs.autoFit=true;savePrefs();applyUiScale()}
+
+  /* Bottom navigation is hidden by default. Migrate once; users can explicitly choose buttons or scrollbar afterward. */
+  if(!prefs.navHiddenDefaultMigrated){
+    prefs.navHiddenDefaultMigrated=true;
+    state.navStyle='hidden';
+    persist();
+    syncModeUI();
+    savePrefs();
+  }
+  /* Simple Mode is an opt-in presentation, never the initial/default presentation. */
+  if(!prefs.simpleDefaultMigrated){
+    prefs.simpleDefaultMigrated=true;
+    if(state.simpleMode){state.simpleMode=false;persist();syncModeUI()}
+    savePrefs();
+  }
+
+  const down=document.querySelector('#uiScaleDown'),up=document.querySelector('#uiScaleUp'),auto=document.querySelector('#uiScaleAuto');
+  if(down)down.addEventListener('click',()=>stepScale(-1));
+  if(up)up.addEventListener('click',()=>stepScale(1));
+  if(auto)auto.addEventListener('click',setAutoFit);
+
+  /* Alt + wheel changes UI scale. Ordinary wheel remains normal page/table scrolling. */
+  document.addEventListener('wheel',e=>{
+    const overScale=e.target.closest?.('.interface-scale-block');
+    if(!e.altKey&&!overScale)return;
+    if(Math.abs(e.deltaY)<1)return;
+    e.preventDefault();
+    stepScale(e.deltaY<0?1:-1);
+  },{passive:false});
+
+  /* Compact secondary-tools menu. */
+  const moreBtn=document.querySelector('#responsiveMoreBtn'),moreMenu=document.querySelector('#responsiveMoreMenu');
+  function placeMoreMenu(){
+    if(!moreBtn||!moreMenu||moreMenu.classList.contains('hidden'))return;
+    const r=moreBtn.getBoundingClientRect(),mw=moreMenu.offsetWidth,mh=moreMenu.offsetHeight,pad=8;
+    let left=Math.min(Math.max(pad,r.right-mw),window.innerWidth-mw-pad);
+    let top=r.bottom+6;
+    if(top+mh>window.innerHeight-pad)top=Math.max(pad,r.top-mh-6);
+    moreMenu.style.left=`${left}px`;moreMenu.style.top=`${top}px`;
+  }
+  function toggleMore(force){
+    if(!moreBtn||!moreMenu)return;
+    const open=force??moreMenu.classList.contains('hidden');
+    moreMenu.classList.toggle('hidden',!open);moreBtn.setAttribute('aria-expanded',open?'true':'false');
+    if(open)requestAnimationFrame(placeMoreMenu);
+  }
+  moreBtn?.addEventListener('click',e=>{e.stopPropagation();toggleMore()});
+  moreMenu?.addEventListener('click',e=>{
+    const b=e.target.closest('[data-proxy]');if(!b)return;
+    const target=document.querySelector(b.dataset.proxy);
+    toggleMore(false);target?.click();
+  });
+  document.addEventListener('click',e=>{if(moreMenu&&!moreMenu.classList.contains('hidden')&&!moreMenu.contains(e.target)&&e.target!==moreBtn)toggleMore(false)});
+
+  function syncResponsiveMenus(){
+    refreshResponsiveClasses();
+    const proxy=document.querySelector('#responsiveNavProxy');
+    if(proxy)proxy.textContent=state.navStyle==='hidden'?'Show Tier Buttons':state.navStyle==='buttons'?'Use Draggable Scrollbar':'Hide Bottom Navigation';
+    if(!prefs.autoFit)updateScaleUi(currentScale());
+  }
+
+  /* Keep scale proportional as the browser/monitor viewport changes. */
+  let resizeRaf=0;
+  const onResize=()=>{cancelAnimationFrame(resizeRaf);resizeRaf=requestAnimationFrame(()=>{if(prefs.autoFit)applyUiScale({quiet:true});else{refreshResponsiveClasses();placeMoreMenu()}syncResponsiveMenus()})};
+  window.addEventListener('resize',onResize,{passive:true});
+  window.visualViewport?.addEventListener('resize',onResize,{passive:true});
+
+  /* Existing mode/nav changes can happen without a resize; observe body class changes and nav button text. */
+  if(window.MutationObserver){
+    new MutationObserver(()=>{refreshResponsiveClasses();syncResponsiveMenus();if(prefs.autoFit)applyUiScale({quiet:true})}).observe(document.body,{attributes:true,attributeFilter:['class']});
+  }
+  document.querySelector('#navStyleBtn')?.addEventListener('click',()=>setTimeout(()=>{refreshResponsiveClasses();syncResponsiveMenus()},0));
+
+  applyUiScale({quiet:true});
+  syncResponsiveMenus();
+})();
 </script>
 </body>
 </html>
