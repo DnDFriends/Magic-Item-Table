@@ -830,6 +830,87 @@ body .search-table tr.evolving .item-anchor.attune>span:first-child{color:var(--
 .reset-theme-choice input{margin-top:2px;accent-color:var(--accent)}
 .reset-theme-choice strong{display:block}.reset-theme-choice small{display:block;color:var(--muted);margin-top:2px}
 </style>
+
+<style id="purchase-scroll-mode-exit-fix-styles">
+/* Purchase/reward drawers are fixed-height flex columns. Their bodies must be
+   allowed to shrink, otherwise long purchase lists grow past the viewport
+   instead of becoming independently scrollable. */
+#purchaseDrawer,
+#rewardDrawer{
+  height:100dvh!important;
+  max-height:100dvh!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  contain:layout paint;
+}
+#purchaseDrawer .drawer-head,
+#rewardDrawer .drawer-head{
+  flex:0 0 auto!important;
+  min-height:0;
+}
+#purchaseDrawer .drawer-body,
+#rewardDrawer .drawer-body{
+  flex:1 1 0!important;
+  min-height:0!important;
+  height:0!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  scrollbar-gutter:stable;
+}
+#purchaseDrawer .purchase-body{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  align-content:flex-start!important;
+  padding-bottom:max(24px,env(safe-area-inset-bottom))!important;
+}
+#purchaseDrawer .purchase-body > *{flex:0 0 auto!important}
+
+body.purchase-sidebar-open #purchaseDrawer{
+  top:0!important;
+  bottom:0!important;
+  height:100dvh!important;
+}
+body.purchase-sidebar-open #purchaseDrawer .drawer-body{
+  overflow-y:auto!important;
+  min-height:0!important;
+}
+
+/* Emergency mode escape. It lives outside the navigation row, so modes that
+   intentionally hide normal navigation can never strand the user. */
+#activeModeExitBtn{
+  position:fixed;
+  top:max(8px,env(safe-area-inset-top));
+  right:10px;
+  z-index:260;
+  display:none;
+  align-items:center;
+  gap:7px;
+  min-height:38px;
+  padding:8px 12px;
+  border:1px solid var(--grid);
+  border-radius:10px;
+  background:var(--ui-active-bg,var(--selected));
+  color:var(--ui-active-text,var(--text));
+  box-shadow:0 8px 22px rgba(0,0,0,.32);
+  font:inherit;
+  font-weight:850;
+  cursor:pointer;
+}
+#activeModeExitBtn.visible{display:inline-flex!important}
+body.spreadsheet-mode #activeModeExitBtn{
+  border-radius:2px!important;
+  box-shadow:none!important;
+}
+@media(max-width:600px){
+  #activeModeExitBtn{top:6px;right:6px;min-height:42px;padding:8px 10px}
+}
+</style>
+
 </head>
 <body>
 <div class="top-sheet">
@@ -2120,5 +2201,101 @@ if(window.ResizeObserver){new ResizeObserver(()=>syncStickyTierHeaders(true)).ob
   syncPurchaseSidebarButton();
 })();
 </script>
+
+<script id="purchase-scroll-mode-exit-fix-script">
+(()=>{
+  const purchaseDrawer=document.querySelector('#purchaseDrawer');
+  const purchaseBody=purchaseDrawer?.querySelector('.drawer-body');
+
+  /* Keep wheel/touch input inside the purchase list when it can scroll. This
+     avoids the underlying MIT consuming the gesture at the top/bottom edges. */
+  if(purchaseBody){
+    purchaseBody.setAttribute('tabindex','0');
+    purchaseBody.setAttribute('aria-label','Scrollable Purchase List');
+    purchaseBody.addEventListener('wheel',e=>{
+      if(e.altKey)return; // Alt+wheel remains the app-level interface scaler.
+      const max=purchaseBody.scrollHeight-purchaseBody.clientHeight;
+      if(max<=1)return;
+      const down=e.deltaY>0,up=e.deltaY<0;
+      if((down&&purchaseBody.scrollTop<max-1)||(up&&purchaseBody.scrollTop>1)){
+        e.stopPropagation();
+      }
+    },{passive:true});
+  }
+
+  /* Always-available way out of any mode that hides the Modes control. */
+  let exitBtn=document.querySelector('#activeModeExitBtn');
+  if(!exitBtn){
+    exitBtn=document.createElement('button');
+    exitBtn.id='activeModeExitBtn';
+    exitBtn.type='button';
+    exitBtn.setAttribute('aria-live','polite');
+    document.body.append(exitBtn);
+  }
+  const modesBtn=document.querySelector('#modesBtn');
+  const modeSpecs=[
+    {key:'simpleMode',label:'Simple Mode',exit:()=>typeof setSimpleMode==='function'?setSimpleMode(false):(state.simpleMode=false)},
+    {key:'mobileMode',label:'Mobile Mode',exit:()=>typeof setMobileMode==='function'?setMobileMode(false):(state.mobileMode=false)},
+    {key:'spreadsheetMode',label:'Spreadsheet Mode',exit:()=>typeof setSpreadsheetMode==='function'?setSpreadsheetMode(false):(state.spreadsheetMode=false)},
+    {key:'artificerMode',label:'Artificer Mode',exit:()=>{
+      state.artificerMode=false;
+      try{localStorage.setItem('mitArtificerMode',JSON.stringify({mode:false,level:Number(state.artificerLevel||0),filter:state.artificerFilter||'highlight'}))}catch{}
+      try{persist()}catch{}
+      try{renderAll()}catch{}
+      document.body.classList.remove('artificer-mode');
+    }}
+  ];
+  let currentExit=null;
+  function modesControlVisible(){
+    if(!modesBtn)return false;
+    const cs=getComputedStyle(modesBtn),r=modesBtn.getBoundingClientRect();
+    return cs.display!=='none'&&cs.visibility!=='hidden'&&Number(cs.opacity)!==0&&r.width>1&&r.height>1;
+  }
+  function syncModeEscape(){
+    const active=modeSpecs.filter(m=>!!state?.[m.key]);
+    /* Simple Mode intentionally strips navigation, so its escape is always
+       visible. Other modes get the escape only when their normal Modes button
+       is actually unavailable. */
+    currentExit=active.find(m=>m.key==='simpleMode')||(!modesControlVisible()?active[0]:null);
+    if(currentExit){
+      exitBtn.textContent=`Exit ${currentExit.label}`;
+      exitBtn.title=`Leave ${currentExit.label} and restore the normal controls`;
+      exitBtn.classList.add('visible');
+      exitBtn.removeAttribute('aria-hidden');
+    }else{
+      exitBtn.classList.remove('visible');
+      exitBtn.setAttribute('aria-hidden','true');
+    }
+  }
+  exitBtn.addEventListener('click',()=>{
+    if(!currentExit)return;
+    currentExit.exit();
+    try{persist()}catch{}
+    try{syncModeUI()}catch{}
+    try{renderAll()}catch{}
+    requestAnimationFrame(syncModeEscape);
+  });
+
+  /* Escape key also exits the currently trapped mode, unless the user is
+     editing a field or a dialog is open. */
+  document.addEventListener('keydown',e=>{
+    if(e.key!=='Escape'||!currentExit)return;
+    if(e.target?.matches?.('input,textarea,select,[contenteditable="true"]'))return;
+    if(document.querySelector('.modal:not(.hidden),.filter-panel:not(.hidden)'))return;
+    e.preventDefault();exitBtn.click();
+  });
+
+  const observer=new MutationObserver(()=>requestAnimationFrame(syncModeEscape));
+  observer.observe(document.body,{attributes:true,attributeFilter:['class','style']});
+  if(modesBtn){
+    let p=modesBtn.parentElement;
+    while(p&&p!==document.body){observer.observe(p,{attributes:true,attributeFilter:['class','style']});p=p.parentElement}
+  }
+  window.addEventListener('resize',syncModeEscape,{passive:true});
+  ['simpleModeBtn','mobileModeBtn','spreadsheetModeBtn','artificerModeBtn'].forEach(id=>document.querySelector('#'+id)?.addEventListener('click',()=>requestAnimationFrame(syncModeEscape)));
+  syncModeEscape();
+})();
+</script>
+
 </body>
 </html>
