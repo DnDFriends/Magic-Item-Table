@@ -2179,8 +2179,7 @@ if(window.ResizeObserver){new ResizeObserver(()=>syncStickyTierHeaders(true)).ob
 
   /* ----- Reward Table: Minor T2–T4 visibly includes previous-tier Major ----- */
   const baseRewardCols=rewardCols;rewardCols=function(){const cols=baseRewardCols();for(const c of cols){if(c.kind!=='minor'||Number(c.tier)<2)continue;const prevTier=Number(c.tier)-1;const carry=dedupeSort(data.filter(x=>Number(x.Tier)===prevTier&&x['Consumable/Non Consumable']==='Consumable'&&norm(x['Cost (TP)'])==='Major'&&itemVisibleBrowse(x)).map(x=>({...x,_rewardCarryLabel:`Tier ${prevTier} Major`})));const seen=new Set(c.items.map(x=>x.Item));for(const x of carry)if(!seen.has(x.Item)){c.items.push(x);seen.add(x.Item)}c.items.sort((a,b)=>a.Item.localeCompare(b.Item,undefined,{numeric:true,sensitivity:'base'}));c.label=`Minor + Tier ${prevTier} Major`;c._carryTier=prevTier}return cols};
-  const baseCellHTML=cellHTML;cellHTML=function(x,groupClass=''){let html=baseCellHTML(x,groupClass);if(x?._rewardCarryLabel)html=html.replace(/(<span class="item-label">[\s\S]*?<\/span>)/,`$1<small class="reward-carry-note">${esc(x._rewardCarryLabel)}</small>`);return html};
-  const baseMobileItemHTML=mobileItemHTML;mobileItemHTML=function(x){let html=baseMobileItemHTML(x);if(x?._rewardCarryLabel)html=html.replace(/(<span class="item-label">[\s\S]*?<\/span>)/,`$1<small class="reward-carry-note">${esc(x._rewardCarryLabel)}</small>`);return html};
+  /* The gold "Tier N Major" note beside carried-over reward items was removed (Sep 26, 2026); the column title "Minor + Tier N Major" already explains them. */
 
   /* ----- Search & Filter is closed by default; move display controls into it. ----- */
   const filterPanel=document.querySelector('#filterPanel'),filtersBtn=document.querySelector('#filtersBtn'),closeFilters=document.querySelector('#closeFilters'),applyFilters=document.querySelector('#applyFiltersBtn'),filterTop=document.querySelector('#filterPanel .filter-top');

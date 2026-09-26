@@ -6,6 +6,7 @@ Deploy the contents of this folder at the root of a GitHub Pages site. Keep the 
 
 - **Crooked Moon** (under Additional Themes): Crooked black page, dark blue-slate panels, Crooked blue borders and hover, moon-blue secondary text, gold accent, and yellow attunement items. The given brand colors are kept exactly for the page, panels, accent and attunement color; every text color passes WCAG AA (4.5:1), with Preserve MIT colors on or off.
 - **Phoenix** (under Additional Themes): ember reds and flame oranges, carried over from the Allowed and Banned Content Guide.
+- **Reward table:** the gold "Tier N Major" note next to items carried into a Tier 2–4 Minor column is removed. The carried items are still listed, and the column title ("Minor + Tier 1 Major") still says where they come from.
 
 ## September 2026 usability and accessibility update
 
