@@ -411,6 +411,18 @@ body.spreadsheet-mode .upgrade-requirement{border-radius:0!important;background:
 .tier-table .item-name.has-prereq{justify-content:flex-start!important}
 .tier-table .item-label{display:inline;line-height:inherit}
 .tier-table .cell-actions{top:50%!important;transform:translateY(-50%)!important}
+
+/* Sep 2026: Row Limit mode */
+.rowcap-settings{margin-top:7px;padding:8px;border:1px solid color-mix(in srgb,var(--grid) 80%,var(--accent));border-radius:9px;background:color-mix(in srgb,var(--surface) 86%,var(--accent) 14%);display:grid;gap:6px}
+.rowcap-settings[hidden]{display:none!important}
+.rowcap-settings label{display:flex;justify-content:space-between;align-items:center;color:var(--text);font-weight:800;font-size:calc(10px * var(--text-scale))}
+.rowcap-value{font-weight:900;color:var(--ui-accent-text,var(--accent))}
+.rowcap-settings input[type=range]{width:100%;accent-color:var(--accent)}
+.rowcap-number{display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:center}
+.rowcap-number input{min-height:32px;border:1px solid var(--grid);border-radius:6px;background:var(--page);color:var(--text);padding:4px 7px;font:inherit}
+.rowcap-number small{color:var(--muted);font-size:calc(8.5px * var(--text-scale));line-height:1.3}
+.tier-table td.split-cont{border-left:1px dashed color-mix(in srgb,var(--grid) 70%,transparent)!important}
+.tier-table th.split-head{text-align:center}
 </style>
 
 <style id="final-scroll-theme-fixes">
@@ -1066,6 +1078,12 @@ body{overflow-y:visible!important;max-height:none!important}
         <button class="mini-btn mode-menu-option" id="mobileModeBtn" type="button" title="Use a touch-friendly vertical table layout">Mobile Mode</button>
         <button class="mini-btn mode-menu-option" id="spreadsheetModeBtn" type="button" title="Performance-optimized Google Sheet-style layout">Spreadsheet Mode</button>
         <button class="mini-btn mode-menu-option artificer-mode-option" id="artificerModeBtn" type="button" title="Highlight magic items available through Artificer Magical Item Plans">Artificer Mode</button>
+        <button class="mini-btn mode-menu-option" id="rowCapModeBtn" type="button" aria-pressed="false" title="Limit how many rows a column can have; longer columns continue in extra columns">Row Limit</button>
+        <div class="rowcap-settings" id="rowCapSettings" hidden>
+          <label for="rowCapInput">Rows per column <span class="rowcap-value" id="rowCapValue">20</span></label>
+          <input id="rowCapRange" type="range" min="10" max="50" step="1" value="20" aria-label="Rows per column">
+          <div class="rowcap-number"><input id="rowCapInput" type="number" min="10" max="50" step="1" inputmode="numeric" value="20"><small>10–50. Long columns continue to the right under the same heading. Desktop table only.</small></div>
+        </div>
         <div class="artificer-mode-settings" id="artificerModeSettings">
           <label>Artificer Level<input id="artificerLevel" type="number" min="1" max="20" step="1" inputmode="numeric" placeholder="2–20"></label>
           <div class="artificer-capacity" id="artificerCapacityText">Enter your Artificer level.</div>
@@ -1102,6 +1120,7 @@ body{overflow-y:visible!important;max-height:none!important}
         <button type="button" data-proxy="#randomItemBtn">Random Item</button>
         <button type="button" data-proxy="#refreshBtn">Refresh Data</button>
         <button type="button" data-proxy="#navStyleBtn" id="responsiveNavProxy">Navigation Style</button>
+        <button type="button" id="copyShareLinkBtn">Copy Link to This View</button>
         <button type="button" data-proxy="#resetBtn" class="danger">Reset</button>
       </div>
     </div>
@@ -1156,7 +1175,7 @@ body{overflow-y:visible!important;max-height:none!important}
    </div>
    <div class="multi-grid" id="multiGrid"></div>
   </div>
-  <div class="dialog-actions filter-dock-actions"><span class="filter-help">Select one or more values in any category. Open a category to choose multiple values.</span><button class="mini-btn" id="clearFiltersBtn">Clear Filters</button><button class="mini-btn primary" id="applyFiltersBtn">Done</button></div>
+  <div class="dialog-actions filter-dock-actions"><span class="filter-help">Select one or more values in any category. Open a category to choose multiple values.</span><button class="mini-btn" id="copyFilterLinkBtn" type="button" title="Copy a link that opens this exact search and filters">Copy Link</button><button class="mini-btn" id="clearFiltersBtn">Clear Filters</button><button class="mini-btn primary" id="applyFiltersBtn">Done</button></div>
  </div>
 </div>
 
@@ -1417,6 +1436,8 @@ const NATION_FLAGS={
 const FACTION_THEME_NAMES=['hydaelyn','crucible','draconic','dreamFoundation','flayersCloth','grandDawn','guardians','harmony','harpers','houseWisdom','kingsReapers','magicalGirls','ministryMuses','monsterSlayers','arcaneInquiry','rocketRescue','sanctuary','sigilPostal','sigilScouts','timeCops','trinitySociety','wanderingCourt'];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const norm=v=>String(v??'').trim();
+/* Auto Fit scales the page with CSS zoom; fixed-position menus must divide screen positions by it. */
+const pageZoomFactor=()=>Math.max(.1,parseFloat(getComputedStyle(document.body).zoom)||1);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:null};
 const isYes=v=>/^(yes|y|true)$/i.test(norm(v));
@@ -1424,16 +1445,16 @@ let data=SNAPSHOT.items.map((x,i)=>({...x,_id:i}));
 let dataMode='snapshot';
 let liveRefreshInFlight=false,lastLiveSignature='',lastSuccessfulLiveAt=null,lastChangeDetectedAt=null;
 const STATE_VERSION=11;
-const state={view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],theme:'default',customTheme:null,customBaseTheme:'default',preserveMitColors:true,simpleMode:false,mobileMode:false,spreadsheetMode:false,navStyle:'hidden',fontKey:'inter',textScale:1.3,evolutionMode:'collapsed',expandedEvolutionChains:[]};
+const state={view:'magic',display:'none',logic:'and',q:'',tier:'',attune:'',tpMin:'',tpMax:'',filters:{},newPlayer:false,npMode:'highlight',npShowHighTiers:false,classes:[],compareMode:false,compare:[],favorites:[],cart:[],theme:'default',customTheme:null,customBaseTheme:'default',preserveMitColors:true,simpleMode:false,mobileMode:false,spreadsheetMode:false,navStyle:'hidden',fontKey:'inter',textScale:1.3,evolutionMode:'collapsed',expandedEvolutionChains:[],rowCapOn:false,rowCap:20};
 const saved=(()=>{try{return JSON.parse(localStorage.getItem('mitGuiState')||'{}')}catch{return {}}})();
 const savedIsCurrent=Number(saved.stateVersion||0)>=7;
-Object.assign(state,{newPlayer:savedIsCurrent?!!saved.newPlayer:false,npMode:savedIsCurrent?(saved.npMode||'highlight'):'highlight',npShowHighTiers:savedIsCurrent?!!saved.npShowHighTiers:false,classes:Array.isArray(saved.classes)?saved.classes:[],compareMode:!!saved.compareMode,compare:Array.isArray(saved.compare)?saved.compare.slice(0,4):[],favorites:Array.isArray(saved.favorites)?saved.favorites:[],cart:Array.isArray(saved.cart)?saved.cart:[],theme:(saved.theme==='parchment'?'default':(saved.theme||'default')),customTheme:saved.customTheme||null,customBaseTheme:(typeof saved.customBaseTheme==='string'&&THEMES[saved.customBaseTheme]?saved.customBaseTheme:'default'),preserveMitColors:savedIsCurrent?saved.preserveMitColors!==false:true,simpleMode:!!saved.simpleMode,mobileMode:!!saved.mobileMode,spreadsheetMode:!!saved.spreadsheetMode,navStyle:(['hidden','buttons','scrollbar'].includes(saved.navStyle)?saved.navStyle:'hidden'),fontKey:['inter','atkinson','georgia','trebuchet','mono'].includes(saved.fontKey)?saved.fontKey:'inter',textScale:Math.max(.8,Math.min(1.8,Number((Number(saved.typographyVersion||0)<2&&Math.abs(Number(saved.textScale||1)-1)<.001)?1.3:(saved.textScale||1.3)))),evolutionMode:saved.evolutionMode==='all'?'all':'collapsed',expandedEvolutionChains:Array.isArray(saved.expandedEvolutionChains)?saved.expandedEvolutionChains:[] });
+Object.assign(state,{newPlayer:savedIsCurrent?!!saved.newPlayer:false,npMode:savedIsCurrent?(saved.npMode||'highlight'):'highlight',npShowHighTiers:savedIsCurrent?!!saved.npShowHighTiers:false,classes:Array.isArray(saved.classes)?saved.classes:[],compareMode:!!saved.compareMode,compare:Array.isArray(saved.compare)?saved.compare.slice(0,4):[],favorites:Array.isArray(saved.favorites)?saved.favorites:[],cart:Array.isArray(saved.cart)?saved.cart:[],theme:(saved.theme==='parchment'?'default':(saved.theme||'default')),customTheme:saved.customTheme||null,customBaseTheme:(typeof saved.customBaseTheme==='string'&&THEMES[saved.customBaseTheme]?saved.customBaseTheme:'default'),preserveMitColors:savedIsCurrent?saved.preserveMitColors!==false:true,simpleMode:!!saved.simpleMode,mobileMode:!!saved.mobileMode,spreadsheetMode:!!saved.spreadsheetMode,navStyle:(['hidden','buttons','scrollbar'].includes(saved.navStyle)?saved.navStyle:'hidden'),fontKey:['inter','atkinson','georgia','trebuchet','mono'].includes(saved.fontKey)?saved.fontKey:'inter',textScale:Math.max(.8,Math.min(1.8,Number((Number(saved.typographyVersion||0)<2&&Math.abs(Number(saved.textScale||1)-1)<.001)?1.3:(saved.textScale||1.3)))),evolutionMode:saved.evolutionMode==='all'?'all':'collapsed',expandedEvolutionChains:Array.isArray(saved.expandedEvolutionChains)?saved.expandedEvolutionChains:[],rowCapOn:!!saved.rowCapOn,rowCap:Math.max(10,Math.min(50,Math.round(Number(saved.rowCap)||20))) });
 /* special themes migrated to their intended palette defaults */
 if(!savedIsCurrent&&(/^pride/i.test(state.theme)||state.theme==='bear'))state.preserveMitColors=false;
 if(state.theme!=='custom'&&!THEMES[state.theme]){state.theme='default';state.customTheme=null;state.preserveMitColors=true;}
 const purchaseState={character:saved.character||'',command:saved.command||'craft',tp:saved.tp||[0,0,0,0],gold:Number(saved.gold||0),methods:(saved.purchaseMethods&&typeof saved.purchaseMethods==='object')?saved.purchaseMethods:{},optGoal:['balanced','preserveTp','preserveGp'].includes(saved.purchaseOptimizeGoal)?saved.purchaseOptimizeGoal:'balanced',shopMode:!!saved.shopMode,shopCurrency:['auto','tp','gp'].includes(saved.shopCurrency)?saved.shopCurrency:'auto',attuneCap:Math.max(0,Number(saved.attuneCap??3)),upgradeOwned:(saved.purchaseUpgradeOwned&&typeof saved.purchaseUpgradeOwned==='object')?saved.purchaseUpgradeOwned:{}};
 const rewardState={mention:saved.rewardMention||'',tier:Number(saved.rewardTier||1),majorCount:Number(saved.majorCount||0),minorCount:Number(saved.minorCount||0),mncCount:Number(saved.mncCount||0),major:Array.isArray(saved.rewardMajor)?saved.rewardMajor:[],minor:Array.isArray(saved.rewardMinor)?saved.rewardMinor:[],mnc:Array.isArray(saved.rewardMnc)?saved.rewardMnc:[],customNames:(saved.rewardCustomNames&&typeof saved.rewardCustomNames==='object')?saved.rewardCustomNames:{},modFriend:!!saved.rewardModFriend};
-function persist(){try{localStorage.setItem('mitGuiState',JSON.stringify({stateVersion:STATE_VERSION,typographyVersion:2,newPlayer:state.newPlayer,npMode:state.npMode,npShowHighTiers:state.npShowHighTiers,classes:state.classes,compareMode:state.compareMode,compare:state.compare,favorites:state.favorites,cart:state.cart,theme:state.theme,customTheme:state.customTheme,customBaseTheme:state.customBaseTheme,preserveMitColors:state.preserveMitColors,simpleMode:state.simpleMode,mobileMode:state.mobileMode,spreadsheetMode:state.spreadsheetMode,navStyle:state.navStyle,fontKey:state.fontKey,textScale:state.textScale,evolutionMode:state.evolutionMode,expandedEvolutionChains:state.expandedEvolutionChains,character:purchaseState.character,command:purchaseState.command,tp:purchaseState.tp,gold:purchaseState.gold,purchaseMethods:purchaseState.methods,purchaseOptimizeGoal:purchaseState.optGoal,shopMode:purchaseState.shopMode,shopCurrency:purchaseState.shopCurrency,attuneCap:purchaseState.attuneCap,purchaseUpgradeOwned:purchaseState.upgradeOwned,rewardMention:rewardState.mention,rewardTier:rewardState.tier,majorCount:rewardState.majorCount,minorCount:rewardState.minorCount,mncCount:rewardState.mncCount,rewardMajor:rewardState.major,rewardMinor:rewardState.minor,rewardMnc:rewardState.mnc,rewardCustomNames:rewardState.customNames,rewardModFriend:rewardState.modFriend}))}catch(e){/* Storage may be unavailable in local previews/private contexts. */}}
+function persist(){try{localStorage.setItem('mitGuiState',JSON.stringify({stateVersion:STATE_VERSION,typographyVersion:2,newPlayer:state.newPlayer,npMode:state.npMode,npShowHighTiers:state.npShowHighTiers,classes:state.classes,compareMode:state.compareMode,compare:state.compare,favorites:state.favorites,cart:state.cart,theme:state.theme,customTheme:state.customTheme,customBaseTheme:state.customBaseTheme,preserveMitColors:state.preserveMitColors,simpleMode:state.simpleMode,mobileMode:state.mobileMode,spreadsheetMode:state.spreadsheetMode,navStyle:state.navStyle,fontKey:state.fontKey,textScale:state.textScale,evolutionMode:state.evolutionMode,expandedEvolutionChains:state.expandedEvolutionChains,rowCapOn:state.rowCapOn,rowCap:state.rowCap,character:purchaseState.character,command:purchaseState.command,tp:purchaseState.tp,gold:purchaseState.gold,purchaseMethods:purchaseState.methods,purchaseOptimizeGoal:purchaseState.optGoal,shopMode:purchaseState.shopMode,shopCurrency:purchaseState.shopCurrency,attuneCap:purchaseState.attuneCap,purchaseUpgradeOwned:purchaseState.upgradeOwned,rewardMention:rewardState.mention,rewardTier:rewardState.tier,majorCount:rewardState.majorCount,minorCount:rewardState.minorCount,mncCount:rewardState.mncCount,rewardMajor:rewardState.major,rewardMinor:rewardState.minor,rewardMnc:rewardState.mnc,rewardCustomNames:rewardState.customNames,rewardModFriend:rewardState.modFriend}))}catch(e){/* Storage may be unavailable in local previews/private contexts. */}}
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.add('hidden'),1800)}
 const FONT_OPTIONS={inter:'Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif',atkinson:'"Atkinson Hyperlegible","Segoe UI",Arial,sans-serif',georgia:'Georgia,"Times New Roman",serif',trebuchet:'"Trebuchet MS",Verdana,Arial,sans-serif',mono:'"Cascadia Mono","SFMono-Regular",Consolas,"Liberation Mono",monospace'};
 function applyTypography(){document.documentElement.style.setProperty('--font',FONT_OPTIONS[state.fontKey]||FONT_OPTIONS.inter);document.documentElement.style.setProperty('--text-scale',String(state.textScale));const f=$('#fontChoice'),v=$('#textSizeReset'),l=$('#textAppearanceLabel');if(f)f.value=state.fontKey;const pct=`${Math.round(state.textScale*100)}%`;if(v)v.textContent=pct;if(l)l.textContent=pct}
@@ -1441,7 +1462,8 @@ function setTextScale(v){state.textScale=Math.max(.8,Math.min(1.8,Math.round(v*2
 function setFontChoice(v){state.fontKey=FONT_OPTIONS[v]?v:'inter';applyTypography();persist();scheduleTierRowHeightSync()}
 
 function hideErrataTooltip(){const tip=$('#errataTooltip');if(tip){tip.classList.add('hidden');tip.classList.remove('interactive')}}
-function placeErrataTooltip(target){const tip=$('#errataTooltip');if(!tip||!target)return;const r=target.getBoundingClientRect(),pad=10;tip.style.left='0px';tip.style.top='0px';tip.classList.remove('hidden');const tr=tip.getBoundingClientRect();let left=Math.min(Math.max(pad,r.left),window.innerWidth-tr.width-pad);let top=r.bottom+7;if(top+tr.height>window.innerHeight-pad)top=Math.max(pad,r.top-tr.height-7);tip.style.left=`${left}px`;tip.style.top=`${top}px`}
+/* Sep 2026 fix: Auto Fit scales the page with CSS zoom, so screen positions are divided by the zoom before use as left/top (otherwise the card drifts up and left of the item on smaller windows). */
+function placeErrataTooltip(target){const tip=$('#errataTooltip');if(!tip||!target)return;const z=Math.max(.1,parseFloat(getComputedStyle(document.body).zoom)||1);const r=target.getBoundingClientRect(),pad=10;tip.style.left='0px';tip.style.top='0px';tip.classList.remove('hidden');const tr=tip.getBoundingClientRect();let left=Math.min(Math.max(pad,r.left),window.innerWidth-tr.width-pad);let top=r.bottom+7;if(top+tr.height>window.innerHeight-pad)top=Math.max(pad,r.top-tr.height-7);tip.style.left=`${left/z}px`;tip.style.top=`${top/z}px`}
 function showItemInfoTooltip(target){const itemName=target?.closest?.('[data-item]')?.dataset?.item||'',meta=itemName?evolutionMeta(itemName):null;if(meta?.isBase&&!evolutionChainExpanded(meta))return;const err=norm(target?.dataset?.errata),next=norm(target?.dataset?.evolution),prev=norm(target?.dataset?.evolutionPrev);if(!err&&!next&&!prev)return;const tip=$('#errataTooltip');if(!tip)return;let h='';if(err)h+=`<div class="item-info-section"><div class="item-info-label">Errata</div><div>${esc(err)}</div></div>`;if(prev||next){h+=`<div class="item-info-section"><div class="item-info-label">Evolution Chain</div>`;if(prev)h+=`<div class="item-info-evolution requires">Requires previous version: <strong>${esc(prev)}</strong></div>`;if(next)h+=`<div class="item-info-evolution">Next: ${esc(next)}</div><button type="button" class="evolution-jump-btn" data-jump-evolution="${esc(next)}">Jump to ${esc(next)} →</button>`;h+='</div>'}tip.innerHTML=h;tip.classList.toggle('interactive',!!next);placeErrataTooltip(target)}
 function jumpToEvolution(name){const x=getByName(name);if(!x){toast(`Next evolution not found: ${name}`);return}const m=evolutionMeta(name);if(m&&state.evolutionMode==='collapsed'&&!state.expandedEvolutionChains.includes(m.chainId))state.expandedEvolutionChains=[...new Set([...state.expandedEvolutionChains,m.chainId])];persist();if(state.display==='only')state.display='highlight';if(state.newPlayer&&state.npMode==='only')state.npMode='highlight';const view=x['Consumable/Non Consumable']==='Consumable'?'reward':'magic';setView(view);requestAnimationFrame(()=>requestAnimationFrame(()=>{const el=document.querySelector(`${activeViewSelector()} [data-item="${CSS.escape(name)}"]`);if(!el){toast(`Next evolution is hidden by the current view`);return}el.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});el.classList.add('evolution-jump');setTimeout(()=>el.classList.remove('evolution-jump'),1700)}));hideErrataTooltip()}
 let itemInfoHideTimer=null;const cancelItemInfoHide=()=>{if(itemInfoHideTimer)clearTimeout(itemInfoHideTimer)};const scheduleItemInfoHide=()=>{cancelItemInfoHide();itemInfoHideTimer=setTimeout(hideErrataTooltip,120)};
@@ -1460,7 +1482,8 @@ function uniqueTags(field){const s=new Set();data.forEach(x=>itemTokens(x,field)
 let autoHighlightFromFilters=false;
 function hasActiveFilters(){if(norm(state.q)||state.tier||state.attune||state.tpMin!==''||state.tpMax!=='')return true;return FILTER_DEFS.some(([f])=>(state.filters[f]||[]).length)}
 function autoHighlightFilters(){const active=hasActiveFilters();if(active){state.display='highlight';autoHighlightFromFilters=true}else if(autoHighlightFromFilters&&state.display==='highlight'){state.display='none';autoHighlightFromFilters=false}const d=$('#displayMode');if(d)d.value=state.display}
-function activeConditions(x){const cond=[];const q=norm(state.q).toLowerCase();if(q)cond.push(ACTIVE_FIELDS.some(k=>norm(x[k]).toLowerCase().includes(q)));if(state.tier)cond.push(norm(x.Tier)===state.tier);if(state.attune)cond.push(norm(x.Attunement)===state.attune);if(state.tpMin!==''||state.tpMax!==''){const n=num(x['Cost (TP)']);let ok=n!==null;if(ok&&state.tpMin!=='')ok=ok&&n>=Number(state.tpMin);if(ok&&state.tpMax!=='')ok=ok&&n<=Number(state.tpMax);cond.push(ok)}for(const [field] of FILTER_DEFS){const sel=state.filters[field]||[];if(!sel.length)continue;const toks=itemTokens(x,field);cond.push(sel.some(v=>toks.includes(v)))}return cond}
+function searchMatches(x,q){/* Every word must appear somewhere in the item (any order); a word starting with - hides items containing it. */const hay=ACTIVE_FIELDS.map(k=>norm(x[k]).toLowerCase()).join(' \u0001 ');const words=q.split(/\s+/).filter(Boolean),isNeg=w=>w.length>1&&w[0]==='-';if(words.filter(isNeg).some(w=>hay.includes(w.slice(1))))return false;const pos=words.filter(w=>!isNeg(w));if(!pos.length)return true;if(ACTIVE_FIELDS.some(k=>norm(x[k]).toLowerCase().includes(pos.join(' '))))return true;return pos.every(w=>hay.includes(w))}
+function activeConditions(x){const cond=[];const q=norm(state.q).toLowerCase();if(q)cond.push(searchMatches(x,q));if(state.tier)cond.push(norm(x.Tier)===state.tier);if(state.attune)cond.push(norm(x.Attunement)===state.attune);if(state.tpMin!==''||state.tpMax!==''){const n=num(x['Cost (TP)']);let ok=n!==null;if(ok&&state.tpMin!=='')ok=ok&&n>=Number(state.tpMin);if(ok&&state.tpMax!=='')ok=ok&&n<=Number(state.tpMax);cond.push(ok)}for(const [field] of FILTER_DEFS){const sel=state.filters[field]||[];if(!sel.length)continue;const toks=itemTokens(x,field);cond.push(sel.some(v=>toks.includes(v)))}return cond}
 function filterMatch(x){const c=activeConditions(x);if(!c.length)return true;return state.logic==='or'?c.some(Boolean):c.every(Boolean)}
 function isRecommended(x){const friendly=isYes(x['New Player Friendly']);const recs=splitTags(x['Recommended Classes']).map(s=>s.toLowerCase());const classMatch=state.classes.some(c=>recs.includes(c.toLowerCase()));return {friendly,classMatch,any:friendly||classMatch}}
 function npVisible(x){if(!state.newPlayer||state.npMode!=='only')return true;return isRecommended(x).any}
@@ -1570,40 +1593,48 @@ function renderSearchMobileRows(rows){
  h+=rows.length?'':'<div class="empty-state">No items match the current filters.</div>';h+='</div></div>';$('#viewSearch').innerHTML=h;updateShareHash();
 }
 
+/* Row limit (Sep 2026): when on, a column with more items than the limit is spread evenly over extra columns
+   under the same header, so the table is never taller than the chosen number of rows (10-50). Desktop table only. */
+function rowCapActive(){return !!(state.rowCapOn&&!state.mobileMode)}
+function splitColumnItems(items){const n=Math.max(10,Math.min(50,Number(state.rowCap)||20));if(!rowCapActive()||items.length<=n)return [items];const parts=Math.ceil(items.length/n),per=Math.ceil(items.length/parts),out=[];for(let i=0;i<items.length;i+=per)out.push(items.slice(i,i+per));return out}
+function applyRowCapGrid(board,models,colMin){if(!board)return;if(!rowCapActive()){board.style.removeProperty('grid-template-columns');board.style.removeProperty('min-width');board.classList.remove('row-capped');return}
+ const spans=models.map(m=>m.parts.reduce((n,p)=>n+p.length,0)),gap=12;board.classList.add('row-capped');
+ board.style.setProperty('grid-template-columns',spans.map(k=>`minmax(${Math.round(colMin*k)}px,${k}fr)`).join(' '),'important');
+ board.style.setProperty('min-width',`${Math.round(spans.reduce((a,k)=>a+colMin*k,0)+gap*(spans.length-1))}px`,'important')}
 function renderMagic(){
   if(state.mobileMode){renderMagicMobile();return;}
   let total=0;const maxTier=(state.newPlayer&&!state.npShowHighTiers)?2:4;
   const models=[];
   for(let t=1;t<=maxTier;t++){
     const cols=COSTS[t].map(c=>({cost:c,items:dedupeSort(data.filter(x=>x['Consumable/Non Consumable']==='Non-Consumable'&&Number(x.Tier)===t&&num(x['Cost (TP)'])===c&&itemVisibleBrowse(x)&&shopItemVisible(x)))}));
-    const count=cols.reduce((n,c)=>n+c.items.length,0);total+=count;models.push({t,cols,count,max:Math.max(0,...cols.map(c=>c.items.length))});
+    const count=cols.reduce((n,c)=>n+c.items.length,0);total+=count;const parts=cols.map(c=>splitColumnItems(c.items));models.push({t,cols,parts,count,max:Math.max(0,...parts.flat().map(p=>p.length))});
   }
   const alignedRows=Math.max(0,...models.map(m=>m.max));
   let h=`<div class="sheet-view modern-board-wrap"><div class="tier-board magic-board ${maxTier===2?'np-two-tier':''}">`;
-  for(const model of models){const {t,cols,count}=model;
+  for(const model of models){const {t,cols,parts,count}=model;const sub=parts.flat();
     h+=`<section class="tier-panel tier-${t}" data-tier="${t}"><div class="tier-panel-head"><div><span class="tier-kicker">TIER ${t}</span><h2>Magic Items</h2></div><div class="tier-meta"><span>Level ${LEVELS[t]}+</span><span>${count} items</span></div></div>`;
-    h+=`<div class="tier-table-wrap"><table class="tier-table"><colgroup>${cols.map(()=>'<col>').join('')}</colgroup><thead><tr>`;
-    cols.forEach(col=>{const sample=data.find(x=>Number(x.Tier)===t&&num(x['Cost (TP)'])===col.cost&&num(x['Cost (Gold)'])!==null);const gold=sample?Number(sample['Cost (Gold)']).toLocaleString():'—';h+=`<th class="cost-head"><strong>${col.cost} TP <span class="cost-slash">/</span> ${gold} GP</strong></th>`});
+    h+=`<div class="tier-table-wrap"><table class="tier-table"><colgroup>${sub.map(()=>'<col>').join('')}</colgroup><thead><tr>`;
+    cols.forEach((col,ci)=>{const sample=data.find(x=>Number(x.Tier)===t&&num(x['Cost (TP)'])===col.cost&&num(x['Cost (Gold)'])!==null);const gold=sample?Number(sample['Cost (Gold)']).toLocaleString():'—';const span=parts[ci].length;h+=`<th class="cost-head${span>1?' split-head':''}"${span>1?` colspan="${span}"`:''}><strong>${col.cost} TP <span class="cost-slash">/</span> ${gold} GP</strong></th>`});
     h+='</tr></thead><tbody>';
-    for(let r=0;r<alignedRows;r++){h+='<tr>';cols.forEach(col=>{const x=col.items[r];h+=x?cellHTML(x,''):'<td class="aligned-empty"></td>'});h+='</tr>'}
+    for(let r=0;r<alignedRows;r++){h+='<tr>';parts.forEach(ps=>ps.forEach((items,pi)=>{const x=items[r];const cls=pi>0?'split-cont':'';h+=x?cellHTML(x,cls):`<td class="aligned-empty ${cls}"></td>`}));h+='</tr>'}
     h+='</tbody></table></div></section>';
   }
-  h+=`</div></div><div class="sheet-footer modern-footer"><span><strong>${total}</strong> purchasable magic-item entries ${maxTier===2?'shown across Tier 1–2 in New Player Mode':'across Tier 1–4'}.</span><span>Rows are aligned across every visible tier. Click a collapsed evolving item to reveal its required upgrade stages.</span></div>`;$('#viewMagic').innerHTML=h;
+  h+=`</div></div><div class="sheet-footer modern-footer"><span><strong>${total}</strong> purchasable magic-item entries ${maxTier===2?'shown across Tier 1–2 in New Player Mode':'across Tier 1–4'}.</span><span>${rowCapActive()?`Row limit on: at most ${state.rowCap} rows; long columns continue to the right under the same heading.`:'Rows are aligned across every visible tier.'} Click a collapsed evolving item to reveal its required upgrade stages.</span></div>`;$('#viewMagic').innerHTML=h;applyRowCapGrid($('#viewMagic .magic-board'),models,150);
 }
 function rewardCols(){const defs=[];defs.push({tier:1,label:'Minor Non-Consumable A–M',kind:'mnc',part:'am'});defs.push({tier:1,label:'Minor Non-Consumable N–Z',kind:'mnc',part:'nz'});defs.push({tier:1,label:'Minor (Consumable)',kind:'minor'});defs.push({tier:1,label:'Major (Consumable)',kind:'major'});for(let t=2;t<=4;t++){defs.push({tier:t,label:'Minor',kind:'minor'});defs.push({tier:t,label:'Major',kind:'major'})}return defs.map((d,globalIndex)=>{let items=data.filter(x=>Number(x.Tier)===d.tier&&x['Consumable/Non Consumable']==='Consumable');if(d.kind==='minor')items=items.filter(x=>norm(x['Cost (TP)'])==='Minor');if(d.kind==='major')items=items.filter(x=>norm(x['Cost (TP)'])==='Major');if(d.kind==='mnc')items=items.filter(x=>norm(x['Cost (TP)'])==='Minor Non-Consumable').filter(x=>{const ch=x.Item.trim()[0]?.toUpperCase()||'';return d.part==='am'?ch>='A'&&ch<='M':ch>='N'&&ch<='Z'});items=dedupeSort(items.filter(itemVisibleBrowse));return {...d,globalIndex,items}})}
 function renderReward(){
   if(state.mobileMode){renderRewardMobile();return;}
   const all=rewardCols(),maxTier=(state.newPlayer&&!state.npShowHighTiers)?2:4,models=[];
-  for(let t=1;t<=maxTier;t++){const cols=all.filter(c=>c.tier===t),count=cols.reduce((n,c)=>n+c.items.length,0);models.push({t,cols,count,max:Math.max(0,...cols.map(c=>c.items.length))})}
+  for(let t=1;t<=maxTier;t++){const cols=all.filter(c=>c.tier===t),count=cols.reduce((n,c)=>n+c.items.length,0),parts=cols.map(c=>splitColumnItems(c.items));models.push({t,cols,parts,count,max:Math.max(0,...parts.flat().map(p=>p.length))})}
   const alignedRows=Math.max(0,...models.map(m=>m.max));
   let h=`<div class="sheet-view modern-board-wrap"><div class="tier-board reward-board ${maxTier===2?'np-two-tier':''}">`;
-  for(const model of models){const {t,cols,count}=model;
+  for(const model of models){const {t,cols,parts,count}=model;const sub=parts.flat();
     h+=`<section class="tier-panel tier-${t}" data-tier="${t}"><div class="tier-panel-head"><div><span class="tier-kicker">TIER ${t}</span><h2>Reward Items</h2></div><div class="tier-meta"><span>Level ${LEVELS[t]}+</span><span>${count} entries</span></div></div>`;
-    h+=`<div class="tier-table-wrap"><table class="tier-table reward-tier-table"><colgroup>${cols.map(()=>'<col>').join('')}</colgroup><thead><tr>`;cols.forEach(c=>h+=`<th class="cost-head reward-head"><strong>${esc(c.label)}</strong></th>`);h+='</tr></thead><tbody>';
-    for(let r=0;r<alignedRows;r++){h+='<tr>';cols.forEach(c=>{const x=c.items[r];h+=x?cellHTML(x,''):'<td class="aligned-empty"></td>'});h+='</tr>'}
+    h+=`<div class="tier-table-wrap"><table class="tier-table reward-tier-table"><colgroup>${sub.map(()=>'<col>').join('')}</colgroup><thead><tr>`;cols.forEach((c,ci)=>{const span=parts[ci].length;h+=`<th class="cost-head reward-head${span>1?' split-head':''}"${span>1?` colspan="${span}"`:''}><strong>${esc(c.label)}</strong></th>`});h+='</tr></thead><tbody>';
+    for(let r=0;r<alignedRows;r++){h+='<tr>';parts.forEach(ps=>ps.forEach((items,pi)=>{const x=items[r];const cls=pi>0?'split-cont':'';h+=x?cellHTML(x,cls):`<td class="aligned-empty ${cls}"></td>`}));h+='</tr>'}
     h+='</tbody></table></div></section>';
   }
-  h+=`</div></div><div class="sheet-footer modern-footer"><span>Reward availability preserves the current MIT Tier → Minor/Major structure.</span><span>Rows are aligned across every visible tier.</span></div>`;$('#viewReward').innerHTML=h;
+  h+=`</div></div><div class="sheet-footer modern-footer"><span>Reward availability preserves the current MIT Tier → Minor/Major structure.</span><span>${rowCapActive()?`Row limit on: at most ${state.rowCap} rows; long columns continue to the right under the same heading.`:'Rows are aligned across every visible tier.'}</span></div>`;$('#viewReward').innerHTML=h;applyRowCapGrid($('#viewReward .reward-board'),models,150);
 }
 function searchResults(){return dedupeSort(data.filter(x=>filterMatch(x)&&npVisible(x)&&evolutionVisible(x)&&shopItemVisible(x)))}
 function renderSearch(){
@@ -1950,8 +1981,39 @@ async function refreshLive(initial=false,silent=false){
   return false;
  }finally{clearTimeout(timer);liveRefreshInFlight=false}
 }
-function updateShareHash(){if(state.view!=='search')return;const payload={q:state.q,tier:state.tier,attune:state.attune,tpMin:state.tpMin,tpMax:state.tpMax,logic:state.logic,filters:state.filters};const raw=encodeURIComponent(JSON.stringify(payload));if(location.hash!==`#search=${raw}`)history.replaceState(null,'',`#search=${raw}`)}
-function loadShareHash(){if(!location.hash.startsWith('#search='))return false;try{const obj=JSON.parse(decodeURIComponent(location.hash.slice(8)));state.q=obj.q||'';state.tier=obj.tier||'';state.attune=obj.attune||'';state.tpMin=obj.tpMin||'';state.tpMax=obj.tpMax||'';state.logic=obj.logic||'and';state.filters=obj.filters||{};state.view='search';return true}catch{return false}}
+/* Shareable links (Sep 2026): the address bar always describes the current tab, search, filters and table options,
+   e.g. #view=reward&q=potion&tier=2&rows=20. Personal data (purchase list, favorites, theme) is never included. */
+let shareHashWriting=false;
+function shareParams(){const p=new URLSearchParams();
+ if(state.view&&state.view!=='magic')p.set('view',state.view);
+ if(norm(state.q))p.set('q',state.q);if(state.tier)p.set('tier',state.tier);if(state.attune)p.set('attune',state.attune);
+ if(state.tpMin!==''||state.tpMax!=='')p.set('tp',`${state.tpMin}-${state.tpMax}`);
+ if(state.logic==='or')p.set('logic','or');
+ if(state.display==='only'||(state.display==='highlight'&&!hasActiveFilters()))p.set('display',state.display);
+ const f={};for(const [k,v] of Object.entries(state.filters||{}))if(Array.isArray(v)&&v.length)f[k]=v;if(Object.keys(f).length)p.set('f',JSON.stringify(f));
+ if(state.newPlayer){p.set('np',state.npMode||'highlight');if(state.npShowHighTiers)p.set('npall','1')}
+ if(state.classes?.length)p.set('classes',state.classes.join(','));
+ if(state.evolutionMode==='all')p.set('evo','all');
+ if(state.rowCapOn)p.set('rows',String(state.rowCap));
+ return p}
+function shareUrl(){const s=shareParams().toString();return location.href.split('#')[0]+(s?'#'+s:'')}
+function updateShareHash(){const s=shareParams().toString(),next=s?'#'+s:'';if(next===(location.hash||''))return;shareHashWriting=true;try{history.replaceState(null,'',next||(location.pathname+location.search))}catch{}shareHashWriting=false}
+function loadShareHash(){
+ if(location.hash.startsWith('#search=')){try{const obj=JSON.parse(decodeURIComponent(location.hash.slice(8)));state.q=obj.q||'';state.tier=obj.tier||'';state.attune=obj.attune||'';state.tpMin=obj.tpMin||'';state.tpMax=obj.tpMax||'';state.logic=obj.logic||'and';state.filters=obj.filters||{};state.view='search';return true}catch{return false}}
+ const h=location.hash.replace(/^#/,'');if(!h||!h.includes('='))return false;
+ try{const p=new URLSearchParams(h);
+  state.view=['magic','reward','search'].includes(p.get('view'))?p.get('view'):'magic';
+  state.q=p.get('q')||'';state.tier=['1','2','3','4'].includes(p.get('tier'))?p.get('tier'):'';state.attune=['Yes','No'].includes(p.get('attune'))?p.get('attune'):'';
+  const tp=(p.get('tp')||'-').split('-');state.tpMin=tp[0]||'';state.tpMax=tp[1]||'';
+  state.logic=p.get('logic')==='or'?'or':'and';
+  let f={};try{f=JSON.parse(p.get('f')||'{}')||{}}catch{}state.filters={};for(const [k,v] of Object.entries(f))if(FILTER_DEFS.some(([d])=>d===k)&&Array.isArray(v))state.filters[k]=v.map(String);
+  if(['none','highlight','only'].includes(p.get('display')))state.display=p.get('display');
+  const np=p.get('np');state.newPlayer=!!np;if(np)state.npMode=np==='only'?'only':'highlight';state.npShowHighTiers=p.get('npall')==='1';
+  state.classes=(p.get('classes')||'').split(',').map(c=>c.trim()).filter(c=>CLASSES.includes(c));
+  state.evolutionMode=p.get('evo')==='all'?'all':'collapsed';
+  const rows=Number(p.get('rows'));state.rowCapOn=Number.isFinite(rows)&&rows>0;if(state.rowCapOn)state.rowCap=Math.max(10,Math.min(50,Math.round(rows)));
+  return true}catch{return false}}
+async function copyShareLink(){updateShareHash();const url=shareUrl();let ok=false;try{await navigator.clipboard.writeText(url);ok=true}catch{try{const t=document.createElement('textarea');t.value=url;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();ok=document.execCommand('copy');t.remove()}catch{}}toast(ok?'Link copied — it opens this tab with the same search, filters and table options':'Could not copy automatically — copy the address bar instead')}
 function openRandomItem(){let pool=data.filter(x=>norm(x.Link));if(state.view==='magic')pool=pool.filter(x=>x['Consumable/Non Consumable']==='Non-Consumable');else if(state.view==='reward')pool=pool.filter(x=>x['Consumable/Non Consumable']==='Consumable');else if(state.view==='search')pool=pool.filter(x=>filterMatch(x)&&npVisible(x));if(!pool.length)pool=data.filter(x=>norm(x.Link));const x=pool[Math.floor(Math.random()*pool.length)];if(!x){toast('No linked items are available');return}toast(`Bot Friend found: ${x.Item}`);openItem(x)}
 function openDrawer(id){$('#drawerBackdrop').classList.remove('hidden');$('#purchaseDrawer').classList.add('hidden');$('#rewardDrawer').classList.add('hidden');$(id).classList.remove('hidden');$(id).setAttribute('aria-hidden','false')}
 function closeDrawers(){$('#drawerBackdrop').classList.add('hidden');for(const id of ['#purchaseDrawer','#rewardDrawer']){$(id).classList.add('hidden');$(id).setAttribute('aria-hidden','true')}}
@@ -1977,7 +2039,7 @@ async function importThemeFile(file){
  if(!file)return;try{const raw=JSON.parse(await file.text()),theme=normalizedImportedTheme(raw);const preserve=raw&&typeof raw==='object'&&'preserveMitColors'in raw?raw.preserveMitColors!==false:true;state.theme='custom';state.customTheme=theme;state.customBaseTheme=validBaseTheme(raw?.basePreset||raw?.sourcePreset);editorBaseTheme=state.customBaseTheme;state.preserveMitColors=preserve;if(FONT_OPTIONS[raw.fontKey])state.fontKey=raw.fontKey;if(Number.isFinite(Number(raw.textScale)))state.textScale=Math.max(.8,Math.min(1.8,Number(raw.textScale)));applyTypography();persist();$('#themePreset').value='custom';$('#preserveMitColors').checked=preserve;renderThemeGrid(theme);syncTricolorBuilder(theme);applyTheme(theme,{preserve,themeName:'custom'});syncThemeLockUI();syncCustomBaseHint();toast(`Theme imported${raw.name?': '+raw.name:''}`)}catch(e){console.error(e);toast('Could not import theme file')}finally{$('#importThemeFile').value=''}
 }
 
-function positionTextAppearanceMenu(){const btn=$('#textAppearanceBtn'),menu=$('#textAppearanceMenu');if(!btn||!menu||menu.classList.contains('hidden'))return;const r=btn.getBoundingClientRect(),mw=Math.min(310,window.innerWidth-18),left=Math.max(9,Math.min(window.innerWidth-mw-9,r.left));menu.style.left=`${left}px`;menu.style.top=`${Math.min(window.innerHeight-menu.offsetHeight-9,r.bottom+6)}px`}
+function positionTextAppearanceMenu(){const btn=$('#textAppearanceBtn'),menu=$('#textAppearanceMenu');if(!btn||!menu||menu.classList.contains('hidden'))return;const z=pageZoomFactor(),r=btn.getBoundingClientRect(),mw=Math.min(310,window.innerWidth-18)*z,left=Math.max(9,Math.min(window.innerWidth-mw-9,r.left));menu.style.left=`${left/z}px`;menu.style.top=`${Math.min(window.innerHeight-menu.offsetHeight*z-9,r.bottom+6)/z}px`}
 function toggleTextAppearanceMenu(force){const menu=$('#textAppearanceMenu'),btn=$('#textAppearanceBtn');if(!menu||!btn)return;const open=force===undefined?menu.classList.contains('hidden'):!!force;menu.classList.toggle('hidden',!open);btn.setAttribute('aria-expanded',open?'true':'false');if(open)requestAnimationFrame(positionTextAppearanceMenu)}
 function bind(){
  $$('.sheet-tab').forEach(b=>b.onclick=()=>setView(b.dataset.view));
@@ -2098,11 +2160,11 @@ if(window.ResizeObserver){new ResizeObserver(()=>syncStickyTierHeaders(true)).ob
   const moreBtn=document.querySelector('#responsiveMoreBtn'),moreMenu=document.querySelector('#responsiveMoreMenu');
   function placeMoreMenu(){
     if(!moreBtn||!moreMenu||moreMenu.classList.contains('hidden'))return;
-    const r=moreBtn.getBoundingClientRect(),mw=moreMenu.offsetWidth,mh=moreMenu.offsetHeight,pad=8;
+    const z=pageZoomFactor(),r=moreBtn.getBoundingClientRect(),mw=moreMenu.offsetWidth*z,mh=moreMenu.offsetHeight*z,pad=8;
     let left=Math.min(Math.max(pad,r.right-mw),window.innerWidth-mw-pad);
     let top=r.bottom+6;
     if(top+mh>window.innerHeight-pad)top=Math.max(pad,r.top-mh-6);
-    moreMenu.style.left=`${left}px`;moreMenu.style.top=`${top}px`;
+    moreMenu.style.left=`${left/z}px`;moreMenu.style.top=`${top/z}px`;
   }
   function toggleMore(force){
     if(!moreBtn||!moreMenu)return;
@@ -2146,7 +2208,7 @@ if(window.ResizeObserver){new ResizeObserver(()=>syncStickyTierHeaders(true)).ob
 (()=>{
   /* ----- Modes menu ----- */
   const modesBtn=document.querySelector('#modesBtn'),modesMenu=document.querySelector('#modesMenu');
-  const placeModesMenu=()=>{if(!modesBtn||!modesMenu||modesMenu.classList.contains('hidden'))return;const r=modesBtn.getBoundingClientRect(),w=modesMenu.offsetWidth||320,h=modesMenu.offsetHeight||300,p=8;let left=Math.min(Math.max(p,r.left),window.innerWidth-w-p),top=r.bottom+6;if(top+h>window.innerHeight-p)top=Math.max(p,r.top-h-6);modesMenu.style.left=`${left}px`;modesMenu.style.top=`${top}px`};
+  const placeModesMenu=()=>{if(!modesBtn||!modesMenu||modesMenu.classList.contains('hidden'))return;const z=pageZoomFactor(),r=modesBtn.getBoundingClientRect(),w=(modesMenu.offsetWidth||320)*z,h=(modesMenu.offsetHeight||300)*z,p=8;let left=Math.min(Math.max(p,r.left),window.innerWidth-w-p),top=r.bottom+6;if(top+h>window.innerHeight-p)top=Math.max(p,r.top-h-6);modesMenu.style.left=`${left/z}px`;modesMenu.style.top=`${top/z}px`};
   const toggleModes=(force)=>{if(!modesBtn||!modesMenu)return;const open=force===undefined?modesMenu.classList.contains('hidden'):!!force;modesMenu.classList.toggle('hidden',!open);modesBtn.setAttribute('aria-expanded',open?'true':'false');if(open)requestAnimationFrame(placeModesMenu)};
   modesBtn?.addEventListener('click',e=>{e.stopPropagation();toggleModes()});modesMenu?.addEventListener('click',e=>e.stopPropagation());document.addEventListener('click',e=>{if(modesMenu&&!modesMenu.classList.contains('hidden')&&!modesMenu.contains(e.target)&&e.target!==modesBtn)toggleModes(false)});window.addEventListener('resize',placeModesMenu,{passive:true});
 
@@ -2870,6 +2932,34 @@ body.attune-marker .item-anchor.attune .item-label::after{content:"\00a0◆";fon
   afterRender();scheduleFit();setTimeout(scheduleFit,400);
 })();
 
+</script>
+
+<script id="sep2026-rowcap-share-script">
+/* Row Limit mode + shareable links wiring (Sep 2026). */
+(()=>{
+  const q=s=>document.querySelector(s),safe=f=>{try{return f()}catch(e){console.warn(e)}};
+  const btn=q('#rowCapModeBtn'),box=q('#rowCapSettings'),range=q('#rowCapRange'),input=q('#rowCapInput'),val=q('#rowCapValue');
+  function syncRowCapUI(){
+    const on=!!state.rowCapOn,n=state.rowCap;
+    if(btn){btn.classList.toggle('primary',on);btn.setAttribute('aria-pressed',String(on));btn.textContent=on?`Row Limit: ${n}`:'Row Limit';}
+    if(box)box.hidden=!on;if(range)range.value=String(n);if(input&&document.activeElement!==input)input.value=String(n);if(val)val.textContent=String(n);
+  }
+  function rerender(){safe(()=>renderAll());requestAnimationFrame(()=>{safe(()=>scheduleTierRowHeightSync());safe(()=>syncStickyTierHeaders(true));safe(()=>syncScrollNavigator())})}
+  let t=0;function setCap(n,{now=false}={}){n=Math.max(10,Math.min(50,Math.round(Number(n)||20)));if(n===state.rowCap&&!now)return;state.rowCap=n;syncRowCapUI();persist();clearTimeout(t);t=setTimeout(rerender,now?0:120)}
+  btn?.addEventListener('click',e=>{e.stopPropagation();state.rowCapOn=!state.rowCapOn;syncRowCapUI();persist();rerender();toast(state.rowCapOn?`Row limit on: ${state.rowCap} rows per column${state.mobileMode?' (applies to the desktop table layout)':''}`:'Row limit off')});
+  range?.addEventListener('input',()=>setCap(range.value));
+  input?.addEventListener('change',()=>setCap(input.value,{now:true}));
+  input?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();setCap(input.value,{now:true})}});
+  syncRowCapUI();
+
+  q('#copyShareLinkBtn')?.addEventListener('click',()=>{q('#responsiveMoreMenu')?.classList.add('hidden');q('#responsiveMoreBtn')?.setAttribute('aria-expanded','false');copyShareLink()});
+  q('#copyFilterLinkBtn')?.addEventListener('click',e=>{e.preventDefault();copyShareLink()});
+
+  /* Keep the address bar in sync after every render, and follow links pasted into an open tab. */
+  const baseRenderAll=renderAll;renderAll=function(){const r=baseRenderAll.apply(this,arguments);safe(updateShareHash);safe(syncRowCapUI);return r};
+  window.addEventListener('hashchange',()=>{if(shareHashWriting)return;if(!loadShareHash())return;safe(()=>renderFiltersToInputs());safe(()=>buildClassList());safe(()=>syncModeUI());syncRowCapUI();safe(()=>setView(state.view))});
+  safe(updateShareHash);
+})();
 </script>
 </body>
 </html>

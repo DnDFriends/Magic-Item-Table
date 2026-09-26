@@ -2,6 +2,13 @@
 
 Deploy the contents of this folder at the root of a GitHub Pages site. Keep the `assets/` folder next to `index.html`; the Bear theme art loads from it.
 
+## September 26, 2026 — row limit, shareable links, search
+
+- **Row Limit** (Modes menu): caps how many rows the Magic Item and Reward tables use, from 10 to 50 (slider or number box). A column with more items than the limit is spread evenly over extra columns under the same heading, with a dashed line between the parts. Rows stay aligned across tiers. It applies to the desktop table (Mobile Mode keeps its tap-to-expand lists). The setting is saved in the browser.
+- **Shareable links:** the address bar now describes the current tab, search, tier/attunement/TP filters, category filters, AND/OR logic, display mode, New Player Mode and classes, evolving-chain view and row limit, for example `#view=reward&q=potion&tier=2&rows=20`. Use **More → Copy Link to This View** or **Copy Link** in Search & Filter. Old `#search=` links still work. Purchase lists, favorites and themes are never included.
+- **Smarter search** (from the Content Guide): every word must appear somewhere on the item, in any order ("giant strength potion"), and a word starting with `-` hides items containing it ("potion -healing").
+- **Fix:** on smaller windows (when Auto Fit scales the page), the item hover card and the Modes, More and Text Size menus appeared in the wrong place, over other items or over their own button. They now line up correctly.
+
 ## September 26, 2026 — new themes
 
 - **Crooked Moon** (under Additional Themes): Crooked black page, dark blue-slate panels, Crooked blue borders and hover, moon-blue secondary text, gold accent, and yellow attunement items. The given brand colors are kept exactly for the page, panels, accent and attunement color; every text color passes WCAG AA (4.5:1), with Preserve MIT colors on or off.
