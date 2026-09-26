@@ -2,6 +2,11 @@
 
 Deploy the contents of this folder at the root of a GitHub Pages site. Keep the `assets/` folder next to `index.html`; the Bear theme art loads from it.
 
+## September 26, 2026 — new themes
+
+- **Crooked Moon** (under Additional Themes): Crooked black page, dark blue-slate panels, Crooked blue borders and hover, moon-blue secondary text, gold accent, and yellow attunement items. The given brand colors are kept exactly for the page, panels, accent and attunement color; every text color passes WCAG AA (4.5:1), with Preserve MIT colors on or off.
+- **Phoenix** (under Additional Themes): ember reds and flame oranges, carried over from the Allowed and Banned Content Guide.
+
 ## September 2026 usability and accessibility update
 
 - **Phones:** new visitors on small screens start in the phone layout. The top bar uses two rows, so Filter, Text Size, Purchase List and More are always on screen. The floating Theme button is gone; Theme is in More.
